@@ -22,7 +22,7 @@ a.nav-text{
     font-size: 2.4vh;
 }
 
-a.nav-text.onhover{
+a.nav-text:hover{
     color: rgb(17, 137, 249);
     transition: all 0.3s;
 }
