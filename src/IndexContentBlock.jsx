@@ -1,26 +1,26 @@
-import "./IndexContentBlock.scss"
-import React from "react"
+import "./IndexContentBlock.scss";
+import React from "react";
 
 /**
- * @param {String} content 
+ * @param {String} content
  */
 function content_process(content){
-    content = content.replaceAll(" ", "\u00A0")
-    var lines_str = content.split("\n")
-    var lines_element = []
+    content = content.replaceAll(" ", "\u00A0");
+    var lines_str = content.split("\n");
+    var lines_element = [];
     for (var i in lines_str){
         lines_element.push(
             <p key={i} className="index-content content-line">
                 {lines_str[i]}
             </p>
-        )
+        );
     }
-    return lines_element
+    return lines_element;
 }
 
 
 
-function IndexContentBlock({title, content, image_src}){
+function IndexContentBlock({ title, content, image_src }){
     return <div className="index-content-container">
         <div className="title-block">
             <p>{title}</p>
@@ -31,7 +31,7 @@ function IndexContentBlock({title, content, image_src}){
         <div className="image-block">
             <img src={image_src} />
         </div>
-    </div>
+    </div>;
 
     // return <div className="content-block">
     //     <div className="title-area">
@@ -46,4 +46,4 @@ function IndexContentBlock({title, content, image_src}){
 
 }
 
-export default IndexContentBlock
+export default IndexContentBlock;

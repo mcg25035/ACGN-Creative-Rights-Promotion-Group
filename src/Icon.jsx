@@ -1,18 +1,18 @@
-import logo from '/logo.png'
+import logo from '/logo.png';
+import { Link } from "react-router-dom";
 
 function Icon(){
     var style = {
         height: "100%",
         width: "auto",
         cursor: "pointer"
-    }
+    };
 
-    var on_icon_click = ()=>{
-        window.location.pathname = "/"
-    }
-
-
-    return <img onClick={on_icon_click} style={style} className='nav-icon' src={logo} />
+    return (
+        <Link to={"/"}>
+            <img style={style} className='nav-icon' src={logo} />
+        </Link>
+    );
 }
 
 export default Icon;

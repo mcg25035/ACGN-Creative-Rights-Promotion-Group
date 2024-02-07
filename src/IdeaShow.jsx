@@ -1,6 +1,6 @@
-import bg from '/bg1.jpg'
-import char from '/char1.png'
-import './IdeaShow.scss'
+import bg from '/bg1.jpg';
+import char from '/char1.png';
+import './IdeaShow.scss';
 
 function IdeaShow(){
     return <div className='container-ideashow'>
@@ -10,8 +10,8 @@ function IdeaShow(){
             <p className='slogan'>拒絕網路戒嚴</p>
             <p className='slogan'>&emsp;&emsp;我們不要第二個白色恐怖</p>
         </div>
-    </div>
+    </div>;
 
 }
 
-export default IdeaShow
+export default IdeaShow;
