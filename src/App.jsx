@@ -1,33 +1,17 @@
 import IdeaShow from "./IdeaShow";
 import Nav from "./Nav";
-import "./App.css"
+import "./App.scss"
+import IndexContentBlock from "./IndexContentBlock";
 
 function App(){
     var div_style={
         width: "100%",
     }
 
-    var img_style={
-        width: "100%",
-    }
-
     return <div className="main-container" style={div_style}>
         <IdeaShow />
         <Nav />
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
+        <IndexContentBlock title="標題" content={"內容\n內容第二行\n    空白測試"} image_src={"/test.png"} />
 
     </div>
 }

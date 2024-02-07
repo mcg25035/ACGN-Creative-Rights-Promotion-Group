@@ -1,6 +1,6 @@
 import Icon from "./Icon";
 import Link from "./Link";
-import "./Nav.css"
+import "./Nav.scss"
 
 
 

@@ -1,0 +1,58 @@
+@import url(//fonts.googleapis.com/earlyaccess/notosanstc.css);
+
+
+div.index-content-container{
+    --outer-x-padding: 2.5%;
+    --inner-x-padding: calc(var(--outer-x-padding) / 2);
+    --inner-y-padding: var(--inner-x-padding);
+    position: relative;
+    margin-top: 2vh;
+    border-radius: 3px;
+    left: var(--outer-x-padding);
+    width: calc(100% - calc(var(--outer-x-padding) * 2));
+    height: fit-content;
+    background-color: rgb(255, 255, 255);
+
+    div.content-block{
+        position: relative;
+        padding-left: var(--inner-x-padding);
+        padding-bottom: var(--inner-y-padding);
+        width: calc(70% - var(--inner-x-padding));
+        height: 100%;
+        display: inline-block;
+
+        p{
+            font-family: 'Noto Sans TC';
+            margin: 0.25vh;
+        }
+    }
+
+    div.image-block{
+        position: relative;
+        padding-right: var(--inner-x-padding);
+        width: calc(30% - var(--inner-x-padding));
+        height: fit-content;
+        display: inline-block;
+        img{
+            width: 100%;
+            position: relative;
+            display: inline-block;
+            
+        }
+    }
+
+    div.title-block{
+        position: relative;
+        padding-top: var(--inner-y-padding);
+        padding-left: var(--inner-x-padding);
+        width: 100%;
+
+        p{
+            font-family: 'Noto Sans TC';
+            font-weight: bold;
+            font-size: 5vh;
+            margin: 0;
+        }
+    }
+    
+}
