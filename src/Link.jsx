@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 
 function Link({ name, to }){
     var ref = React.createRef();
-    var on_mouse = {
+    var onMouse = {
         over: ()=>{
          /**@type {HTMLElement} */
             var element = ref.current;
@@ -21,7 +21,7 @@ function Link({ name, to }){
     };
 
     return (
-        <div className="nav-link" onMouseOut={on_mouse.out} onMouseOver={on_mouse.over}>
+        <div className="nav-link" onMouseOut={onMouse.out} onMouseOver={onMouse.over}>
             <RouterLink ref={ref} to={`/${to}`} className="nav-text">
                 {name}
             </RouterLink>

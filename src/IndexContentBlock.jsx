@@ -1,35 +1,35 @@
 import "./IndexContentBlock.scss";
-import React from "react";
+import PropTypes from "prop-types";
 
 /**
  * @param {String} content
  */
-function content_process(content){
+function renderContentProcess(content){
     content = content.replaceAll(" ", "\u00A0");
-    var lines_str = content.split("\n");
-    var lines_element = [];
-    for (var i in lines_str){
-        lines_element.push(
+    var linesStr = content.split("\n");
+    var linesElement = [];
+    for (var i in linesStr){
+        linesElement.push(
             <p key={i} className="index-content content-line">
-                {lines_str[i]}
+                {linesStr[i]}
             </p>
         );
     }
-    return lines_element;
+    return linesElement;
 }
 
-
-
-function IndexContentBlock({ title, content, image_src }){
+function IndexContentBlock({ title, content, imageSrc }){
     return <div className="index-content-container">
         <div className="title-block">
             <p>{title}</p>
         </div>
-        <div id="test" className="content-block">
-            {content_process(content)}
-        </div>
-        <div className="image-block">
-            <img src={image_src} />
+        <div className="content-wrapper">
+            <div className="content-block">
+                {renderContentProcess(content)}
+            </div>
+            <div className="image-block">
+                <img src={imageSrc} title={title} />
+            </div>
         </div>
     </div>;
 
@@ -45,5 +45,11 @@ function IndexContentBlock({ title, content, image_src }){
     // </div>
 
 }
+
+IndexContentBlock.propTypes = {
+    title: PropTypes.string.isRequired,
+    content: PropTypes.string.isRequired,
+    imageSrc: PropTypes.string.isRequired
+};
 
 export default IndexContentBlock;
