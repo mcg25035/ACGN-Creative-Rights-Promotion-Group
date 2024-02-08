@@ -3,15 +3,16 @@
 
 div.index-content-container{
     --outer-x-padding: 2.5%;
-    --inner-x-padding: calc(var(--outer-x-padding) / 2);
+    --inner-x-padding: 2.5%;
     --inner-y-padding: var(--inner-x-padding);
+    border: solid rgb(131, 161, 192);
     position: relative;
-    margin-top: 2vh;
+    margin-top: 4vh;
     border-radius: 3px;
     left: var(--outer-x-padding);
     width: calc(100% - calc(var(--outer-x-padding) * 2));
     height: fit-content;
-    background-color: rgb(255, 255, 255);
+    background-color: rgb(238, 246, 255);
     display: flex;
     flex-direction: column;
 
@@ -21,32 +22,67 @@ div.index-content-container{
             text-align: right;
         }
 
+        .content-block{
+            padding-right: var(--inner-x-padding);
+            flex-direction: row-reverse;
+        }
+
+        .image-block{
+            padding-left: var(--inner-x-padding);
+        }
+
+        .text-block{
+            text-align: left;
+        }
     }
 
+    &:nth-child(odd) {
+        .content-block{
+            padding-left: var(--inner-x-padding);
+        }
+
+        .image-block{
+            padding-right: var(--inner-x-padding);
+        }
+    }
+
+
     .content-wrapper {
+        padding-top: calc(var(--inner-y-padding));
         display: flex;
         align-items: stretch;
         flex: 1;
     }
 
-    div.content-block{
+    .content-block{
         position: relative;
-        padding-left: var(--inner-x-padding);
         padding-bottom: var(--inner-y-padding);
         width: calc(70% - var(--inner-x-padding));
+        align-items: center;
+        display: flex;
+        
 
         p{
             font-family: 'Noto Sans TC';
             margin: 0.25vh;
         }
+
+        .text-block{
+            display: flex;
+            flex-direction: column;
+            height: fit-content;
+            // align-self: center;
+        }
     }
 
-    div.image-block{
+    .image-block{
         position: relative;
-        padding-right: var(--inner-x-padding);
         width: calc(30% - var(--inner-x-padding));
         height: fit-content;
         display: inline-block;
+        align-self: center;
+        padding-bottom: var(--inner-y-padding);
+
         img{
             width: 100%;
             position: relative;
@@ -54,7 +90,7 @@ div.index-content-container{
         }
     }
 
-    div.title-block{
+    .title-block{
         position: relative;
         padding-top: var(--inner-y-padding);
         padding-left: var(--inner-x-padding);

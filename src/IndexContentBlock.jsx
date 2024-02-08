@@ -9,13 +9,22 @@ function renderContentProcess(content){
     var linesStr = content.split("\n");
     var linesElement = [];
     for (var i in linesStr){
+        var lineContent = linesStr[i];
+        if (!lineContent){
+            lineContent = "\u00A0";
+        }
         linesElement.push(
             <p key={i} className="index-content content-line">
-                {linesStr[i]}
+                {lineContent}
             </p>
         );
     }
-    return linesElement;
+
+    var textBlock = <div className="text-block">
+        {linesElement}
+    </div>
+
+    return textBlock;
 }
 
 function IndexContentBlock({ title, content, imageSrc }){
