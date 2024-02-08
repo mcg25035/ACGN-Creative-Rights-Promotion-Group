@@ -1,0 +1,20 @@
+
+.page-footer{
+    min-height: 16vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: linear-gradient(#ced9e0, #b6dcff 90%, #1189f9);
+    color: black;
+    flex-direction: column;
+
+    .social-medias {
+        display: flex;
+        margin-top: 8px;
+    }
+    .icon {
+        height: 2vw;
+        width: 2vw;
+        background-size: contain;
+    }
+}
