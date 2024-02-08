@@ -3,7 +3,6 @@ import Nav from "./Nav";
 import Footer from "./Footer";
 import IndexPage from "./IndexPage";
 import "./App.scss";
-import Footer from "./Footer";
 
 function App(){
     var divStyle={

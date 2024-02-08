@@ -1,32 +1,50 @@
+/* eslint-disable semi */
 import "./Footer.scss";
-import discordSvg from "./assets/discord.svg";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSquareFacebook, faSquareInstagram, faXTwitter, faDiscord} from '@fortawesome/free-brands-svg-icons'
 
 const socialMedias = [
     {
-        name: "discord",
+        name: "Discord",
         href: "https://discord.gg/URGhN3KG",
-        icon: discordSvg,
+        icon: faDiscord,
+    },
+    {
+        name: "Twitter",
+        href: "/",
+        icon: faXTwitter,
+    },
+    {
+        name: "Facebook",
+        href: "/",
+        icon: faSquareFacebook,
+    },
+    {
+        name: "Instagram",
+        href: "/",
+        icon: faSquareInstagram,
     }
 ];
 
+function linkIcon(name, href, icon){
+    return <a key={name} href={href} target="_blank" rel="noreferrer">
+        <FontAwesomeIcon icon={icon} />
+    </a>
+}
+
 function Footer(){
-    const socialMediaIcons = socialMedias.map(({ name, href, icon }) => (
-        <a
-            key={name}
-            className="icon"
-            href={href}
-            style={{ backgroundImage: `url(${icon})` }}
-            target="_blank"
-            rel="noreferrer"
-        />
-    ));
+    const socialMediaIcons = socialMedias.map(({ name, href, icon }) => {
+        return linkIcon(name, href, icon)
+    });
 
     return (
         <footer className="page-footer">
-            <div>還不知道要放什麼的Footer</div>
             <div className="social-medias">
                 {socialMediaIcons}
             </div>
+            <p>
+                ACGN創作權益推動小組
+            </p>
         </footer>
     );
 }

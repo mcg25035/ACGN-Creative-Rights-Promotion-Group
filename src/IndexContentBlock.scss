@@ -5,9 +5,9 @@ div.index-content-container{
     --outer-x-padding: 2.5%;
     --inner-x-padding: 2.5%;
     --inner-y-padding: var(--inner-x-padding);
-    border: solid rgb(131, 161, 192);
+    border: solid rgb(131, 161, 192) 2px;
     position: relative;
-    margin-top: 4vh;
+    margin-top: 8vh;
     border-radius: 3px;
     left: var(--outer-x-padding);
     width: calc(100% - calc(var(--outer-x-padding) * 2));
