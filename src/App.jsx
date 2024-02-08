@@ -1,6 +1,7 @@
-import IdeaShow from "./IdeaShow";
+import { Routes, Route } from "react-router-dom";
 import Nav from "./Nav";
-import IndexContentContainer from "./IndexContentContainer";
+import Footer from "./Footer";
+import IndexPage from "./IndexPage";
 import "./App.scss";
 
 function App(){
@@ -9,10 +10,17 @@ function App(){
     };
 
     return <div className="main-container" style={divStyle}>
-        <IdeaShow />
         <Nav />
-        <IndexContentContainer />
-
+        <main>
+            <Routes>
+                <Route path="/" element={<IndexPage />} />
+                <Route path="/about_us" element={<IndexPage />} />
+                <Route path="/donate" element={<IndexPage />} />
+                <Route path="/working_project" element={<IndexPage />} />
+                <Route path="/join_us" element={<IndexPage />} />
+            </Routes>
+        </main>
+        <Footer />
     </div>;
 }
 
