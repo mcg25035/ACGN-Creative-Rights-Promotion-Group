@@ -3,12 +3,20 @@
 @tailwind utilities;
 
 html{
-  width: 100%;
-  height: 100%;
+    width: 100%;
+    height: 100%;
+    font-size: calc(100vw / 1920); /* 1px = 1rem in 1920px wide */
 }
 
 body{
-  width: 100%;
-  margin: 0;
-  padding: 0;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    font-size: 16rem;
+}
+
+@media (orientation: portrait) {
+    html {
+        font-size: calc(100vw / 375); /* 1px = 1rem in 375px wide */
+    }
 }

@@ -18,13 +18,11 @@ div.index-content-container{
 
     &:nth-child(even) {
         .content-wrapper {
-            flex-direction: row-reverse;
             text-align: right;
         }
 
         .content-block{
             padding-right: var(--inner-x-padding);
-            flex-direction: row-reverse;
         }
 
         .image-block{
@@ -57,10 +55,8 @@ div.index-content-container{
     .content-block{
         position: relative;
         padding-bottom: var(--inner-y-padding);
-        width: calc(70% - var(--inner-x-padding));
         align-items: center;
         display: flex;
-        
 
         p{
             font-family: 'Noto Sans TC';
@@ -103,5 +99,11 @@ div.index-content-container{
             font-size: 5vh;
             margin: 0;
         }
+    }
+}
+
+@media (orientation: portrait) {
+    div.index-content-container .content-wrapper {
+        flex-direction: column-reverse;
     }
 }

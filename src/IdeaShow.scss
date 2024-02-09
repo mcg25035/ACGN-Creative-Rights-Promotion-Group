@@ -8,7 +8,7 @@ div.container-ideashow{
     
     div.text-container{
         background-color: rgba(255,255,255,0.5);
-        width: 80vh;    
+        width: 60vw;
         height: fit-content;
         left: 10%;
         top: 35%;
@@ -16,8 +16,8 @@ div.container-ideashow{
 
         p.slogan{
             width: fit-content;
-            margin: 0;   
-            font-size: 6vh;
+            margin: 0;
+            font-size: 60rem;
             font-weight: bold;
             font-family: 'Noto Sans';
             color: rgb(17, 137, 249);
@@ -41,5 +41,14 @@ div.container-ideashow{
         bottom: 0%;
         right: 0%;
         position: absolute;
+    }
+}
+
+@media (orientation: portrait) {
+    div.container-ideashow div.text-container {
+        width: 80vw;
+    }
+    div.container-ideashow div.text-container p.slogan {
+        font-size: 20rem;
     }
 }
