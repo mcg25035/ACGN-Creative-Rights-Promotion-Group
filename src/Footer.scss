@@ -11,7 +11,6 @@
     flex-direction: column;
 
     .social-medias {
-        
         display: flex;
         margin-top: 8px;
         align-items: center;
@@ -29,12 +28,6 @@
             color: white;
             transition: all 0.1s;
         }
-    }
-
-    .icon {
-        height: 2vw;
-        width: 2vw;
-        background-size: contain;
     }
 
     p{
