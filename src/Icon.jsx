@@ -6,7 +6,7 @@ function Icon(){
 
     return (
         <Link to={"/"} className="">
-            <img className='h-full' src={logo} />
+            <img className='logo h-full' src={logo} />
         </Link>
     );
 }
