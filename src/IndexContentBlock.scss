@@ -15,38 +15,16 @@ div.index-content-container{
     background-color: rgb(238, 246, 255);
     display: flex;
     flex-direction: column;
+    padding: var(--inner-y-padding) var(--inner-x-padding);
+    box-sizing: border-box;
 
     &:nth-child(even) {
         .content-wrapper {
-            text-align: right;
-        }
-
-        .content-block{
-            padding-right: var(--inner-x-padding);
-        }
-
-        .image-block{
-            padding-left: var(--inner-x-padding);
-        }
-
-        .text-block{
-            text-align: left;
+            flex-direction: row-reverse;
         }
     }
-
-    &:nth-child(odd) {
-        .content-block{
-            padding-left: var(--inner-x-padding);
-        }
-
-        .image-block{
-            padding-right: var(--inner-x-padding);
-        }
-    }
-
 
     .content-wrapper {
-        padding-top: calc(var(--inner-y-padding));
         display: flex;
         align-items: stretch;
         flex: 1;
@@ -54,9 +32,9 @@ div.index-content-container{
 
     .content-block{
         position: relative;
-        padding-bottom: var(--inner-y-padding);
         align-items: center;
         display: flex;
+        flex: 1;
 
         p{
             font-family: 'Noto Sans TC';
@@ -77,7 +55,6 @@ div.index-content-container{
         height: fit-content;
         display: inline-block;
         align-self: center;
-        padding-bottom: var(--inner-y-padding);
 
         img{
             width: 100%;
@@ -88,8 +65,6 @@ div.index-content-container{
 
     .title-block{
         position: relative;
-        padding-top: var(--inner-y-padding);
-        padding-left: var(--inner-x-padding);
         width: 100%;
         box-sizing: border-box;
 
@@ -103,7 +78,9 @@ div.index-content-container{
 }
 
 @media (orientation: portrait) {
-    div.index-content-container .content-wrapper {
-        flex-direction: column-reverse;
+    div.index-content-container {
+        .content-wrapper, &:nth-child(even) .content-wrapper {
+            flex-direction: column-reverse;
+        }
     }
 }
