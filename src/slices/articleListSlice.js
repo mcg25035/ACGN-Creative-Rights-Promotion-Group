@@ -1,6 +1,7 @@
-import { FETCH_ARTICLE_LIST } from '../actions/actionTypes';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import axios from 'axios';
 
-const INITIAL_STATE = [];
+const initialState = [];
 
 // XXX: test data
 const mockData = [
@@ -19,15 +20,25 @@ const mockData = [
     }
 ];
 
-
-export const articleList = (state = INITIAL_STATE, action) => {
-    const { type, payload } = action;
-    switch (type) {
-        case FETCH_ARTICLE_LIST:
-            console.log(payload?.data);
-            return mockData;
-        default:
-            return state;
+export const fetchArticleList = createAsyncThunk('articleList\fetchArticleList', async () => {
+    const url = '/api/articles';
+    try {
+        const response = await axios.get(url);
+        // return response?.data;
+        return mockData;
+    } catch (error) {
+        console.error(error);
     }
-};
+});
 
+
+const articleListSlice = createSlice({
+    name: 'articleList',
+    initialState,
+    reducers:{},
+    extraReducers: (builder) => {
+        builder.addCase(fetchArticleList.fulfilled, (state, action) => action.payload);
+    }
+});
+
+export default articleListSlice.reducer;
