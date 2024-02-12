@@ -9,9 +9,6 @@ function IndexPage(){
     const dispatch = useDispatch();
 
     useEffect(() => {
-    }, []);
-
-    useEffect(() => {
         dispatch(fetchArticleList());
     }, [dispatch]);
 
