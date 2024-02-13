@@ -1,4 +1,6 @@
 import axios from "axios";
+import UserAPI from "./UserAPI";
+import UI from "./UI";
 
 var sortBy = {
     "date-sb": "date-sb", // old to new
@@ -10,6 +12,7 @@ var sortBy = {
 
 var articleApiPath = "http://localhost:3000/api/articles"
 var commentApiPath = (id) => `${articleApiPath}/${id}/comments`
+var replyApiPath = (articleId, commentId) => `${commentApiPath(articleId)}/${commentId}/replies`
 
 class Comment{
     /**@type {Array<Comment>} */
@@ -22,6 +25,8 @@ class Comment{
     gpCount;
     /**@type {string} */
     userId;
+    /**@type {string} */
+    id;
     /**@type {ArticleAPI} */
     article;
     /**@type {string} */
@@ -30,6 +35,8 @@ class Comment{
     error;
     /**@type {boolean} */
     isReply;
+    /**@type {Number} */
+    selfVote; //1 : gp, 0 : none, -1 : bp
 
     /**
      * @param {ArticleAPI} article
@@ -40,7 +47,8 @@ class Comment{
      * @param {Number} replies 
      * @param {boolean} isReply
      */
-    constructor(article, content, userId, bp, gp, replies, isReply){
+    constructor(article, content, userId, bp, gp, replies, isReply, id){
+        this.id = id;
         this.article = article;
         this.content = content;
         this.userId = userId;
@@ -77,6 +85,39 @@ class Comment{
             return;
         }
     }
+
+    async bp(){
+        var bp_api = this.isReply ?
+        `${replyApiPath(this.article.id, this.id)}/${this.id}/bp` : `${commentApiPath(this.article.id)}/${this.id}/bp`;
+        try{
+            await axios.put(`${bp_api}?user=${UserAPI.currentUserId}`);
+        }
+        catch(e){
+            UI.raiseError("Error", `此事件交互失敗: bp on article ${this.id}\n${e}`)
+        }
+        
+
+        if (this.selfVote === -1){
+            this.selfVote = 0;
+            this.bpCount -= 1;
+        }
+    }
+
+    async gp(){
+        var gp_api = this.isReply ?
+        `${replyApiPath(this.article.id, this.id)}/${this.id}/gp` : `${commentApiPath(this.article.id)}/${this.id}/gp`;
+        try{
+            await axios.put(`${gp_api}?user=${UserAPI.currentUserId}`);
+        }
+        catch(e){
+            UI.raiseError("Error", `此事件交互失敗: gp on article ${this.id}\n${e}`)
+        }
+        if (this.selfVote === 1){
+            this.selfVote = 0;
+            this.gpCount -= 1;
+        }
+    }
+
 }
 
 class ArticleAPI{
@@ -137,7 +178,23 @@ class ArticleAPI{
         }
     }
 
-    
+    async bp(){
+        try{
+            await axios.put(`${articleApiPath}/${this.id}/bp?user=${UserAPI.currentUserId}`);
+        }
+        catch(e){
+            UI.raiseError("Error", `此事件交互失敗: bp_article on ${this.id}\n${e}`)
+        }
+    }
+
+    async gp(){
+        try{
+            await axios.put(`${articleApiPath}/${this.id}/gp?user=${UserAPI.currentUserId}`);
+        }
+        catch(e){
+            UI.raiseError("Error", `此事件交互失敗: gp_article on ${this.id}\n${e}`)
+        }
+    }
 }
 
 
