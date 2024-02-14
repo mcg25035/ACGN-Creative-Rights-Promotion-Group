@@ -47,15 +47,21 @@ class Comment{
      * @param {Number} gp 
      * @param {Number} replies 
      */
-    constructor(article, content, userId, bp, gp, replies, id, target){
-        this.id = id;
-        this.article = article;
-        this.content = content;
-        this.userId = userId;
-        this.bpCount = bp;
-        this.gpCount = gp;
-        this.repliesCount = replies;
-        this.target = target;
+    static async init(article, content, userId, bp, gp, replies, id, target){
+        var result = new Comment();
+        result.id = id;
+        result.article = article
+        result.content = content
+        result.userId = userId
+        result.bpCount = bp
+        result.gpCount = gp
+        result.repliesCount = replies
+        result.target = target
+        
+        try{ await result.syncSelfVote() }
+        catch(e){ result.error = true };
+        
+        return result
     }
 
     async fetchReplies(){
@@ -74,7 +80,7 @@ class Comment{
             res = res.data;
             for (var i in res.comments){
                 var that = res.comments[i];
-                var comment = new Comment(
+                var comment = Comment.init(
                     this.article, that.content, that.userId, that.bpCount, that.gpCount, that.repliesCount, 
                     that.id, this
                 );
@@ -169,6 +175,12 @@ class Comment{
         }
     }
 
+    async syncSelfVote(){
+        var res = await axios.get(`${articleApiPath}/bpgp/${this.id}?user=${UserAPI.currentUserId}`)
+        res = res.state
+        this.selfVote = res.vote
+    }
+
 }
 
 class ArticleAPI{
@@ -217,12 +229,19 @@ class ArticleAPI{
             this.gpCount = res.gp
             this.commentsCount = res.comments
             this.postBy = res.userId
+            await this.syncSelfVote()
             return true
         }
         catch(e){
             this.article_error = true
             return false
         }
+    }
+
+    async syncSelfVote(){
+        var res = await axios.get(`${articleApiPath}/bpgp/${this.id}?user=${UserAPI.currentUserId}`)
+        res = res.state
+        this.selfVote = res.vote
     }
 
     async fetch_comments(){
@@ -232,7 +251,7 @@ class ArticleAPI{
 
             for (var i in res.comments){
                 var that = res.comments[i];
-                var comment = new Comment(
+                var comment = Comment.init(
                     this, that.content, that.userId, that.bp, that.gp, that.replies, that.id, this
                 );
                 this.comments.push(comment);
