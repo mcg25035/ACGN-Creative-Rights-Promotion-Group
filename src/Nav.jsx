@@ -4,10 +4,6 @@ import { useState, useEffect } from "react";
 
 
 function Nav(){
-    var ulStyle = {
-        position: "relative",
-        height: "100%"
-    };
     const [visible, setVisible] = useState(true);
     const [prevScrollPos, setPrevScrollPos] = useState(window.pageYOffset);
 
