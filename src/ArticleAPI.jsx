@@ -27,14 +27,14 @@ class Comment{
     userId;
     /**@type {string} */
     id;
+    /**@type {Comment | ArticleAPI} */
+    target;
     /**@type {ArticleAPI} */
     article;
     /**@type {string} */
     content;
     /**@type {boolean} */
     error;
-    /**@type {boolean} */
-    isReply;
     /**@type {Number} */
     selfVote; //1 : gp, 0 : none, -1 : bp
 
@@ -42,12 +42,12 @@ class Comment{
      * @param {ArticleAPI} article
      * @param {string} content 
      * @param {string} userId 
+     * @param {Comment | ArticleAPI} target
      * @param {Number} bp 
      * @param {Number} gp 
      * @param {Number} replies 
-     * @param {boolean} isReply
      */
-    constructor(article, content, userId, bp, gp, replies, isReply, id){
+    constructor(article, content, userId, bp, gp, replies, id, target){
         this.id = id;
         this.article = article;
         this.content = content;
@@ -55,11 +55,11 @@ class Comment{
         this.bpCount = bp;
         this.gpCount = gp;
         this.repliesCount = replies;
-        this.isReply = isReply;
+        this.target = target;
     }
 
     async fetchReplies(){
-        if (this.isReply) return;
+        if (this.target instanceof Comment) return false;
 
         try{
             var lastId;
@@ -75,46 +75,75 @@ class Comment{
             for (var i in res.comments){
                 var that = res.comments[i];
                 var comment = new Comment(
-                    this.article, that.content, that.userId, that.bpCount, that.gpCount, that.repliesCount
+                    this.article, that.content, that.userId, that.bpCount, that.gpCount, that.repliesCount, 
+                    that.id, this
                 );
-                this.replies.push(comment);
+                this.replies.push(comment)
             }
+            return true
         }
         catch(e){
-            this.error = true;
-            return;
+            this.error = true
+            return false
         }
     }
 
     async bp(){
-        var bp_api = this.isReply ?
+        var bp_api = (this.target instanceof Comment) ?
         `${replyApiPath(this.article.id, this.id)}/${this.id}/bp` : `${commentApiPath(this.article.id)}/${this.id}/bp`;
         try{
             await axios.put(`${bp_api}?user=${UserAPI.currentUserId}`);
+            if (this.selfVote === -1){
+                this.selfVote = 0;
+                this.bpCount -= 1;
+            }
+            return true
         }
         catch(e){
             UI.raiseError("Error", `此事件交互失敗: bp on article ${this.id}\n${e}`)
+            return false
         }
         
-
-        if (this.selfVote === -1){
-            this.selfVote = 0;
-            this.bpCount -= 1;
-        }
     }
 
     async gp(){
-        var gp_api = this.isReply ?
+        var gp_api = (this.target instanceof Comment) ?
         `${replyApiPath(this.article.id, this.id)}/${this.id}/gp` : `${commentApiPath(this.article.id)}/${this.id}/gp`;
         try{
             await axios.put(`${gp_api}?user=${UserAPI.currentUserId}`);
+            if (this.selfVote === 1){
+                this.selfVote = 0;
+                this.gpCount -= 1;
+            }
+            return true
         }
         catch(e){
             UI.raiseError("Error", `此事件交互失敗: gp on article ${this.id}\n${e}`)
+            return false
         }
-        if (this.selfVote === 1){
-            this.selfVote = 0;
-            this.gpCount -= 1;
+    }
+
+    async postReply(content){
+        try{
+            var id = this.id
+
+            if (this.target instanceof Comment){
+                id = this.target.id;
+            }
+
+            await axios.post(`${replyApiPath(this.article.id, id)}?user=${UserAPI.currentUserId}`, {
+                content: content
+            });
+
+            if (this.target instanceof Comment){
+                this.target.repliesCount += 1;
+            }
+
+            return true
+        }
+        catch(e){
+            UI.raiseError("Error", `此事件交互失敗: post_reply on article ${this.id}\n${e}`)
+            return false
         }
     }
 
@@ -146,16 +175,17 @@ class ArticleAPI{
 
     async init(){
         try{
-            var res = await axios.get(`${articleApiPath}/${this.id}`);
-            res = res.data;
+            var res = await axios.get(`${articleApiPath}/${this.id}`)
+            res = res.data
 
-            this.title = res.title;
-            this.content = res.content;
-            this.thumbnail = res.thumbnail;
+            this.title = res.title
+            this.content = res.content
+            this.thumbnail = res.thumbnail
+            return true
         }
         catch(e){
-            this.article_error = true;
-            return;
+            this.article_error = true
+            return false
         }
     }
 
@@ -167,32 +197,50 @@ class ArticleAPI{
             for (var i in res.comments){
                 var that = res.comments[i];
                 var comment = new Comment(
-                    this, that.content, that.userId, that.bp, that.gp, that.replies, false
+                    this, that.content, that.userId, that.bp, that.gp, that.replies, that.id, this
                 );
                 this.comments.push(comment);
             }
+            return true
         }
         catch(e){
-            this.comments_error = true;
-            return;
+            this.comments_error = true
+            return false
         }
     }
 
     async bp(){
         try{
-            await axios.put(`${articleApiPath}/${this.id}/bp?user=${UserAPI.currentUserId}`);
+            await axios.put(`${articleApiPath}/${this.id}/bp?user=${UserAPI.currentUserId}`)
+            return true
         }
         catch(e){
             UI.raiseError("Error", `此事件交互失敗: bp_article on ${this.id}\n${e}`)
+            return false
         }
     }
 
     async gp(){
         try{
-            await axios.put(`${articleApiPath}/${this.id}/gp?user=${UserAPI.currentUserId}`);
+            await axios.put(`${articleApiPath}/${this.id}/gp?user=${UserAPI.currentUserId}`)
+            return true
         }
         catch(e){
             UI.raiseError("Error", `此事件交互失敗: gp_article on ${this.id}\n${e}`)
+            return false
+        }
+    }
+
+    async postComment(content){
+        try{
+            await axios.post(`${commentApiPath(this.id)}?user=${UserAPI.currentUserId}`, {
+                content: content
+            });
+            return true
+        }
+        catch(e){
+            UI.raiseError("Error", `此事件交互失敗: post_comment on ${this.id}\n${e}`)
+            return false
         }
     }
 }
