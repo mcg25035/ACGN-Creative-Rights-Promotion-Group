@@ -28,10 +28,10 @@ const Login = () => {
 
     return (
         <div className="login-page">
-            <form onSubmit={handleSubmit}>
-                <h1>登入 Login</h1>
+            <div>
+                <h1><b>登入 Login</b></h1>
                 <span>
-                    <h2>帳號名稱 Username</h2>
+                    <h2><b>帳號名稱 Username</b></h2>
                     <input
                         type="text"
                         name="username"
@@ -41,7 +41,7 @@ const Login = () => {
                     />
                 </span>
                 <span>
-                    <h2>密碼 Password</h2>
+                    <h2><b>密碼 Password</b></h2>
                     <input
                         type="password"
                         name="password"
@@ -50,9 +50,9 @@ const Login = () => {
                         onChange={(e) => setPassword(e.target.value)}
                     />
                 </span>
-                <button type="submit">登入</button>
+                <button onClick={handleSubmit}>登入</button>
                 {error && <p className="error">{error}</p>}
-            </form>
+            </div>
         </div>
     );
 };
