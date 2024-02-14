@@ -147,6 +147,28 @@ class Comment{
         }
     }
 
+    deletable(){
+        return this.userId === UserAPI.currentUserId;
+    }
+
+    async delete(){
+        try{
+            if (this.target instanceof Comment){
+                await axios.delete(`${commentApiPath(this.article.id)}/${this.id}?user=${UserAPI.currentUserId}`);
+                this.target.repliesCount -= 1;
+            }
+            else{
+                await axios.delete(`${replyApiPath(this.article.id, this.target.id)}/${this.id}?user=${UserAPI.currentUserId}`);
+                this.article.commentsCount -= 1;
+            }
+            return true
+        }
+        catch(e){
+            UI.raiseError("Error", `此事件交互失敗: delete_comment on article ${this.id}\n${e}`)
+            return false
+        }
+    }
+
 }
 
 class ArticleAPI{
@@ -160,12 +182,22 @@ class ArticleAPI{
     content;
     /**@type {string} */
     thumbnail;
+    /**@type {string} */
+    postBy;
     /**@type {Array{Comment}}*/
     comments = [];
     /**@type {boolean} */
     article_error;
     /**@type {boolean} */
     comments_error;
+    /**@type {Number} */
+    bpCount;
+    /**@type {Number} */
+    gpCount;
+    /**@type {Number} */
+    commentsCount;
+    /**@type {Number} */
+    selfVote; //1 : gp, 0 : none, -1 : bp
     
 
     /**@param {string} id  */
@@ -181,6 +213,10 @@ class ArticleAPI{
             this.title = res.title
             this.content = res.content
             this.thumbnail = res.thumbnail
+            this.bpCount = res.bp
+            this.gpCount = res.gp
+            this.commentsCount = res.comments
+            this.postBy = res.userId
             return true
         }
         catch(e){
@@ -212,6 +248,10 @@ class ArticleAPI{
     async bp(){
         try{
             await axios.put(`${articleApiPath}/${this.id}/bp?user=${UserAPI.currentUserId}`)
+            if (this.selfVote === -1){
+                this.selfVote = 0;
+                this.bpCount -= 1;
+            }
             return true
         }
         catch(e){
@@ -223,6 +263,10 @@ class ArticleAPI{
     async gp(){
         try{
             await axios.put(`${articleApiPath}/${this.id}/gp?user=${UserAPI.currentUserId}`)
+            if (this.selfVote === 1){
+                this.selfVote = 0;
+                this.gpCount -= 1;
+            }
             return true
         }
         catch(e){
@@ -236,10 +280,26 @@ class ArticleAPI{
             await axios.post(`${commentApiPath(this.id)}?user=${UserAPI.currentUserId}`, {
                 content: content
             });
+            this.commentsCount += 1
             return true
         }
         catch(e){
             UI.raiseError("Error", `此事件交互失敗: post_comment on ${this.id}\n${e}`)
+            return false
+        }
+    }
+
+    deleteable(){
+        return UserAPI.currentUserId === this.postBy;
+    }
+
+    async delete(){
+        try{
+            await axios.delete(`${articleApiPath}/${this.id}?user=${UserAPI.currentUserId}`);
+            return true
+        }
+        catch(e){
+            UI.raiseError("Error", `此事件交互失敗: delete_article on ${this.id}\n${e}`)
             return false
         }
     }
