@@ -6,7 +6,7 @@ const initialState = {};
 
 export const fetchArticle = createAsyncThunk('article/fetchArticle', async (articleId) => {
     const article = await ArticleAPI.getArticleById(articleId);
-    article.init();
+    await article.init();
 
     if (article.articleError) {
         console.error("article fetch error");
