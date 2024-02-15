@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThumbsUp, faThumbsDown } from '@fortawesome/free-solid-svg-icons';
 
-import { fetchArticle, fetchComments } from './slices';
+import { fetchArticle, fetchComments } from '@/slices';
 import './ArticlePage.scss';
 
 // TODO: style

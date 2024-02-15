@@ -1,12 +1,12 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import ArticleAPI from '../ArticleAPI';
+import ArticleAPI from '@/utils/ArticleAPI';
 
 const initialState = [];
 
 export const fetchComments = createAsyncThunk('comments/fetchComments', async (articleId) => {
-    const article = await ArticleAPI.getArticleById(articleId)
+    const article = await ArticleAPI.getArticleById(articleId);
     if (article.articleError) {
-        console.error("article fetch error")
+        console.error("article fetch error");
         return;
     }
 

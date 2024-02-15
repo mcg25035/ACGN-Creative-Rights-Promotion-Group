@@ -1,8 +1,8 @@
 import { Routes, Route } from "react-router-dom";
 import Nav from "./Nav";
-import Footer from "./Footer";
-import IndexPage from "./IndexPage";
-import ArticlePage from "./ArticlePage";
+import Footer from "./containers/Footer";
+import IndexPage from "./containers/IndexPage";
+import ArticlePage from "./containers/ArticlePage";
 import "./App.scss";
 
 function App(){
