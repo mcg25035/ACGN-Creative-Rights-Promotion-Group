@@ -14,6 +14,9 @@ var articleApiPath = "http://localhost:3000/api/articles"
 var commentApiPath = (id) => `${articleApiPath}/${id}/comments`
 var replyApiPath = (articleId, commentId) => `${commentApiPath(articleId)}/${commentId}/replies`
 
+/**
+ * comment class
+ */
 class Comment{
     /**@type {Array<Comment>} */
     replies = [];
@@ -39,6 +42,7 @@ class Comment{
     selfVote; //1 : gp, 0 : none, -1 : bp
 
     /**
+     * construct the comment object
      * @param {ArticleAPI} article
      * @param {string} content 
      * @param {string} userId 
@@ -64,6 +68,9 @@ class Comment{
         return result
     }
 
+    /**
+     * fetch 50 replies per call, load more by calling this function again
+     */
     async fetchReplies(){
         if (this.target instanceof Comment) return false;
 
@@ -94,6 +101,9 @@ class Comment{
         }
     }
 
+    /**
+     * dislike the comment
+     */
     async bp(){
         var bp_api = (this.target instanceof Comment) ?
         `${replyApiPath(this.article.id, this.id)}/${this.id}/bp` : `${commentApiPath(this.article.id)}/${this.id}/bp`;
@@ -112,6 +122,9 @@ class Comment{
         
     }
 
+    /**
+     * like the comment
+     */
     async gp(){
         var gp_api = (this.target instanceof Comment) ?
         `${replyApiPath(this.article.id, this.id)}/${this.id}/gp` : `${commentApiPath(this.article.id)}/${this.id}/gp`;
@@ -129,6 +142,10 @@ class Comment{
         }
     }
 
+    /**
+     * reply to the comment
+     * @param {string} content
+     */
     async postReply(content){
         try{
             var id = this.id
@@ -153,10 +170,16 @@ class Comment{
         }
     }
 
+    /**
+     * return true if the comment is post by the current user
+     */
     deletable(){
         return this.userId === UserAPI.currentUserId;
     }
 
+    /**
+     * delete the comment
+     */
     async delete(){
         try{
             if (this.target instanceof Comment){
@@ -175,6 +198,9 @@ class Comment{
         }
     }
 
+    /**
+     * sync self's like or dislike status
+     */
     async syncSelfVote(){
         var res = await axios.get(`${articleApiPath}/bpgp/${this.id}?user=${UserAPI.currentUserId}`)
         res = res.state
@@ -183,6 +209,11 @@ class Comment{
 
 }
 
+
+
+/**
+ * article class
+ */
 class ArticleAPI{
     /**@type {string}*/
     id;
@@ -211,12 +242,17 @@ class ArticleAPI{
     /**@type {Number} */
     selfVote; //1 : gp, 0 : none, -1 : bp
     
-
-    /**@param {string} id  */
+    /**
+     * construct an article object by id
+     * @param {string} id
+     */
     constructor(id){
         this.id = id;
     }
 
+    /**
+     * init the article object
+     */
     async init(){
         try{
             var res = await axios.get(`${articleApiPath}/${this.id}`)
@@ -238,15 +274,22 @@ class ArticleAPI{
         }
     }
 
+    /**
+     * sync self's like or dislike status
+     */
     async syncSelfVote(){
         var res = await axios.get(`${articleApiPath}/bpgp/${this.id}?user=${UserAPI.currentUserId}`)
         res = res.state
         this.selfVote = res.vote
     }
 
+    /**
+     * fetch 50 comments per call, load more by calling this function again
+     */
     async fetch_comments(){
         try{
-            var res = await axios.get(`${commentApiPath(this.id)}?sortBy=${this.sortBy}`);
+            var lastId = (this.comments.length > 0) ? this.comments[this.comments.length - 1].id : "";
+            var res = await axios.get(`${commentApiPath(this.id)}?sortBy=${this.sortBy}&lastId=${lastId}`);
             res = res.data;
 
             for (var i in res.comments){
@@ -264,6 +307,9 @@ class ArticleAPI{
         }
     }
 
+    /**
+     * dislike the article
+     */
     async bp(){
         try{
             await axios.put(`${articleApiPath}/${this.id}/bp?user=${UserAPI.currentUserId}`)
@@ -279,6 +325,9 @@ class ArticleAPI{
         }
     }
 
+    /**
+     * like the article
+     */
     async gp(){
         try{
             await axios.put(`${articleApiPath}/${this.id}/gp?user=${UserAPI.currentUserId}`)
@@ -294,6 +343,10 @@ class ArticleAPI{
         }
     }
 
+    /**
+     * post a comment
+     * @param {string} content
+     */
     async postComment(content){
         try{
             await axios.post(`${commentApiPath(this.id)}?user=${UserAPI.currentUserId}`, {
@@ -308,10 +361,16 @@ class ArticleAPI{
         }
     }
 
+    /**
+     * return true if the article is post by the current user
+     */
     deleteable(){
         return UserAPI.currentUserId === this.postBy;
     }
 
+    /**
+     * delete the article
+     */
     async delete(){
         try{
             await axios.delete(`${articleApiPath}/${this.id}?user=${UserAPI.currentUserId}`);
