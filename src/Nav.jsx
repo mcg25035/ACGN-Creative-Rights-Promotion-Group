@@ -1,6 +1,7 @@
 import Icon from "./Icon";
 import Link from "./Link";
 import { useState, useEffect } from "react";
+import './Nav.scss';
 
 
 function Nav(){

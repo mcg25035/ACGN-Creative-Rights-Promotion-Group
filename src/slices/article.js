@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
-import ArticleAPI from '../ArticleAPI';
+import ArticleAPI from '@/utils/ArticleAPI';
 
 const initialState = {};
 
