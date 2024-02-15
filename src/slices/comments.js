@@ -1,13 +1,24 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import ArticleAPI from '../ArticleAPI';
 
 const initialState = [];
 
 export const fetchComments = createAsyncThunk('comments/fetchComments', async (articleId) => {
-    const url = `/api/articles/${articleId}/comments`;
+    const article = await ArticleAPI.getArticleById(articleId)
+    if (article.articleError) {
+        console.error("article fetch error")
+        return;
+    }
+
+    var result = await article.fetchComments();
+
+    if (result){
+        console.error("comments fetch error");
+        return;
+    }
+
     try {
-        const response = await axios.get(url, { params: { sortBy: 'date-sb', lastId: 0 } });
-        return response?.data;
+        return result;
     } catch (error) {
         console.error(error);
     }

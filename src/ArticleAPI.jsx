@@ -215,6 +215,28 @@ class Comment{
  * article class
  */
 class ArticleAPI{
+    /**@type {ArticleAPI} */
+    static articles = [];
+    
+    /**
+     * @param {string} id 
+     * @returns {ArticleAPI | false}
+     */
+    static async getArticleById(id){
+        var article = this.articles.find((article) => article.id === id)
+        var avaliable = true
+        if (article === undefined){
+            article = new ArticleAPI(id)
+            await article.init()
+            avaliable = !article.article_error
+        }
+        if (!avaliable){
+            return false
+        }
+        return article;
+    }
+
+
     /**@type {string}*/
     id;
     /**@type {string} */
@@ -229,8 +251,10 @@ class ArticleAPI{
     postBy;
     /**@type {Array{Comment}}*/
     comments = [];
+    /**@type {lastId} */
+    lastId;
     /**@type {boolean} */
-    article_error;
+    articleError;
     /**@type {boolean} */
     comments_error;
     /**@type {Number} */
@@ -266,10 +290,11 @@ class ArticleAPI{
             this.commentsCount = res.comments
             this.postBy = res.userId
             await this.syncSelfVote()
+            ArticleAPI.articles.push(this)
             return true
         }
         catch(e){
-            this.article_error = true
+            this.articleError = true
             return false
         }
     }
@@ -286,20 +311,23 @@ class ArticleAPI{
     /**
      * fetch 50 comments per call, load more by calling this function again
      */
-    async fetch_comments(){
+    async fetchComments(){
         try{
-            var lastId = (this.comments.length > 0) ? this.comments[this.comments.length - 1].id : "";
-            var res = await axios.get(`${commentApiPath(this.id)}?sortBy=${this.sortBy}&lastId=${lastId}`);
-            res = res.data;
+            var res = await axios.get(`${commentApiPath(this.id)}?sortBy=${this.sortBy}&lastId=${lastId}`)
+            res = res.data
+            var result = []
 
             for (var i in res.comments){
                 var that = res.comments[i];
                 var comment = Comment.init(
                     this, that.content, that.userId, that.bp, that.gp, that.replies, that.id, this
                 );
-                this.comments.push(comment);
+                this.comments.push(comment)
+                result.push(comment)
             }
-            return true
+
+            lastId = this.comments[this.comments.length - 1].id;
+            return result
         }
         catch(e){
             this.comments_error = true
