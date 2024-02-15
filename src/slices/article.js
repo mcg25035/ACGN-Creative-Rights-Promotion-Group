@@ -1,16 +1,19 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import ArticleAPI from '../ArticleAPI';
 
 const initialState = {};
 
 export const fetchArticle = createAsyncThunk('article/fetchArticle', async (articleId) => {
-    const url = `/api/articles/${articleId}`;
-    try {
-        const response = await axios.get(url);
-        return response?.data;
-    } catch (error) {
-        console.error(error);
+    const article = await ArticleAPI.getArticleById(articleId);
+    article.init();
+
+    if (article.articleError) {
+        console.error("article fetch error");
+        return;
     }
+
+    return article;
 });
 
 
