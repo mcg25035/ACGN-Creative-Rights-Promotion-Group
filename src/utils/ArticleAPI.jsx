@@ -14,197 +14,95 @@ var articleApiPath = "http://localhost:3000/api/articles"
 var commentApiPath = (id) => `${articleApiPath}/${id}/comments`
 var replyApiPath = (articleId, commentId) => `${commentApiPath(articleId)}/${commentId}/replies`
 
+
 /**
- * comment class
+ * @typedef {Object} article
+ * @property {string} article.id
+ * @property {string} article.title
+ * @property {string} article.content
+ * @property {string} article.thumbnail
+ * @property {string} article.postBy
+ * @property {Number} article.bp
+ * @property {Number} article.gp
+ * @property {Number} article.comments
  */
-class Comment{
-    /**@type {Array<Comment>} */
-    replies = [];
-    /**@type {Number} */
-    repliesCount;
-    /**@type {Number} */
-    bpCount;
-    /**@type {Number} */
-    gpCount;
-    /**@type {string} */
-    userId;
-    /**@type {string} */
-    id;
-    /**@type {Comment | ArticleAPI} */
-    target;
-    /**@type {ArticleAPI} */
-    article;
-    /**@type {string} */
-    content;
-    /**@type {boolean} */
-    error;
-    /**@type {Number} */
-    selfVote; //1 : gp, 0 : none, -1 : bp
+ 
+/**
+ * @typedef {Object} comment
+ * @property {string} comment.id
+ * @property {string} comment.date
+ * @property {string} comment.by
+ * @property {string} comment.target
+ * @property {string} comment.content
+ * @property {Number} comment.bp
+ * @property {Number} comment.gp
+ * @property {Number} comment.replies
+ * @property {Number} comment.state //0: none, 1 : deleted, 2 : edited
+ */
 
+class comment{
     /**
-     * construct the comment object
-     * @param {ArticleAPI} article
-     * @param {string} content 
-     * @param {string} userId 
-     * @param {Comment | ArticleAPI} target
-     * @param {Number} bp 
-     * @param {Number} gp 
-     * @param {Number} replies 
+     * fetch 50 replies from the comment which id is {comment_id}
+     * @param {string} article_id
+     * @param {string} comment_id
+     * @param {string} lastId
+     * @param {("date-sb"|"date-bs"|"gp"|"bp"|"replies")} sortBy
+     * @returns {Array<comment>}
      */
-    static async init(article, content, userId, bp, gp, replies, id, target){
-        var result = new Comment();
-        result.id = id;
-        result.article = article
-        result.content = content
-        result.userId = userId
-        result.bpCount = bp
-        result.gpCount = gp
-        result.repliesCount = replies
-        result.target = target
-        
-        try{ await result.syncSelfVote() }
-        catch(e){ result.error = true };
-        
-        return result
-    }
-
-    /**
-     * fetch 50 replies per call, load more by calling this function again
-     */
-    async fetchReplies(){
-        if (this.target instanceof Comment) return false;
-
-        try{
-            var lastId;
-            if (this.replies.length > 0){
-                lastId = this.replies[this.replies.length - 1].id;
-            }
-
-            var res = await axios.get(
-                `${commentApiPath(this.article.id)}/${this.id}/replies?sortBy=${this.article.sortBy}&lastId=${lastId}`
-            );
-
-            res = res.data;
-            for (var i in res.comments){
-                var that = res.comments[i];
-                var comment = Comment.init(
-                    this.article, that.content, that.userId, that.bpCount, that.gpCount, that.repliesCount, 
-                    that.id, this
-                );
-                this.replies.push(comment)
-            }
-            return true
-        }
-        catch(e){
-            this.error = true
-            return false
-        }
+    static async fetchReplies(article_id, comment_id, sortBy, lastId){
+        var res = await axios.get(`${replyApiPath(article_id, comment_id)}?sortBy=${sortBy}&lastId=${lastId}`)
+        res = res.data
+        return res.replies
     }
 
     /**
      * dislike the comment
+     * @param {string} article_id
+     * @param {string} comment_id
      */
-    async bp(){
-        var bp_api = (this.target instanceof Comment) ?
-        `${replyApiPath(this.article.id, this.id)}/${this.id}/bp` : `${commentApiPath(this.article.id)}/${this.id}/bp`;
-        try{
-            await axios.put(`${bp_api}?user=${UserAPI.currentUserId}`);
-            if (this.selfVote === -1){
-                this.selfVote = 0;
-                this.bpCount -= 1;
-            }
-            return true
-        }
-        catch(e){
-            UI.raiseError("Error", `此事件交互失敗: bp on article ${this.id}\n${e}`)
-            return false
-        }
-        
+    static async bp(article_id, comment_id){
+        await axios.put(`${replyApiPath(article_id, comment_id)}/${comment_id}/bp?user=${UserAPI.currentUserId}`);
     }
 
     /**
      * like the comment
+     * @param {string} article_id
+     * @param {string} comment_id
      */
-    async gp(){
-        var gp_api = (this.target instanceof Comment) ?
-        `${replyApiPath(this.article.id, this.id)}/${this.id}/gp` : `${commentApiPath(this.article.id)}/${this.id}/gp`;
-        try{
-            await axios.put(`${gp_api}?user=${UserAPI.currentUserId}`);
-            if (this.selfVote === 1){
-                this.selfVote = 0;
-                this.gpCount -= 1;
-            }
-            return true
-        }
-        catch(e){
-            UI.raiseError("Error", `此事件交互失敗: gp on article ${this.id}\n${e}`)
-            return false
-        }
+    static async gp(article_id, comment_id){
+        await axios.put(`${replyApiPath(article_id, comment_id)}/${comment_id}/gp?user=${UserAPI.currentUserId}`);
     }
 
     /**
      * reply to the comment
+     * @param {string} article_id
+     * @param {string} comment_id
      * @param {string} content
      */
-    async postReply(content){
-        try{
-            var id = this.id
-
-            if (this.target instanceof Comment){
-                id = this.target.id;
-            }
-
-            await axios.post(`${replyApiPath(this.article.id, id)}?user=${UserAPI.currentUserId}`, {
-                content: content
-            });
-
-            if (this.target instanceof Comment){
-                this.target.repliesCount += 1;
-            }
-
-            return true
-        }
-        catch(e){
-            UI.raiseError("Error", `此事件交互失敗: post_reply on article ${this.id}\n${e}`)
-            return false
-        }
-    }
-
-    /**
-     * return true if the comment is post by the current user
-     */
-    deletable(){
-        return this.userId === UserAPI.currentUserId;
+    static async postReply(article_id, comment_id, content){
+        await axios.post(`${replyApiPath(article_id, comment_id)}?user=${UserAPI.currentUserId}`, {
+            content: content
+        });
     }
 
     /**
      * delete the comment
+     * @param {string} article_id
+     * @param {string} comment_id
      */
-    async delete(){
-        try{
-            if (this.target instanceof Comment){
-                await axios.delete(`${commentApiPath(this.article.id)}/${this.id}?user=${UserAPI.currentUserId}`);
-                this.target.repliesCount -= 1;
-            }
-            else{
-                await axios.delete(`${replyApiPath(this.article.id, this.target.id)}/${this.id}?user=${UserAPI.currentUserId}`);
-                this.article.commentsCount -= 1;
-            }
-            return true
-        }
-        catch(e){
-            UI.raiseError("Error", `此事件交互失敗: delete_comment on article ${this.id}\n${e}`)
-            return false
-        }
+    static async delete(article_id, comment_id){
+        await axios.delete(`${replyApiPath(article_id, comment_id)}/${comment_id}?user=${UserAPI.currentUserId}`);
     }
 
     /**
-     * sync self's like or dislike status
+     * get the comment's self vote status
+     * @param {string} comment_id
+     * @returns {Number} 1 : like, 0 : none, -1 : dislike
      */
-    async syncSelfVote(){
-        var res = await axios.get(`${articleApiPath}/bpgp/${this.id}?user=${UserAPI.currentUserId}`)
-        res = res.state
-        this.selfVote = res.vote
+    static async getSelfState(comment_id){
+        var res = await axios.get(`${articleApiPath}/bpgp/${comment_id}?user=${UserAPI.currentUserId}`)
+        res = res.data
+        return res.state
     }
 
 }
@@ -214,202 +112,81 @@ class Comment{
 /**
  * article class
  */
-class ArticleAPI{
-    /**@type {ArticleAPI} */
-    static articles = [];
-    
-    /**
-     * @param {string} id 
-     * @returns {ArticleAPI | false}
-     */
-    static async getArticleById(id){
-        var article = this.articles.find((article) => article.id === id)
-        var avaliable = true
-        if (article === undefined){
-            article = new ArticleAPI(id)
-            await article.init()
-            avaliable = !article.article_error
-        }
-        if (!avaliable){
-            return false
-        }
-        return article;
-    }
+class article{
 
-
-    /**@type {string}*/
-    id;
-    /**@type {string} */
-    sortBy = sortBy["date-bs"];
-    /**@type {string} */
-    title;
-    /**@type {string} */
-    content;
-    /**@type {string} */
-    thumbnail;
-    /**@type {string} */
-    postBy;
-    /**@type {Array{Comment}}*/
-    comments = [];
-    /**@type {lastId} */
-    lastId;
-    /**@type {boolean} */
-    articleError;
-    /**@type {boolean} */
-    comments_error;
-    /**@type {Number} */
-    bpCount;
-    /**@type {Number} */
-    gpCount;
-    /**@type {Number} */
-    commentsCount;
-    /**@type {Number} */
-    selfVote; //1 : gp, 0 : none, -1 : bp
-    
     /**
-     * construct an article object by id
+     * get article by id
      * @param {string} id
+     * @returns {article}
      */
-    constructor(id){
-        this.id = id;
+    static async getArticle(id){
+        var res = await axios.get(`${articleApiPath}/${id}`)
+        res = res.data
+        return res
     }
 
     /**
-     * init the article object
+     * get the article's self vote status
+     * @param {string} id
+     * @returns {Number} 1 : like, 0 : none, -1 : dislike
      */
-    async init(){
-        try{
-            var res = await axios.get(`${articleApiPath}/${this.id}`)
-            res = res.data
-
-            this.title = res.title
-            this.content = res.content
-            this.thumbnail = res.thumbnail
-            this.bpCount = res.bp
-            this.gpCount = res.gp
-            this.commentsCount = res.comments
-            this.postBy = res.userId
-            await this.syncSelfVote()
-            ArticleAPI.articles.push(this)
-            return true
-        }
-        catch(e){
-            this.articleError = true
-            return false
-        }
+    static async getSelfState(id){
+        var res = await axios.get(`${articleApiPath}/bpgp/${id}?user=${UserAPI.currentUserId}`)
+        res = res.data
+        return res.state
     }
 
     /**
-     * sync self's like or dislike status
+     * fetch 50 comments after the comment which id is {lastCommentId}
+     * @param {string} id
+     * @param {("date-sb"|"date-bs"|"gp"|"bp"|"replies")} sortBy
+     * @param {string} lastCommentId
+     * @returns {Array<comment>}
      */
-    async syncSelfVote(){
-        var res = await axios.get(`${articleApiPath}/bpgp/${this.id}?user=${UserAPI.currentUserId}`)
-        res = res.state
-        this.selfVote = res.vote
-    }
-
-    /**
-     * fetch 50 comments per call, load more by calling this function again
-     */
-    async fetchComments(){
-        try{
-            var res = await axios.get(`${commentApiPath(this.id)}?sortBy=${this.sortBy}&lastId=${lastId}`)
-            res = res.data
-            var result = []
-
-            for (var i in res.comments){
-                var that = res.comments[i];
-                var comment = Comment.init(
-                    this, that.content, that.userId, that.bp, that.gp, that.replies, that.id, this
-                );
-                this.comments.push(comment)
-                result.push(comment)
-            }
-
-            lastId = this.comments[this.comments.length - 1].id;
-            return result
-        }
-        catch(e){
-            this.comments_error = true
-            return false
-        }
+    static async fetchComments(id, sortBy, lastCommentId){
+        var res = await axios.get(`${commentApiPath(id)}?sortBy=${sortBy}&lastId=${lastCommentId}`)
+        res = res.data
+        return res.comments
     }
 
     /**
      * dislike the article
+     * @param {string} id
      */
-    async bp(){
-        try{
-            await axios.put(`${articleApiPath}/${this.id}/bp?user=${UserAPI.currentUserId}`)
-            if (this.selfVote === -1){
-                this.selfVote = 0;
-                this.bpCount -= 1;
-            }
-            return true
-        }
-        catch(e){
-            UI.raiseError("Error", `此事件交互失敗: bp_article on ${this.id}\n${e}`)
-            return false
-        }
+    static async bp(id){
+        await axios.put(`${articleApiPath}/${id}/bp?user=${UserAPI.currentUserId}`)
     }
 
     /**
      * like the article
+     * @param {string} id
      */
-    async gp(){
-        try{
-            await axios.put(`${articleApiPath}/${this.id}/gp?user=${UserAPI.currentUserId}`)
-            if (this.selfVote === 1){
-                this.selfVote = 0;
-                this.gpCount -= 1;
-            }
-            return true
-        }
-        catch(e){
-            UI.raiseError("Error", `此事件交互失敗: gp_article on ${this.id}\n${e}`)
-            return false
-        }
+    static async gp(id){
+        await axios.put(`${articleApiPath}/${id}/gp?user=${UserAPI.currentUserId}`)
     }
 
     /**
-     * post a comment
+     * post a comment to an article
+     * @param {string} id
      * @param {string} content
      */
-    async postComment(content){
-        try{
-            await axios.post(`${commentApiPath(this.id)}?user=${UserAPI.currentUserId}`, {
-                content: content
-            });
-            this.commentsCount += 1
-            return true
-        }
-        catch(e){
-            UI.raiseError("Error", `此事件交互失敗: post_comment on ${this.id}\n${e}`)
-            return false
-        }
-    }
-
-    /**
-     * return true if the article is post by the current user
-     */
-    deleteable(){
-        return UserAPI.currentUserId === this.postBy;
+    static async postComment(id, content){
+        await axios.post(`${commentApiPath(id)}?user=${UserAPI.currentUserId}`, {
+            content: content
+        });
     }
 
     /**
      * delete the article
+     * @param {string} id
      */
-    async delete(){
-        try{
-            await axios.delete(`${articleApiPath}/${this.id}?user=${UserAPI.currentUserId}`);
-            return true
-        }
-        catch(e){
-            UI.raiseError("Error", `此事件交互失敗: delete_article on ${this.id}\n${e}`)
-            return false
-        }
+    static async delete(id){
+        await axios.delete(`${articleApiPath}/${id}?user=${UserAPI.currentUserId}`)
     }
 }
 
-
-export default ArticleAPI;
+export default {
+    article: article,
+    comment: comment,
+    sortBy: sortBy
+};
