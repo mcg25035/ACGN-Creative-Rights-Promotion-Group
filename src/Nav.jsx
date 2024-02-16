@@ -1,13 +1,10 @@
 import Icon from "./Icon";
 import Link from "./Link";
 import { useState, useEffect } from "react";
+import './Nav.scss';
 
 
 function Nav(){
-    var ulStyle = {
-        position: "relative",
-        height: "100%"
-    };
     const [visible, setVisible] = useState(true);
     const [prevScrollPos, setPrevScrollPos] = useState(window.pageYOffset);
 

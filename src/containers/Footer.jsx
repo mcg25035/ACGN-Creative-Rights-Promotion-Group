@@ -1,7 +1,7 @@
 /* eslint-disable semi */
 import "./Footer.scss";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSquareFacebook, faSquareInstagram, faXTwitter, faDiscord} from '@fortawesome/free-brands-svg-icons'
+import { faSquareFacebook, faSquareInstagram, faXTwitter, faDiscord } from '@fortawesome/free-brands-svg-icons'
 
 const socialMedias = [
     {

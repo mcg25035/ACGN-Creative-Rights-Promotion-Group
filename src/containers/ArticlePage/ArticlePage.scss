@@ -1,0 +1,42 @@
+.article-page {
+    padding: 80rem 300rem 0;
+
+    .article-title {
+        font-size: 40rem;
+    }
+
+    .article-content {
+        font-size: 16rem;
+        white-space: pre-line;
+    }
+
+    .reaction-btns {
+       display: flex;
+       margin-top: 8rem;
+       button {
+            box-sizing: border-box;
+            margin-right: 4rem;
+            min-width: 50rem;
+            height: 28rem;
+            border-radius: 20rem;
+            border: 3rem solid;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+       }
+       .gp-btn {
+            background-color: #ccffcc;
+            color: #006400;
+            svg {
+                fill: #006400;
+            }
+       }
+       .bp-btn {
+            background-color: #ffdddd;
+            color: #660000;
+            svg {
+                fill: #660000;
+            }
+       }
+    }
+}

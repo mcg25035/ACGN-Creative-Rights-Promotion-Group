@@ -1,5 +1,6 @@
 import "./IndexContentBlock.scss";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 /**
  * @param {String} content
@@ -22,43 +23,33 @@ function renderContentProcess(content){
 
     var textBlock = <div className="text-block">
         {linesElement}
-    </div>
+    </div>;
 
     return textBlock;
 }
 
-function IndexContentBlock({ title, content, imageSrc }){
+function IndexContentBlock({ articleData }){
+    const { id, title, content, thumbnail, post_by: postBy } = articleData;
     return <div className="index-content-container">
-        <div className="title-block">
-            <p>{title}</p>
-        </div>
+        <Link to={`/article/${id}`}>
+            <div className="title-block">
+                <p>{title}</p>
+                <span>{`Author: ${postBy}`}</span>
+            </div>
+        </Link>
         <div className="content-wrapper">
             <div className="content-block">
                 {renderContentProcess(content)}
             </div>
             <div className="image-block">
-                <img src={imageSrc} title={title} />
+                <img src={thumbnail} title={title} />
             </div>
         </div>
     </div>;
-
-    // return <div className="content-block">
-    //     <div className="title-area">
-    //         <p className="index-content title">
-    //             {props.title}
-    //         </p>
-    //     </div>
-    //     <div className="content-area">
-    //         {contentProcess(props.content)}
-    //     </div>
-    // </div>
-
 }
 
 IndexContentBlock.propTypes = {
-    title: PropTypes.string.isRequired,
-    content: PropTypes.string.isRequired,
-    imageSrc: PropTypes.string.isRequired
+    articleData: PropTypes.object.isRequired,
 };
 
 export default IndexContentBlock;

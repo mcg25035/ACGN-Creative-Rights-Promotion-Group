@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { fetchArticleList } from './slices';
-import './Nav.scss';
+import { fetchArticleList } from '@/slices';
 import IdeaShow from './IdeaShow';
 import IndexContentContainer from './IndexContentContainer';
 

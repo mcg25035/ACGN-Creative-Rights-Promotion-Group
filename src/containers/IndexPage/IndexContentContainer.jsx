@@ -3,10 +3,9 @@ import IndexContentBlock from "./IndexContentBlock";
 import "./IndexContentBlock.scss";
 
 const IndexContentWrapper = () => {
-    const articleList = useSelector((state) => state.articleList) || [];
-    const contentBlocks = articleList.map((item, index) => {
-        const { title, content, imageSrc } = item;
-        return <IndexContentBlock title={title} content={content} imageSrc={imageSrc} key={index} />;
+    const articleList = useSelector((state) => state.articleList);
+    const contentBlocks = articleList.map((item) => {
+        return <IndexContentBlock articleData={item} key={item.id}/>;
     });
     return (
         <div className="index-content-wrapper">
