@@ -4,6 +4,7 @@ import Footer from "./containers/Footer";
 import IndexPage from "./containers/IndexPage";
 import ArticlePage from "./containers/ArticlePage";
 import "./App.scss";
+import Login from "./acount/login";
 
 function App(){
     var divStyle={
@@ -20,6 +21,7 @@ function App(){
                 <Route path="/donate" element={<IndexPage />} />
                 <Route path="/working_project" element={<IndexPage />} />
                 <Route path="/join_us" element={<IndexPage />} />
+                <Route path="/login" element={<Login />} />
             </Routes>
         </main>
         <Footer />
