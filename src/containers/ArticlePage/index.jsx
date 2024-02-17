@@ -1,28 +1,16 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faThumbsUp, faThumbsDown } from '@fortawesome/free-solid-svg-icons';
+import ArticleContainer from './ArticleContainer';
+import CommentContainer from './CommentContainer';
 
 import { fetchArticle, fetchComments } from '@/slices';
 import './ArticlePage.scss';
 
-// TODO: style
-// TODO: split components
-// TODO: comments
-
 const ArticlePage = () => {
     const { articleId } = useParams();
     const dispatch = useDispatch();
-    const {
-        id,
-        gp,
-        bp,
-        title,
-        content,
-        post_by: postBy
-    } = useSelector((state) => state.article);
-
+    const articleData = useSelector((state) => state.article);
     const comments = useSelector((state) => state.comments);
 
     useEffect(() => {
@@ -32,30 +20,18 @@ const ArticlePage = () => {
         }
     }, [dispatch, articleId]);
 
-    if (articleId !== id) {
+    if (articleId !== articleData.id) {
         return null;
     }
 
+    const commentList = comments.map((commentData) => <CommentContainer commentData={commentData} key={commentData.id} />);
+
     return (
         <div className="article-page">
-            <article>
-                <h1 className="article-title">{title}</h1>
-                <div>{`Author: ${postBy}`}</div>
-                <p className="article-content">{content}</p>
-            </article>
-            <hr />
-            <section className="article-comments">
-                <div className="reaction-btns">
-                    <button className="gp-btn">
-                        <FontAwesomeIcon icon={faThumbsUp} />
-                        <span>{gp}</span>
-                    </button>
-                    <button className="bp-btn">
-                        <FontAwesomeIcon icon={faThumbsDown} />
-                        <span>{bp}</span>
-                    </button>
-                </div>
-            </section>
+            <ArticleContainer articleData={articleData} />
+            <div className="comment-list">
+                {commentList}
+            </div>
         </div>
 
     );

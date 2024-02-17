@@ -1,18 +1,18 @@
 import axios from "axios";
 import UserAPI from "./UserAPI";
-import UI from "./UI";
+// import UI from "./UI";
 
-var sortBy = {
-    "date-sb": "date-sb", // old to new
-    "date-bs": "date-bs", // new to old
-    "bp": "bp", // downvotes
-    "gb": "gb", // upvotes
-    "replies": "replies" 
-}
+export const SORT_BY = {
+    DATE_SB: "date-sb", // old to new
+    DATE_BS: "date-bs", // new to old
+    GP: "bp", // downvotes
+    BP: "gb", // upvotes
+    REPLIES: "replies"
+};
 
-var articleApiPath = "http://localhost:3000/api/articles"
-var commentApiPath = (id) => `${articleApiPath}/${id}/comments`
-var replyApiPath = (articleId, commentId) => `${commentApiPath(articleId)}/${commentId}/replies`
+var articleApiPath = "http://localhost:3000/api/articles";
+var commentApiPath = (id) => `${articleApiPath}/${id}/comments`;
+var replyApiPath = (articleId, commentId) => `${commentApiPath(articleId)}/${commentId}/replies`;
 
 
 /**
@@ -26,7 +26,7 @@ var replyApiPath = (articleId, commentId) => `${commentApiPath(articleId)}/${com
  * @property {Number} article.gp
  * @property {Number} article.comments
  */
- 
+
 /**
  * @typedef {Object} comment
  * @property {string} comment.id
@@ -49,10 +49,10 @@ class comment{
      * @param {("date-sb"|"date-bs"|"gp"|"bp"|"replies")} sortBy
      * @returns {Array<comment>}
      */
-    static async fetchReplies(article_id, comment_id, sortBy, lastId){
-        var res = await axios.get(`${replyApiPath(article_id, comment_id)}?sortBy=${sortBy}&lastId=${lastId}`)
-        res = res.data
-        return res.replies
+    static async fetchReplies(articleId, commentId, sortBy, lastId){
+        var res = await axios.get(`${replyApiPath(articleId, commentId)}?sortBy=${sortBy}&lastId=${lastId}`);
+        res = res.data;
+        return res.replies;
     }
 
     /**
@@ -60,8 +60,8 @@ class comment{
      * @param {string} article_id
      * @param {string} comment_id
      */
-    static async bp(article_id, comment_id){
-        await axios.put(`${replyApiPath(article_id, comment_id)}/${comment_id}/bp?user=${UserAPI.currentUserId}`);
+    static async bp(articleId, commentId){
+        await axios.put(`${replyApiPath(articleId, commentId)}/${commentId}/bp?user=${UserAPI.currentUserId}`);
     }
 
     /**
@@ -69,8 +69,8 @@ class comment{
      * @param {string} article_id
      * @param {string} comment_id
      */
-    static async gp(article_id, comment_id){
-        await axios.put(`${replyApiPath(article_id, comment_id)}/${comment_id}/gp?user=${UserAPI.currentUserId}`);
+    static async gp(articleId, commentId){
+        await axios.put(`${replyApiPath(articleId, commentId)}/${commentId}/gp?user=${UserAPI.currentUserId}`);
     }
 
     /**
@@ -79,8 +79,8 @@ class comment{
      * @param {string} comment_id
      * @param {string} content
      */
-    static async postReply(article_id, comment_id, content){
-        await axios.post(`${replyApiPath(article_id, comment_id)}?user=${UserAPI.currentUserId}`, {
+    static async postReply(articleId, commentId, content){
+        await axios.post(`${replyApiPath(articleId, commentId)}?user=${UserAPI.currentUserId}`, {
             content: content
         });
     }
@@ -90,8 +90,8 @@ class comment{
      * @param {string} article_id
      * @param {string} comment_id
      */
-    static async delete(article_id, comment_id){
-        await axios.delete(`${replyApiPath(article_id, comment_id)}/${comment_id}?user=${UserAPI.currentUserId}`);
+    static async delete(articleId, commentId){
+        await axios.delete(`${replyApiPath(articleId, commentId)}/${commentId}?user=${UserAPI.currentUserId}`);
     }
 
     /**
@@ -99,10 +99,10 @@ class comment{
      * @param {string} comment_id
      * @returns {Number} 1 : like, 0 : none, -1 : dislike
      */
-    static async getSelfState(comment_id){
-        var res = await axios.get(`${articleApiPath}/bpgp/${comment_id}?user=${UserAPI.currentUserId}`)
-        res = res.data
-        return res.state
+    static async getSelfState(commentId){
+        var res = await axios.get(`${articleApiPath}/bpgp/${commentId}?user=${UserAPI.currentUserId}`);
+        res = res.data;
+        return res.state;
     }
 
 }
@@ -112,17 +112,25 @@ class comment{
 /**
  * article class
  */
-class article{
+export class article {
+
+    /**
+     * get article list
+     * @param {("date-sb"|"date-bs"|"gp"|"bp"|"replies")} sortBy
+     * @param {string | number} lastId
+     * @returns {Array<article>}
+     */
+    static getArticleList(sortBy = SORT_BY.DATE_SB, lastId = 0){
+        return axios.get(`${articleApiPath}`, { params: { sortBy, lastId } });
+    }
 
     /**
      * get article by id
      * @param {string} id
      * @returns {article}
      */
-    static async getArticle(id){
-        var res = await axios.get(`${articleApiPath}/${id}`)
-        res = res.data
-        return res
+    static getArticleById(id){
+        return axios.get(`${articleApiPath}/${id}`);
     }
 
     /**
@@ -131,9 +139,9 @@ class article{
      * @returns {Number} 1 : like, 0 : none, -1 : dislike
      */
     static async getSelfState(id){
-        var res = await axios.get(`${articleApiPath}/bpgp/${id}?user=${UserAPI.currentUserId}`)
-        res = res.data
-        return res.state
+        var res = await axios.get(`${articleApiPath}/bpgp/${id}?user=${UserAPI.currentUserId}`);
+        res = res.data;
+        return res.state;
     }
 
     /**
@@ -143,10 +151,8 @@ class article{
      * @param {string} lastCommentId
      * @returns {Array<comment>}
      */
-    static async fetchComments(id, sortBy, lastCommentId){
-        var res = await axios.get(`${commentApiPath(id)}?sortBy=${sortBy}&lastId=${lastCommentId}`)
-        res = res.data
-        return res.comments
+    static fetchComments(id, sortBy = SORT_BY.DATE_SB, lastCommentId = 0){
+        return axios.get(`${commentApiPath(id)}?sortBy=${sortBy}&lastId=${lastCommentId}`);
     }
 
     /**
@@ -154,7 +160,7 @@ class article{
      * @param {string} id
      */
     static async bp(id){
-        await axios.put(`${articleApiPath}/${id}/bp?user=${UserAPI.currentUserId}`)
+        await axios.put(`${articleApiPath}/${id}/bp?user=${UserAPI.currentUserId}`);
     }
 
     /**
@@ -162,7 +168,7 @@ class article{
      * @param {string} id
      */
     static async gp(id){
-        await axios.put(`${articleApiPath}/${id}/gp?user=${UserAPI.currentUserId}`)
+        await axios.put(`${articleApiPath}/${id}/gp?user=${UserAPI.currentUserId}`);
     }
 
     /**
@@ -181,12 +187,12 @@ class article{
      * @param {string} id
      */
     static async delete(id){
-        await axios.delete(`${articleApiPath}/${id}?user=${UserAPI.currentUserId}`)
+        await axios.delete(`${articleApiPath}/${id}?user=${UserAPI.currentUserId}`);
     }
 }
 
 export default {
     article: article,
     comment: comment,
-    sortBy: sortBy
+    sortBy: SORT_BY
 };

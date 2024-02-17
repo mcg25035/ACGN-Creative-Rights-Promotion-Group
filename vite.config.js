@@ -1,6 +1,7 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import { EsLinter, linterPlugin } from "vite-plugin-linter";
+import path from 'path';
 
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
 
