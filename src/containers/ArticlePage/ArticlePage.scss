@@ -1,5 +1,13 @@
 .article-page {
-    padding: 80rem 300rem 0;
+    padding: 100rem 300rem 0;
+
+    .article-conainer {
+      border: solid #83a1c0 2px;
+      background-color: white;
+      padding: 20rem;
+      border-radius: 10rem;
+      box-sizing: border-box;
+    }
 
     .article-title {
         font-size: 40rem;
@@ -10,19 +18,26 @@
         white-space: pre-line;
     }
 
-    .reaction-btns {
+    .reaction-row {
        display: flex;
        margin-top: 8rem;
+       align-items: center;
+       font-size: 12rem;
+
+       > button, div {
+         margin-right: 8rem;
+       }
+
        button {
             box-sizing: border-box;
-            margin-right: 4rem;
-            min-width: 50rem;
-            height: 28rem;
+            min-width: 40rem;
+            height: 20rem;
             border-radius: 20rem;
             border: 3rem solid;
             display: flex;
             justify-content: space-around;
             align-items: center;
+            padding: 4rem;
        }
        .gp-btn {
             background-color: #ccffcc;
@@ -38,5 +53,29 @@
                 fill: #660000;
             }
        }
+    }
+    .comment-list {
+      padding: 0 20rem;
+      border-radius: 10rem;
+    }
+    .comment-container {
+      margin-top: 20rem;
+    }
+
+    .comment-content {
+      display: inline-block;
+      background-color: #ffffffaa;
+      padding: 8rem 8rem;
+      border-radius: 10rem;
+    }
+    .author {
+      font-weight: 700;
+      color: #0761eb;
+    }
+}
+
+@media (orientation: portrait) {
+    .article-page {
+        padding: 100rem 20rem 0;
     }
 }
