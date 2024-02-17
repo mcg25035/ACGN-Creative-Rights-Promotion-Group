@@ -6,10 +6,11 @@ class UserAPI{
 
 
     /**
-     * @param {string} id 
+     * @param {string} id
      */
     static async getAvatar(id){
-        return "/public/user_avatar.png"
+        const avatar = id ? `${id}.png` : '/public/user_avatar.png';
+        return avatar;
     }
 
     /**
