@@ -29,19 +29,20 @@ const Login = () => {
     return (
         <div className="login-page">
             <div>
-                <h1><b>登入 Login</b></h1>
+                <h1><b>登入</b></h1>
                 <span>
-                    <h2><b>帳號名稱 Username</b></h2>
+                    {/* <h2><b>帳號名稱 Username</b></h2> */}
                     <input
                         type="text"
                         name="username"
-                        placeholder="名稱"
+                        placeholder="使用者名稱"
                         value={username}
+                        autoComplete='off'
                         onChange={(e) => setUsername(e.target.value)}
                     />
                 </span>
                 <span>
-                    <h2><b>密碼 Password</b></h2>
+                    {/* <h2><b>密碼 Password</b></h2> */}
                     <input
                         type="password"
                         name="password"

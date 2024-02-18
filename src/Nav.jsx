@@ -23,7 +23,7 @@ function Nav(){
             window.removeEventListener('scroll', handleScroll);
         };
     }, [prevScrollPos]);
-    return <div className={`bg-white top-0 fixed w-full flex px-16 items-center h-[80rem] z-[1] transform ${visible ? '' : 'translate-y-[-100%]'} transition-all duration-150 ease-out`}>
+    return <div className={`bg-white top-0 fixed w-full flex px-16 items-center h-[100rem] z-[1] transform ${visible ? '' : 'translate-y-[-100%]'} transition-all duration-150 ease-out`}>
         <li className="mr-auto"><Icon /></li>
         <ul className="w-1/2 flex items-center justify-between">
             <li><Link to="about_us" name="關於我們" /></li>
