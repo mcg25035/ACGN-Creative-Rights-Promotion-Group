@@ -1,6 +1,12 @@
 .article-page {
     padding: 100rem 300rem 0;
 
+    .article-header {
+      height: 30rem;
+      width: 100%;
+      background-color: black;
+    }
+
     .article-conainer {
       border: solid #83a1c0 2px;
       background-color: white;

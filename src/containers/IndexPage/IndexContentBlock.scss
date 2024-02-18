@@ -5,7 +5,7 @@ div.index-content-container{
     --outer-x-padding: 2.5%;
     --inner-x-padding: 2.5%;
     --inner-y-padding: var(--inner-x-padding);
-    border: solid rgb(131, 161, 192) 2px;
+    // border: solid rgb(131, 161, 192) 2px;
     position: relative;
     margin-top: 8vh;
     border-radius: 3px;
@@ -13,40 +13,66 @@ div.index-content-container{
     width: calc(100% - calc(var(--outer-x-padding) * 2));
     height: fit-content;
     background-color: rgb(238, 246, 255);
+    box-shadow: 0px 0px 8px 0px #9e9e9e;
     display: flex;
     flex-direction: column;
-    padding: var(--inner-y-padding) var(--inner-x-padding);
+    // padding: var(--inner-y-padding) var(--inner-x-padding);
     box-sizing: border-box;
 
-    &:nth-child(even) {
-        .content-wrapper {
-            flex-direction: row-reverse;
+    // &:nth-child(even) {
+    //     .content-wrapper {
+    //         flex-direction: row-reverse;
+    //     }
+    // }
+
+    .index-content-header{
+        .date{
+            width: 150rem;
+            float: left;
+            background: linear-gradient(90deg, #464668 0, rgba(70, 70, 104, .8) 100%);
+            height: 100%;
+            color: white;
+            font-family: 'Noto Sans TC';
+            font-weight: 500;
+            padding-left: 20rem;
+            font-size: 20rem;
         }
+        .author{
+            float: left;
+            width: calc(100% - 150rem);
+            background: linear-gradient(90deg, #2f78bc, #3b94e7);
+            height: 100%;
+            color: white;
+            font-family: 'Noto Sans TC';
+            font-weight: 500;
+            text-align: center;
+        }
+        padding: 0;
+        height: 35rem;
+        width: 100%;
     }
 
     .content-wrapper {
+        .image-block{
+            width: 100%;
+            height: fit-content;
+            img{
+                width: 100%;
+            }
+        }
         display: flex;
         align-items: stretch;
+        flex-direction: column;
         flex: 1;
     }
 
-    .content-block{
-        position: relative;
-        align-items: center;
-        display: flex;
-        flex: 1;
-
-        p{
-            font-family: 'Noto Sans TC';
-            margin: 0.25vh;
-        }
-
-        .text-block{
-            display: flex;
-            flex-direction: column;
-            height: fit-content;
-            // align-self: center;
-        }
+    .title-block{
+        font-family: 'Noto Sans TC';
+        color: #000000;
+        text-align: center;
+        font-weight: 400;
+        font-size: 23rem;
+        height: 145rem;
     }
 
     .image-block{

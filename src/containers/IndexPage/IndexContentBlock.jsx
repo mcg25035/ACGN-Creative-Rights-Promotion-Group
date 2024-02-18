@@ -31,20 +31,20 @@ function renderContentProcess(content){
 function IndexContentBlock({ articleData }){
     const { id, title, content, thumbnail, post_by: postBy } = articleData;
     return <div className="index-content-container">
+        <div className="index-content-header">
+            <p class="date">2077.07.07</p>
+            <p class="author">{postBy}</p>
+        </div>
         <Link to={`/article/${id}`}>
-            <div className="title-block">
-                <p>{title}</p>
-                <span>{`Author: ${postBy}`}</span>
+            <div className="content-wrapper">
+                <div className="image-block">
+                    <img src={thumbnail}/>
+                </div>
+                <p className="title-block">
+                    {title}
+                </p>
             </div>
         </Link>
-        <div className="content-wrapper">
-            <div className="content-block">
-                {renderContentProcess(content)}
-            </div>
-            <div className="image-block">
-                <img src={thumbnail} title={title} />
-            </div>
-        </div>
     </div>;
 }
 
