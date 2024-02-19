@@ -69,5 +69,12 @@
       width: 100%;
       margin-bottom: 30rem;
     }
+    
+    button:active {
+      background: #8bacd0;
+      transition-duration: 0.4s;
+      // transition-timing-function: ease-in;
+      // transition-delay: 0.3s;
+    }
   }
 }
