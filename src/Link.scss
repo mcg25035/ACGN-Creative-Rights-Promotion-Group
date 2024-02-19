@@ -9,8 +9,6 @@ div.nav-link{
     a.nav-text{
         color: black;
         text-decoration: none;
-        position: absolute;
-        width: 100%;
         left: 50%;
         top: 50%;
         transform: translate(-50%, -50%);
@@ -19,7 +17,8 @@ div.nav-link{
         margin: 0;
         font-family: 'Noto Sans TC';
         font-weight: 500;
-        font-size: 2.4vh;
+        font-size: 32rem;
+        white-space: nowrap;
     }
     
     a.nav-text.on-hover{

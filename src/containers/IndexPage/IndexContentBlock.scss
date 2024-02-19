@@ -1,13 +1,18 @@
 @import url(//fonts.googleapis.com/earlyaccess/notosanstc.css);
 
 
+.index-content-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
 div.index-content-container{
     --outer-x-padding: 2.5%;
     --inner-x-padding: 2.5%;
     --inner-y-padding: var(--inner-x-padding);
     // border: solid rgb(131, 161, 192) 2px;
     position: relative;
-    margin-top: 8vh;
+    margin-top: 80rem;
     border-radius: 3px;
     left: var(--outer-x-padding);
     width: calc(100% - calc(var(--outer-x-padding) * 2));
@@ -19,16 +24,13 @@ div.index-content-container{
     // padding: var(--inner-y-padding) var(--inner-x-padding);
     box-sizing: border-box;
 
-    // &:nth-child(even) {
-    //     .content-wrapper {
-    //         flex-direction: row-reverse;
-    //     }
-    // }
-
     .index-content-header{
+        display: flex;
+        position: relative;
         .date{
+            display: flex;
+            align-items: center;
             width: 150rem;
-            float: left;
             background: linear-gradient(90deg, #464668 0, rgba(70, 70, 104, .8) 100%);
             height: 100%;
             color: white;
@@ -38,9 +40,11 @@ div.index-content-container{
             font-size: 20rem;
         }
         .author{
-            float: left;
-            width: calc(100% - 150rem);
+            flex: 1;
             background: linear-gradient(90deg, #2f78bc, #3b94e7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
             height: 100%;
             color: white;
             font-family: 'Noto Sans TC';
@@ -73,6 +77,12 @@ div.index-content-container{
         font-weight: 400;
         font-size: 23rem;
         height: 145rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        width: 100%;
+        box-sizing: border-box;
     }
 
     .image-block{
@@ -88,25 +98,11 @@ div.index-content-container{
             display: inline-block;
         }
     }
-
-    .title-block{
-        position: relative;
-        width: 100%;
-        box-sizing: border-box;
-
-        p{
-            font-family: 'Noto Sans TC';
-            font-weight: bold;
-            font-size: 5vh;
-            margin: 0;
-        }
-    }
 }
 
 @media (orientation: portrait) {
-    div.index-content-container {
-        .content-wrapper, &:nth-child(even) .content-wrapper {
-            flex-direction: column-reverse;
-        }
+    .index-content-wrapper {
+        grid-template-columns: 1fr;
+
     }
 }
