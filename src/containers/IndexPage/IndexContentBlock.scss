@@ -121,6 +121,7 @@ div.index-content-container{
 
 @media (orientation: portrait) {
     .index-content-wrapper {
+        padding: 0;
         grid-template-columns: 1fr;
     }
 }

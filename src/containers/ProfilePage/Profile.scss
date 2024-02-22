@@ -1,0 +1,45 @@
+.profile-page {
+    padding-top: 120rem;
+    margin: auto;
+    width: 90vw;
+    max-width: 800rem;
+    font-size: 28rem;
+
+    label {
+        width: 100%;
+        margin: 20rem auto;
+        display: flex;
+        align-items: center;
+        span {
+            width: 300rem;
+        }
+
+        input {
+            flex: 1;
+            padding: 0 8rem;
+            box-sizing: border-box;
+            border-radius: 8rem;
+            background-color: transparent;
+            border: 1px solid transparent;
+            
+            &:focus {
+                outline-width: 0;
+            }
+
+            &:not(:read-only) {
+                border-color: #052745;
+            }
+        }
+    }
+}
+
+@media (orientation: portrait) {
+    .profile-page {
+        label {
+            flex-wrap: wrap;
+            span {
+                basis-width: 100%;
+            }
+        }
+    }
+}
