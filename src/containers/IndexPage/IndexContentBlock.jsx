@@ -46,18 +46,18 @@ function IndexContentBlock({ articleData }){
         over : () => {
             for (var i in refs){
                 /**@type {HTMLElement} */
-                var element = refs[i].current
+                var element = refs[i].current;
                 element.classList.add("hover");
             }
-        }, 
+        },
         out : () => {
             for (var i in refs){
                 /**@type {HTMLElement} */
-                var element = refs[i].current
+                var element = refs[i].current;
                 element.classList.remove("hover");
             }
         }
-    }
+    };
     return <div className="index-content-container" ref={refs[0]}>
         <div className="index-content-header">
             <p className="date">{timestampFormat(date)}</p>

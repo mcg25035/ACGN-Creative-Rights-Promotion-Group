@@ -3,8 +3,9 @@ import Nav from "./Nav";
 import Footer from "./containers/Footer";
 import IndexPage from "./containers/IndexPage";
 import ArticlePage from "./containers/ArticlePage";
-import "./App.scss";
+import ProfilePage from "./containers/ProfilePage";
 import Login from "./acount/login";
+import "./App.scss";
 
 function App(){
     var divStyle={
@@ -22,6 +23,7 @@ function App(){
                 <Route path="/working_project" element={<IndexPage />} />
                 <Route path="/join_us" element={<IndexPage />} />
                 <Route path="/login" element={<Login />} />
+                <Route path="/profile" element={<ProfilePage />} />
             </Routes>
         </main>
         <Footer />

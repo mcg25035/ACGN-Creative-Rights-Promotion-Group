@@ -1,0 +1,30 @@
+.switch-input {
+    position: relative;
+    display: inline-block;
+    box-sizing: border-box;
+    width: 60rem;
+    height: 30rem;
+    background-color: #ff5a67;
+    vertical-align: middle;
+    border-radius: 15rem;
+    transition: background-color .3s;
+    &::after {
+        content: '';
+        position: absolute;
+        display: block;
+        width: 30rem;
+        height: 30rem;
+        background-color: white;
+        box-shadow: 2rem 2rem 4rem #dbdbdb;
+        border-radius: 15px;
+        transition: left .3s;
+        left: calc(100% - 30rem);
+    }
+
+    &.enabled {
+        background-color: #aae88f;
+        &::after {
+            left: 0;
+        }
+    }
+}
