@@ -1,18 +1,22 @@
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThumbsUp, faThumbsDown, faReply } from '@fortawesome/free-solid-svg-icons';
+import { useParams } from 'react-router-dom';
 import classNames from 'classnames';
+import ReplyArea from './ReplyArea';
 
 import './ArticlePage.scss';
 
 // TODO: fetch replies
 
 const ReactionButtons = ({ articleInfo, handleLike, handleDislike, ratingData }) => {
+    const { articleId } = useParams();
+    const [replyEnabled, setReplyEnabled] = useState(false);
     const {
         state,
         replies,
         comments,
-        date,
     } = articleInfo;
 
     const {
@@ -24,23 +28,29 @@ const ReactionButtons = ({ articleInfo, handleLike, handleDislike, ratingData })
 
     const className = classNames('reaction-row', { like: state === 1, dislike: state === -1 });
     const displayReplies = comments || replies;
-    const displayDate = new Date(date).toLocaleDateString();
+
+    const showReply = () => {
+        setReplyEnabled(!replyEnabled);
+    };
 
     return (
-        <div className={className}>
-            <button type="button" className="btn" onClick={handleLike}>
-                <FontAwesomeIcon icon={faThumbsUp} />
-                <span>{gpCount}</span>
-            </button>
-            <button type="button" className="btn" onClick={handleDislike}>
-                <FontAwesomeIcon icon={faThumbsDown} />
-                <span>{bpCount}</span>
-            </button>
-            <button type="button" className="btn">
-                <FontAwesomeIcon icon={faReply} />
-                <span>{displayReplies}</span>
-            </button>
-        </div>
+        <>
+            <div className={className}>
+                <button type="button" className="btn" onClick={handleLike}>
+                    <FontAwesomeIcon icon={faThumbsUp} />
+                    <span>{gpCount}</span>
+                </button>
+                <button type="button" className="btn" onClick={handleDislike}>
+                    <FontAwesomeIcon icon={faThumbsDown} />
+                    <span>{bpCount}</span>
+                </button>
+                <button type="button" className="btn" onClick={showReply}>
+                    <FontAwesomeIcon icon={faReply} />
+                    <span>{displayReplies}</span>
+                </button>
+            </div>
+            {replyEnabled && <ReplyArea parentId={articleId}/>}
+        </>
     );
 };
 

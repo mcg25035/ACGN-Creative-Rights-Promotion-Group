@@ -103,10 +103,16 @@
     }
 
     .comment-content {
-        display: inline-block;
-        background-color: #ffffffaa;
-        padding: 8rem 8rem;
-        border-radius: 10rem;
+      border: solid #83a1c0 2px;
+      box-sizing: border-box;
+      display: inline-block;
+      background-color: #ffffffaa;
+      padding: 8rem 8rem;
+      border-radius: 10rem;
+    }
+    .author {
+      font-weight: 700;
+      color: #0761eb;
     }
 }
 
