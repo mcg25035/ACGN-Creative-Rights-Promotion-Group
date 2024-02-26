@@ -14,11 +14,6 @@ export default defineConfig((configEnv) => ({
             linters: [new EsLinter({ configEnv: configEnv })],
         }),
     ],
-    resolve: {
-        alias: {
-            '@': path.resolve(__dirname, 'src')
-        }
-    },
     server: {
         proxy: {
             '/api': 'http://localhost:3000'
