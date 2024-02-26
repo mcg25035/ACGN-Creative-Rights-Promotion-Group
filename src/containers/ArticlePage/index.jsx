@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import ArticleContainer from './ArticleContainer';
 import CommentContainer from './CommentContainer';
 
-import { fetchArticle, fetchComments } from '@/slices';
+import { fetchArticle, fetchComments } from '../../slices';
 import './ArticlePage.scss';
 
 const ArticlePage = () => {
