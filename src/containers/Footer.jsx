@@ -11,12 +11,12 @@ const socialMedias = [
     },
     {
         name: "Twitter",
-        href: "/",
+        href: "https://twitter.com/ACGNCRPA",
         icon: faXTwitter,
     },
     {
         name: "Facebook",
-        href: "/",
+        href: "https://www.facebook.com/ACGNCRPA",
         icon: faSquareFacebook,
     },
     {
