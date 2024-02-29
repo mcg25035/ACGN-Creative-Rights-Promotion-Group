@@ -1,0 +1,71 @@
+.email-verify-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    flex: 1;
+
+    h1 {
+        font-size: 50rem;
+    }
+
+    input {
+        position: absolute;
+        opacity: 0;
+        pointer-events: none;
+    }
+    .verify-code {
+        display: inline-block;
+        height: 50rem;
+        line-height: 50rem;
+        font-size: 44rem;
+        width: 44rem;
+        margin: 8rem;
+        border-bottom: 4rem solid;
+        text-align: center;
+        vertical-align: bottom;
+    }
+
+    .verify-message-container {
+        margin-top: 10rem;
+        height: 30rem;
+        min-width: 10rem;
+    }
+
+    .verify-message {
+        font-size: 24rem;
+        animation: 0.5s ease-in 0s fadein;
+        &.success {
+            color: ForestGreen;
+            svg path{
+                fill: ForestGreen;
+            }
+        }
+
+        &.failed {
+            color: FireBrick;
+            svg path{
+                fill: FireBrick;
+            }
+        }
+    }
+}
+
+@media (orientation: portrait) {
+    .email-verify-page {
+        h1 {
+            font-size: 36rem;
+        }
+    }
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opactity: 1;
+  }
+}

@@ -4,6 +4,7 @@ import Footer from "./containers/Footer";
 import IndexPage from "./containers/IndexPage";
 import ArticlePage from "./containers/ArticlePage";
 import ProfilePage from "./containers/ProfilePage";
+import EmailVerifyPage from "./containers/EmailVerifyPage";
 import Login from "./acount/login";
 import "./App.scss";
 
@@ -24,6 +25,7 @@ function App(){
                 <Route path="/join_us" element={<IndexPage />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/profile" element={<ProfilePage />} />
+                <Route path="/emailVerifyPage" element={<EmailVerifyPage />} />
             </Routes>
         </main>
         <Footer />
