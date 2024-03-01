@@ -6,8 +6,9 @@ import ArticlePage from "./containers/ArticlePage";
 import ProfilePage from "./containers/ProfilePage";
 import Login from "./containers/AccountPortal/login";
 import SignUP from "./containers/AccountPortal/signup";
-import Forget from "./containers/AccountPortal/forget"
+import Forget from "./containers/AccountPortal/forget";
 import EmailVerifyPage from "./containers/EmailVerifyPage";
+import Loading from "./containers/Loading";
 import "./App.scss";
 
 function App(){
@@ -33,6 +34,7 @@ function App(){
             </Routes>
         </main>
         <Footer />
+        <Loading />
     </div>;
 }
 

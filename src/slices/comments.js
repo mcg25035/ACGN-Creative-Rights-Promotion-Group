@@ -9,7 +9,7 @@ export const fetchComments = createAsyncThunk('comments/fetchComments', async (a
 });
 
 
-const articleSlice = createSlice({
+const commentSlice = createSlice({
     name: 'comments',
     initialState,
     reducers:{},
@@ -22,4 +22,4 @@ const articleSlice = createSlice({
     }
 });
 
-export default articleSlice.reducer;
+export default commentSlice.reducer;
