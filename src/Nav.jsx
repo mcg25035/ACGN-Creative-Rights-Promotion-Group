@@ -32,12 +32,12 @@ function Nav() {
         <div>
             <div className={`bg-white z-[5] top-0 fixed w-full px-16 items-center h-[100rem] transform ${ visible ? '' : 'translate-y-[-100%]' } transition-all duration-150 ease-out`}>
                 <div className="menu mr-[20px] flex justify-between items-center">
-                    <span className="h-[100rem]"><Icon/></span>
                 </div>
                 {/* block relative bg-white p-[25px] top-1 float-end */}
             </div>
             <div className={`bg-transparent z-[7] top-0 fixed w-full px-16 items-center h-[100rem] transform ${ visible ? '' : 'translate-y-[-100%]' } transition-all duration-150 ease-out`}>
                 <div className="menu-transparent mr-[20px] flex justify-between items-center">
+                    <span className="h-[100rem]"><Icon/></span>
                     <div className={`hamburger-icon ${isOpen ? 'open' : ''}`} onClick={toggleMenu}>
                         <span className="line l1"></span>
                         <span className="line l2"></span>
