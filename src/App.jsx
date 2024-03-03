@@ -4,7 +4,9 @@ import Footer from "./containers/Footer";
 import IndexPage from "./containers/IndexPage";
 import ArticlePage from "./containers/ArticlePage";
 import ProfilePage from "./containers/ProfilePage";
-import Login from "./acount/login";
+import Login from "./containers/AccountPortal/login";
+import SignUP from "./containers/AccountPortal/signup";
+import Forget from "./containers/AccountPortal/forget"
 import "./App.scss";
 
 function App(){
@@ -23,6 +25,8 @@ function App(){
                 <Route path="/working_project" element={<IndexPage />} />
                 <Route path="/join_us" element={<IndexPage />} />
                 <Route path="/login" element={<Login />} />
+                <Route path="/signup" element={<SignUP/>}/>
+                <Route path="/forget" element={<Forget/>}/>
                 <Route path="/profile" element={<ProfilePage />} />
             </Routes>
         </main>

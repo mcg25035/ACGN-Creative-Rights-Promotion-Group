@@ -1,15 +1,15 @@
 import { useState } from 'react';
 import axios from 'axios';
-import './login.scss'; // Import Sass file
+import './style.scss';
 
 const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState(null); // Add state for error handling
+    const [error, setError] = useState(null);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+        
         try {
             const response = await axios.post('/api/login', {
                 username,
@@ -27,11 +27,10 @@ const Login = () => {
     };
 
     return (
-        <div className="login-page">
+        <div className="page">
             <div>
                 <h1><b>登入</b></h1>
                 <span>
-                    {/* <h2><b>帳號名稱 Username</b></h2> */}
                     <input
                         type="text"
                         name="username"
@@ -42,7 +41,6 @@ const Login = () => {
                     />
                 </span>
                 <span>
-                    {/* <h2><b>密碼 Password</b></h2> */}
                     <input
                         type="password"
                         name="password"
