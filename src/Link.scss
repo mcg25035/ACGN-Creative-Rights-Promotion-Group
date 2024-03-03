@@ -16,13 +16,25 @@ div.nav-link{
         text-align: center;
         margin: 0;
         font-family: 'Noto Sans TC';
-        font-weight: 500;
+        font-weight: 400;
         white-space: nowrap;
     }
     
     a.nav-text.on-hover{
         color: rgb(17, 137, 249);
         transition: all 0.3s;
+    }
+
+    p.text-main{
+        text-align: left;
+        font-size: 38rem;
+        font-weight: 500;
+    }
+
+    p.text-sub{
+        text-align: left;
+        font-size: 24rem;
+        font-weight: 300;
     }
 }
 

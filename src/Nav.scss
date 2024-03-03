@@ -11,6 +11,59 @@ $breakpoint-lg: 992px;
     transition: transform 0.2s, opacity 0.2s;
 }
 
+ul.menu{
+    top: 0;
+    width: 15vw;
+    height: 100vh;
+    position: fixed;
+    right: 0vw;
+    transition: all 0.3s;
+    background: url('menu_overlay.webp') no-repeat bottom right 60%;
+    background-color: rgb(230, 243, 251);
+    
+    li.navbar-area{
+        height: 100rem;
+        margin-left: 30rem;
+        margin-top: 0;
+    }
+
+    li{
+        margin-top: 30rem;
+        div {
+            margin-left: 50rem;
+        }
+    }
+}
+
+div.menu{
+    position: relative;
+}
+
+div.menu-transparent{
+    height: 100%;
+    flex-direction: row-reverse;
+}
+
+div.menu-overlay{
+    width: 125vw;
+    height: 125vh;
+    position: fixed;
+    top: -10vh;
+    left: -10vw;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(2px);
+    transition: all 0.3s;
+}
+
+div.menu-overlay.menu-hidden{
+    opacity: 0%;
+    pointer-events: none; 
+}
+
+ul.menu.menu-hidden{
+    right: -15vw;
+}
+
 .open .line:nth-child(1) {
     transform: translateY(8px) rotate(45deg);
 }
