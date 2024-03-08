@@ -7,6 +7,7 @@ import ProfilePage from "./containers/ProfilePage";
 import Login from "./containers/AccountPortal/login";
 import SignUP from "./containers/AccountPortal/signup";
 import Forget from "./containers/AccountPortal/forget"
+import EmailVerifyPage from "./containers/EmailVerifyPage";
 import "./App.scss";
 
 function App(){
@@ -28,6 +29,7 @@ function App(){
                 <Route path="/signup" element={<SignUP/>}/>
                 <Route path="/forget" element={<Forget/>}/>
                 <Route path="/profile" element={<ProfilePage />} />
+                <Route path="/emailVerifyPage" element={<EmailVerifyPage />} />
             </Routes>
         </main>
         <Footer />

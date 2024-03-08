@@ -1,9 +1,8 @@
 @import url(//fonts.googleapis.com/earlyaccess/notosanstc.css);
 
 div.container-ideashow{
-    margin-top: 100rem;
     width: 100%;
-    height: 90vh;
+    height: calc(100vh - 100rem);
     position: relative;
     
     div.text-container{
@@ -35,7 +34,7 @@ div.container-ideashow{
     }
 
     img.char{
-        width: 75%;
+        width: 65%;
         bottom: 0%;
         right: 0%;
         position: absolute;
@@ -43,10 +42,16 @@ div.container-ideashow{
 }
 
 @media (orientation: portrait) {
-    div.container-ideashow div.text-container {
-        width: 80vw;
-    }
-    div.container-ideashow div.text-container p.slogan {
-        font-size: 20rem;
+    div.container-ideashow {
+        div.text-container {
+            width: 80vw;
+        }
+        div.text-container p.slogan {
+            font-size: 20rem;
+        }
+
+        img.char {
+            width: 100%;
+        }
     }
 }

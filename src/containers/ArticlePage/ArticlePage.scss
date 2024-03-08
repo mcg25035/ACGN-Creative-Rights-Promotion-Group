@@ -1,5 +1,5 @@
 .article-page {
-    padding: 100rem 300rem 0;
+    padding: 0 300rem;
 
     .article-header {
       height: 30rem;
@@ -82,6 +82,6 @@
 
 @media (orientation: portrait) {
     .article-page {
-        padding: 100rem 20rem 0;
+        padding: 0 20rem;
     }
 }
