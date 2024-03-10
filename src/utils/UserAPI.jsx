@@ -23,7 +23,7 @@ String.prototype.passwordProcess = function (){
     var afterSalt = sha256(salt).toString()
     for (var i=0; i<16; i++) afterSalt = sha256(afterSalt+this).toString();
 }
-    
+
 
 
 class UserAPI{
@@ -53,15 +53,15 @@ class UserAPI{
         UserAPI.currentUserAvatar = UserAPI.getAvatar(userId);
     }
 
-    
+
 
     /**
-     * @param {string} userId 
-     * @param {string} password 
+     * @param {string} userId
+     * @param {string} password
      */
     static async login(userId, password){
         var password = password.passwordProcess();
-        
+
         var response = await axios.put(`${userApiPath}/login`, {
             user_id: userId,
             password: password
@@ -80,7 +80,7 @@ class UserAPI{
         var response = await axios.post(`${userApiPath}/${userId}/normal`, {
             password: password
         })
-        return response.data.user_id 
+        return response.data.user_id
     }
 
     /**
@@ -110,7 +110,7 @@ class UserAPI{
      * @property {String} realname
      * @property {String} avatar
      * @property {String} self_description_article
-     * 
+     *
      */
 
     /**
@@ -122,7 +122,7 @@ class UserAPI{
          * @type {{[key: string]: ValueInfo}}
          */
         var info = {}
-        
+
         info.userId = {
             name: "使用者ID",
             type: "string",
@@ -201,8 +201,8 @@ class UserAPI{
     }
 
     /**
-     * @param {String} userId 
-     * @param {UserConfig} config 
+     * @param {String} userId
+     * @param {UserConfig} config
      */
     static async updateUserInfo(userId, config) {
         await axios.put(`${userApiPath}/${userId}`, config);

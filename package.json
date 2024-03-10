@@ -8,6 +8,7 @@
     "lan": "vite --host 0.0.0.0",
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "oxlint": "npx oxlint && npx eslint",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -23,13 +24,15 @@
     "crypto-js": "^4.2.0",
     "localforage": "^1.10.0",
     "match-sorter": "^6.3.4",
+    "oxlint": "^0.2.13",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^9.1.0",
     "react-router": "^6.22.0",
     "react-router-dom": "^6.22.0",
     "sass": "^1.70.0",
-    "sort-by": "^1.2.0"
+    "sort-by": "^1.2.0",
+    "vite-plugin-oxlint": "^1.0.2"
   },
   "devDependencies": {
     "@types/react": "^18.2.43",
@@ -37,6 +40,7 @@
     "@vitejs/plugin-react": "^4.2.1",
     "autoprefixer": "^10.4.17",
     "eslint": "^8.55.0",
+    "eslint-plugin-oxlint": "^0.2.4",
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.5",
