@@ -22,6 +22,7 @@ String.prototype.passwordProcess = function (){
     for (var i=0; i<3; i++) salt = salt+salt;
     var afterSalt = sha256(salt).toString()
     for (var i=0; i<16; i++) afterSalt = sha256(afterSalt+this).toString();
+    return afterSalt;
 }
 
 
