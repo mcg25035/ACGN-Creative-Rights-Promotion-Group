@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import axios from 'axios';
+import UserApi from '../../utils/UserAPI';
 import './style.scss';
 
 const Login = () => {
@@ -9,12 +9,9 @@ const Login = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        
+
         try {
-            const response = await axios.post('/api/login', {
-                username,
-                password,
-            });
+            const response = await UserApi.login(username, password);
 
             if (response.status === 200) {
                 console.log('Login successful');
