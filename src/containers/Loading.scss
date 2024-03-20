@@ -1,0 +1,58 @@
+.loading-overlay {
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 5;
+    background-color: #ffffff88;
+    .loading-icon {
+        width: 200rem;
+        height: 200rem;
+        animation: 1s steps(8, end) 0s infinite spin;
+        path {
+            animation: 10s linear 0s infinite breathing-color;
+        }
+    }
+}
+
+@keyframes breathing-color {
+    0% {
+        fill: hsl(0, 100%, 70%);
+    }
+    12.5% {
+        fill: hsl(45, 100%, 70%);
+    }
+    25% {
+        fill: hsl(90, 100%, 70%);
+    }
+    37.5% {
+        fill: hsl(135, 100%, 70%);
+    }
+    50% {
+        fill: hsl(180, 100%, 70%);
+    }
+    62.5% {
+        fill: hsl(225, 100%, 70%);
+    }
+    75% {
+        fill: hsl(270, 100%, 70%);
+    }
+    87.5% {
+        fill: hsl(315, 100%, 70%);
+    }
+    100% {
+        fill: hsl(359, 100%, 70%);
+    }
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}

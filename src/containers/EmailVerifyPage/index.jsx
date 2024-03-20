@@ -29,7 +29,7 @@ const EmailVerifyPage = () => {
         }
     };
 
-    const defaultCodes = new Array(CODE_LENGTH).fill('');
+    const defaultCodes = Array.from({ length: CODE_LENGTH }).fill('');
 
     const codes = [...verifyCode.split(''), ...defaultCodes].slice(0, CODE_LENGTH);
 

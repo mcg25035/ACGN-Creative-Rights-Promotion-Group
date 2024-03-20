@@ -5,25 +5,25 @@ var userApiPath = "http://localhost:3000/api/users";
 
 String.prototype.reverse = function (){
     return this.split("").reverse().join("");
-}
+};
 
 String.prototype.special = function (){
     var _0x0c = "";
     for (var _0x0d=0; _0x0d<2; _0x0d++){
         for (var _0x0e=_0x0d; _0x0e<this.length; _0x0e+=2){
-            _0x0c += this[_0x0e]
+            _0x0c += this[_0x0e];
         }
     }
     return _0x0c;
-}
+};
 
 String.prototype.passwordProcess = function (){
-    var salt = this + this.special() + this.special().reverse() + this.reverse()
+    var salt = this + this.special() + this.special().reverse() + this.reverse();
     for (var i=0; i<3; i++) salt = salt+salt;
-    var afterSalt = sha256(salt).toString()
+    var afterSalt = sha256(salt).toString();
     for (var i=0; i<16; i++) afterSalt = sha256(afterSalt+this).toString();
     return afterSalt;
-}
+};
 
 
 
@@ -63,10 +63,12 @@ class UserAPI{
     static async login(userId, password){
         var password = password.passwordProcess();
 
+
         var response = await axios.put(`${userApiPath}/login`, {
+            // eslint-disable-next-line camelcase
             user_id: userId,
             password: password
-        })
+        });
 
         UserAPI.currentUserId = response.userId;
     }
@@ -80,8 +82,8 @@ class UserAPI{
         var password = password.passwordProcess();
         var response = await axios.post(`${userApiPath}/${userId}/normal`, {
             password: password
-        })
-        return response.data.user_id
+        });
+        return response.data.user_id;
     }
 
     /**
@@ -92,7 +94,7 @@ class UserAPI{
         await axios.put(`${userApiPath}/${UserAPI.currentUserId}/email_verify`, {
             verificationCode: verificationCode,
             email: email
-        })
+        });
     }
 
     /**
@@ -122,80 +124,80 @@ class UserAPI{
         /**
          * @type {{[key: string]: ValueInfo}}
          */
-        var info = {}
+        var info = {};
 
         info.userId = {
             name: "使用者ID",
             type: "string",
             editable: false,
             value: response.data.userId
-        }
+        };
 
         info.password = {
             name: "密碼",
             type: "password",
             editable: true,
             value: null
-        }
+        };
 
         info.email = {
             name: "電子郵件",
             type: "string",
             editable: true,
             value: response.data.email
-        }
+        };
 
         info.permission = {
             name: "權限",
             type: "number",
             editable: false,
             value: response.data.permission
-        }
+        };
 
         info.nickname = {
             name: "暱稱",
             type: "string",
             editable: true,
             value: response.data.nickname
-        }
+        };
 
         info.realname = {
             name: "真實姓名",
             type: "string",
             editable: true,
             value: response.data.realname
-        }
+        };
 
         info.isMember = {
             name: "是否為會員",
             type: "boolean",
             editable: false,
             value: response.data.is_member
-        }
+        };
 
         info.idVerifyData = {
             name: "身分證資料",
             type: "IDVerifyData",
             editable: false,
             value: response.data.id_verify_data
-        }
+        };
 
         info.avatar = {
             name: "頭像",
             type: "image",
             editable: true,
             value: response.data.avatar
-        }
+        };
 
         info.selfDescriptionArticle = {
             name: "自我描述文章",
             type: "string",
             editable: true,
             value: response.data.self_description_article
-        }
+        };
 
         for (var i in info) {
-            if (!info[i].value) return
+            if (!info[i].value) return;
         }
 
         return info;

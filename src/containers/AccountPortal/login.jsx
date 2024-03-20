@@ -1,20 +1,21 @@
 import { useState } from 'react';
-import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { setLoading } from '../../slices';
+import UserApi from '../../utils/UserAPI';
 import './style.scss';
 
 const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(null);
+    const dispatch = useDispatch();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        
+
         try {
-            const response = await axios.post('/api/login', {
-                username,
-                password,
-            });
+            dispatch(setLoading(true));
+            const response = await UserApi.login(username, password);
 
             if (response.status === 200) {
                 console.log('Login successful');
@@ -23,6 +24,8 @@ const Login = () => {
             }
         } catch (error) {
             setError(error.message);
+        } finally {
+            dispatch(setLoading(false));
         }
     };
 
