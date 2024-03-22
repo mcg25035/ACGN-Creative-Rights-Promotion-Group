@@ -5,7 +5,7 @@ import "./Loading.scss";
 
 const Loading = () => {
     const loading = useSelector((state) =>
-        Object.values(state).some(({ loading }) => loading)
+        Object.values(state).some((subState) => subState?.loading)
     );
 
     if (!loading) {
