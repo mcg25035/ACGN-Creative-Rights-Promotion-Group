@@ -64,7 +64,7 @@ class UserAPI{
         var password = password.passwordProcess();
 
 
-        var response = await axios.put(`${userApiPath}/login`, {
+        var response = await axios.put(`${userApiPath}/${userId}/login`, {
             // eslint-disable-next-line camelcase
             user_id: userId,
             password: password

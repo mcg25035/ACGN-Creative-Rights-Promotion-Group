@@ -5,3 +5,5 @@ export const parseCookies = () => {
         return { ...result, [decodeURIComponent(k)]: decodeURIComponent(v) };
     }, {});
 };
+
+export const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));

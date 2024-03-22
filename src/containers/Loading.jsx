@@ -14,7 +14,8 @@ const Loading = () => {
 
     return (
         <div className="loading-overlay">
-            <FontAwesomeIcon className="loading-icon" icon={faSpinner} />
+            <div className="loading-progress" />
+            {/* <FontAwesomeIcon className="loading-icon" icon={faSpinner} /> */}
         </div>
     );
 };
