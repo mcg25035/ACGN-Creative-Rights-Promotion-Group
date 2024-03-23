@@ -1,13 +1,17 @@
 import PropTypes from 'prop-types';
 import ReactionButtons from './ReactionButtons';
-
+import { timestampFormat } from "../../utils/commonUtils";
 import './ArticlePage.scss';
+import ArticleHeader from '../ArticleHeader';
+import ThumbnailShow from '../ThumbnailShow';
 
 const ArticleContainer = ({ articleData }) => {
     const {
         title,
         content,
-        post_by: postBy
+        post_by: postBy,
+        date,
+        thumbnail
     } = articleData;
 
     const handleLike = () => {};
@@ -15,16 +19,20 @@ const ArticleContainer = ({ articleData }) => {
 
     return (
         <>
-            <article className="article-conainer">
-                <h1 className="article-title">{title}</h1>
-                <div>Author: <span className="author">{postBy}</span></div>
-                <p className="article-content">{content}</p>
-            </article>
-            <ReactionButtons
-                articleInfo={articleData}
-                handleLike={handleLike}
-                handleDislike={handleDislike}
-            />
+            <div className="article-block-wrapper">
+                <ArticleHeader date={date} postBy={postBy}/>
+                <article className="article-conainer">
+                    <h1 className="article-title">{title}</h1>
+                    <hr />
+                    <ThumbnailShow img_src={thumbnail}/>
+                    <p className="article-content">{content}</p>
+                </article>
+                <ReactionButtons
+                        articleInfo={articleData}
+                        handleLike={handleLike}
+                        handleDislike={handleDislike}
+                />
+            </div>
         </>
     );
 };

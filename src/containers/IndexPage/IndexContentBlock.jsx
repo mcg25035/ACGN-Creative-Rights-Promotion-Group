@@ -2,6 +2,9 @@ import "./IndexContentBlock.scss";
 import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import { timestampFormat } from "../../utils/commonUtils";
+import ArticleHeader from "../ArticleHeader";
+import ThumbnailShow from "../ThumbnailShow";
 
 /**
  * @param {String} content
@@ -29,16 +32,6 @@ import { Link } from "react-router-dom";
 //     return textBlock;
 // }
 
-function timestampFormat(timestamp) {
-    const date = new Date(timestamp);
-
-    const year = date.getFullYear();
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
-    const day = date.getDate().toString().padStart(2, '0');
-
-    return `${year}.${month}.${day}`;
-}
-
 function IndexContentBlock({ articleData }){
     const { date, id, title, thumbnail, post_by: postBy } = articleData;
     const refs = [new React.createRef(), new React.createRef(), new React.createRef()];
@@ -59,15 +52,10 @@ function IndexContentBlock({ articleData }){
         }
     };
     return <div className="index-content-container" ref={refs[0]}>
-        <div className="index-content-header">
-            <p className="date">{timestampFormat(date)}</p>
-            <p className="author">{postBy}</p>
-        </div>
+        <ArticleHeader date={date} postBy={postBy}/>
         <Link to={`/article/${id}`} onMouseOver={mouse.over} onMouseOut={mouse.out}>
             <div ref={refs[1]} className="content-wrapper">
-                <div className="image-block">
-                    <img src={thumbnail}/>
-                </div>
+                <ThumbnailShow img_src={thumbnail}/>
                 <p ref={refs[2]} className="title-block">
                     {title}
                 </p>
