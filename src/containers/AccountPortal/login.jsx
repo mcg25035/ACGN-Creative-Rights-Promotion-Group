@@ -27,10 +27,7 @@ const Login = () => {
             var unloginElement = unloginElementContainer.current;
             dispatch(setLoading(true));
             await UserApi.login(username, password);
-        } catch (error) {
-            // when login failed
-            setError(error.message);
-        } finally {
+
             // when login success
             dispatch(setLoading(false));
             overlay.classList.add('active');
@@ -40,6 +37,10 @@ const Login = () => {
             /**@type {HTMLElement} */
             var page = pageRef.current;
             page.style.setProperty('--current-height', `${currentHeight}px`);
+        } catch (error) {
+            // when login failed
+            setError(error.message);
+            dispatch(setLoading(false));
         }
     };
 
