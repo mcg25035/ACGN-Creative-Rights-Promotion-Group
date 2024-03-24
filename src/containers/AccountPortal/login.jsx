@@ -1,5 +1,6 @@
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { setLoading } from '../../slices';
 import React from 'react';
 import UserApi from '../../utils/UserAPI';
@@ -7,11 +8,14 @@ import { sleep } from '../../utils/commonUtils';
 import './style.scss';
 import './checkMarkStyke.scss';
 
+
 const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(null);
     const [loginSuccess, setLoginSuccess] = useState(false);
+    const authorized = useSelector((state) => !!state.loginToken);
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const loginSuccessOverlay = React.createRef();
     const unloginElementContainer = React.createRef();
@@ -37,12 +41,22 @@ const Login = () => {
             /**@type {HTMLElement} */
             var page = pageRef.current;
             page.style.setProperty('--current-height', `${currentHeight}px`);
+            await sleep(1000);
+            window.location.reload();
         } catch (error) {
             // when login failed
             setError(error.message);
             dispatch(setLoading(false));
         }
     };
+
+    useEffect(() =>{
+        if (authorized) {
+            console.log('redirect');
+            navigate('/');
+        }
+    }, [authorized, navigate]);
+
 
     return (
         <div className="page" ref={pageRef}>
@@ -74,7 +88,7 @@ const Login = () => {
             {loginSuccess && <div className="login">
                 <div className='ac-container'>
                     <div className="animation-component circle-loader load-complete">
-                        <div className="animation-component checkmark draw" style={{display: "block"}} />
+                        <div className="animation-component checkmark draw" style={{ display: "block" }} />
                     </div>
                 </div>
                 <h1><b>登入成功</b></h1>
