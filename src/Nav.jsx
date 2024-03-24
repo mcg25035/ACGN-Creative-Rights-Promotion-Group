@@ -8,7 +8,7 @@ function Nav() {
     const [isOpen, setIsOpen] = useState(false);
     const [visible, setVisible] = useState(true);
     const [prevScrollPos, setPrevScrollPos] = useState(window.pageYOffset);
-    const authorized = useSelector((state) => !!state.loginToken);
+    const { loginStatus } = useSelector((state) => state.userState);
 
     const toggleMenu = () => {
         setIsOpen(!isOpen);
@@ -54,9 +54,9 @@ function Nav() {
                     <li onClick={toggleMenu}><Link to="donate" name="贊助支持" subtext="Donate"/></li>
                     <li onClick={toggleMenu}><Link to="working_project" name="企劃進度" subtext="Project Progress" /></li>
                     <li onClick={toggleMenu}><Link to="join_us" name="加入我們" subtext="Join Us" /></li>
-                    {!authorized && <li onClick={toggleMenu}><Link to="login" name="登入" subtext="Login"/></li>}
-                    {authorized && <li onClick={logout}><Link to="" name="登出" subtext="Logout"/></li>}
-                    {authorized && <li onClick={toggleMenu}><Link to="profile" name="帳號" subtext="Profile"/></li>}
+                    {!loginStatus && <li onClick={toggleMenu}><Link to="login" name="登入" subtext="Login"/></li>}
+                    {loginStatus && <li onClick={logout}><Link to="" name="登出" subtext="Logout"/></li>}
+                    {loginStatus && <li onClick={toggleMenu}><Link to="profile" name="帳號" subtext="Profile"/></li>}
                     <li onClick={toggleMenu}><Link to="login" name="測試多一項" subtext="test"/></li>
                     <li onClick={toggleMenu}><Link to="login" name="測試多一項" subtext="test"/></li>
                     <li onClick={toggleMenu}><Link to="login" name="測試多一項" subtext="test"/></li>
