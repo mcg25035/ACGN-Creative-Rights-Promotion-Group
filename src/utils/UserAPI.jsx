@@ -55,7 +55,17 @@ class UserAPI{
         UserAPI.currentUserAvatar = UserAPI.getAvatar(userId);
     }
 
-
+    static async refreshLoad(){
+        try{
+            var response = await axios.get(`${userApiPath}/get_login_state`);
+            UserAPI.currentUserId = response.data.user_id;
+            UserAPI.currentUserName = response.data.realname;
+            UserAPI.currentUserNickname = response.data.nickname;
+            UserAPI.currentUserAvatar = UserAPI.getAvatar(UserAPI.currentUserId);
+            UserAPI.loginStatus = true;
+        }
+        catch (e){}
+    }
 
     /**
      * @param {string} userId
@@ -65,14 +75,12 @@ class UserAPI{
         var password = password.passwordProcess();
 
 
-        var response = await axios.put(`${userApiPath}/${userId}/login`, {
+        await axios.put(`${userApiPath}/${userId}/login`, {
             // eslint-disable-next-line camelcase
             user_id: userId,
             password: password
         });
-
-        UserAPI.currentUserId = response.userId;
-        UserAPI.loginStatus = true;
+        
     }
 
     /**
