@@ -32,6 +32,7 @@ class UserAPI{
     static currentUserName = "test_user_name";
     static currentUserNickname = "test_user_nickname";
     static currentUserAvatar = UserAPI.getAvatar(UserAPI.currentUserId);
+    static loginStatus = false;
 
 
     /**
@@ -71,6 +72,7 @@ class UserAPI{
         });
 
         UserAPI.currentUserId = response.userId;
+        UserAPI.loginStatus = true;
     }
 
     /**
