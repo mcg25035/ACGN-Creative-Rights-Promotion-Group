@@ -1,4 +1,6 @@
 import { Routes, Route } from "react-router-dom";
+import { useEffect } from 'react';
+import { useDispatch } from "react-redux";
 import Nav from "./Nav";
 import Footer from "./containers/Footer";
 import IndexPage from "./containers/IndexPage";
@@ -9,12 +11,19 @@ import SignUP from "./containers/AccountPortal/signup";
 import Forget from "./containers/AccountPortal/forget";
 import EmailVerifyPage from "./containers/EmailVerifyPage";
 import Loading from "./containers/Loading";
+import { fetchUserState } from './slices';
 import "./App.scss";
 
 function App(){
     var divStyle={
         width: "100%",
     };
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(fetchUserState());
+    }, [dispatch]);
 
     return <div className="main-container" style={divStyle}>
         <Nav />

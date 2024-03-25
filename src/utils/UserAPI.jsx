@@ -56,7 +56,7 @@ class UserAPI{
     }
 
     static async refreshLoad(){
-        try{
+        try {
             var response = await axios.get(`${userApiPath}/get_login_state`);
             UserAPI.currentUserId = response.data.user_id;
             UserAPI.currentUserName = response.data.realname;
@@ -64,7 +64,9 @@ class UserAPI{
             UserAPI.currentUserAvatar = UserAPI.getAvatar(UserAPI.currentUserId);
             UserAPI.loginStatus = true;
         }
-        catch (e){}
+        catch (e){
+            throw new Error(e);
+        }
     }
 
     /**
@@ -80,7 +82,7 @@ class UserAPI{
             user_id: userId,
             password: password
         });
-        
+
     }
 
     /**
