@@ -57,7 +57,10 @@ class UserAPI{
 
     static async refreshLoad(){
         try {
-            var response = await axios.get(`${userApiPath}/get_login_state`);
+            var response = await axios.get(
+                `${userApiPath}/get_login_state`,
+                {withCredentials: true}
+            );
             UserAPI.currentUserId = response.data.user_id;
             UserAPI.currentUserName = response.data.realname;
             UserAPI.currentUserNickname = response.data.nickname;
@@ -77,11 +80,14 @@ class UserAPI{
         var password = password.passwordProcess();
 
 
-        await axios.put(`${userApiPath}/${userId}/login`, {
-            // eslint-disable-next-line camelcase
-            user_id: userId,
-            password: password
-        });
+        await axios.put(
+            `${userApiPath}/${userId}/login`,
+            {
+                user_id: userId,
+                password: password
+            },
+            {withCredentials: true}
+        );
 
     }
 
@@ -92,9 +98,10 @@ class UserAPI{
      */
     static async register(userId, password){
         var password = password.passwordProcess();
-        var response = await axios.post(`${userApiPath}/${userId}/normal`, {
-            password: password
-        });
+        var response = await axios.post(`${userApiPath}/${userId}/normal`,
+            {password: password},
+            {withCredentials: true}
+        );
         return response.data.user_id;
     }
 
@@ -103,10 +110,13 @@ class UserAPI{
      * @param {string} email
      */
     static async verifyEmail(verificationCode, email){
-        await axios.put(`${userApiPath}/${UserAPI.currentUserId}/email_verify`, {
-            verificationCode: verificationCode,
-            email: email
-        });
+        await axios.put(`${userApiPath}/${UserAPI.currentUserId}/email_verify`, 
+            {
+                verificationCode: verificationCode,
+                email: email
+            },
+            {withCredentials: true}
+        );
     }
 
     /**
@@ -132,7 +142,10 @@ class UserAPI{
      * @param {string} userId
      */
     static async getUserInfo(userId){
-        var response = await axios.get(`${userApiPath}/${userId}`);
+        var response = await axios.get(
+            `${userApiPath}/${userId}`,
+            {withCredentials: true}
+        );
         /**
          * @type {{[key: string]: ValueInfo}}
          */
@@ -220,7 +233,11 @@ class UserAPI{
      * @param {UserConfig} config
      */
     static async updateUserInfo(userId, config) {
-        await axios.put(`${userApiPath}/${userId}`, config);
+        await axios.put(
+            `${userApiPath}/${userId}`,
+            config,
+            {withCredentials: true}
+        );
     }
 
 
