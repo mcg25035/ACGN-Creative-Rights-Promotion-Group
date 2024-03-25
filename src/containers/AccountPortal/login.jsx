@@ -14,7 +14,7 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const [error, setError] = useState(null);
     const [loginSuccess, setLoginSuccess] = useState(false);
-    const authorized = useSelector((state) => !!state.loginToken);
+    const { loginStatus } = useSelector((state) => state.userState);
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const loginSuccessOverlay = React.createRef();
@@ -51,11 +51,11 @@ const Login = () => {
     };
 
     useEffect(() =>{
-        if (authorized) {
+        if (loginStatus) {
             console.log('redirect');
             navigate('/');
         }
-    }, [authorized, navigate]);
+    }, [loginStatus, navigate]);
 
 
     return (

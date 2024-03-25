@@ -21,7 +21,7 @@ const userStateSlice = createSlice({
     initialState,
     reducers:{},
     extraReducers: (builder) => {
-        builder.addCase(fetchUserState.fulfilled, (state, action) => ({ ...action.payload }));
+        builder.addCase(fetchUserState.fulfilled, (state, action) => ({ ...action.payload,  loginStatus: true }));
         builder.addCase(fetchUserState.rejected, () => ({ loginStatus: false }));
     }
 });
