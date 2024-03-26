@@ -7,8 +7,10 @@ import ThumbnailShow from '../ThumbnailShow';
 import { useEffect, useState } from 'react';
 import {article, comment} from '../../utils/ArticleAPI';
 import UserAPI from '../../utils/UserAPI';
+import { toast, Bounce } from 'react-toastify';
 
 const ArticleContainer = ({ articleData }) => {
+
     const {
         id,
         title,
@@ -28,9 +30,36 @@ const ArticleContainer = ({ articleData }) => {
 
     const handleLike = async () => {
         console.log(lock)
-        if (lock) return;
+        if (lock) return toast.error('此事件交互失敗', {
+            position: "bottom-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+            transition: Bounce,
+        });
         setLock(true);
-        await article.gp(id);
+        try{
+            await article.gp(id);
+        }
+        catch (e) {
+            toast.error('此事件交互失敗', {
+                position: "bottom-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+                transition: Bounce,
+            });
+            setLock(false);
+            return
+        }
         if (bpState) {
             setBpState(false);
             setBpCount(bpCount - 1);
@@ -47,9 +76,36 @@ const ArticleContainer = ({ articleData }) => {
 
     const handleDislike = async () => {
         console.log(lock)
-        if (lock) return;
+        if (lock) return toast.error('此事件交互失敗', {
+            position: "bottom-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+            transition: Bounce,
+        });
         setLock(true);
-        await article.bp(id);
+        try {
+            await article.bp(id);
+        }
+        catch (e) {
+            toast.error('此事件交互失敗', {
+                position: "bottom-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+                transition: Bounce,
+            });
+            setLock(false);
+            return
+        }
         if (gpState) {
             setGpState(false);
             setGpCount(gpCount - 1);

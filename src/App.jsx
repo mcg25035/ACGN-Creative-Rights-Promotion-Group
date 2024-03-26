@@ -12,6 +12,8 @@ import Forget from "./containers/AccountPortal/forget";
 import EmailVerifyPage from "./containers/EmailVerifyPage";
 import Loading from "./containers/Loading";
 import { fetchUserState } from './slices';
+import { toast, ToastContainer } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 import "./App.scss";
 
 function App(){
@@ -26,6 +28,7 @@ function App(){
     }, [dispatch]);
 
     return <div className="main-container" style={divStyle}>
+        <ToastContainer />
         <Nav />
         <main>
             <Routes>
