@@ -7,29 +7,36 @@ import './ArticlePage.scss';
 
 // TODO: fetch replies
 
-const ReactionButtons = ({ articleInfo, handleLike, handleDislike }) => {
+const ReactionButtons = ({ articleInfo, handleLike, handleDislike, ratingData }) => {
     const {
         state,
         replies,
         comments,
         date,
-        gp,
-        bp,
     } = articleInfo;
+
+    const {
+        gpCount,
+        bpCount,
+        gpState,
+        bpState
+    } = ratingData;
 
     const className = classNames('reaction-row', { like: state === 1, dislike: state === -1 });
     const displayReplies = comments || replies;
     const displayDate = new Date(date).toLocaleDateString();
 
+    console.log(ratingData);
+
     return (
         <div className={className}>
             <button type="button" className="btn" onClick={handleLike}>
                 <FontAwesomeIcon icon={faThumbsUp} />
-                <span>{gp}</span>
+                <span>{gpCount}</span>
             </button>
             <button type="button" className="btn" onClick={handleDislike}>
                 <FontAwesomeIcon icon={faThumbsDown} />
-                <span>{bp}</span>
+                <span>{bpCount}</span>
             </button>
             <button type="button" className="btn">
                 <FontAwesomeIcon icon={faReply} />

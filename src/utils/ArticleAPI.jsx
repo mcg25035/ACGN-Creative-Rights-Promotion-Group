@@ -40,7 +40,7 @@ var replyApiPath = (articleId, commentId) => `${commentApiPath(articleId)}/${com
  * @property {Number} comment.state //0: none, 1 : deleted, 2 : edited
  */
 
-class comment{
+export class comment{
     /**
      * fetch 50 replies from the comment which id is {comment_id}
      * @param {string} article_id
@@ -126,9 +126,6 @@ class comment{
 
 
 
-/**
- * article class
- */
 export class article {
 
     /**
@@ -164,7 +161,7 @@ export class article {
      */
     static async getSelfState(id){
         var res = await axios.get(
-            `${articleApiPath}/bpgp/${id}?user=${UserAPI.currentUserId}`,
+            `${articleApiPath}/gpbp/${id}?user=${UserAPI.currentUserId}`,
             {withCredentials: true}
         );
         res = res.data;
@@ -231,9 +228,3 @@ export class article {
         );
     }
 }
-
-export default {
-    article: article,
-    comment: comment,
-    sortBy: SORT_BY
-};

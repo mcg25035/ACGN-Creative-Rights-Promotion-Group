@@ -17,3 +17,11 @@ export const timestampFormat = (timestamp) => {
 
     return `${year}.${month}.${day}`;
 };
+
+export const waitUntilLoaded = () => new Promise((resolve) => {
+    setInterval(() => {
+        if (document.readyState === 'complete') {
+            resolve();
+        }
+    }, 100);
+});

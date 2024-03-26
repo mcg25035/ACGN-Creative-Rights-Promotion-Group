@@ -1,10 +1,10 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { article as articleAPI } from '../utils/ArticleAPI';
+import { article } from '../utils/ArticleAPI';
 
 const initialState = [];
 
 export const fetchArticleList = createAsyncThunk('articleList/fetchArticleList', async (sortBy, lastId) => {
-    const response = await articleAPI.getArticleList(sortBy, lastId);
+    const response = await article.getArticleList(sortBy, lastId);
     return response?.data?.articles;
 });
 
