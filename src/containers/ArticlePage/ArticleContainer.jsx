@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
 import ReactionButtons from './ReactionButtons';
-import { timestampFormat, waitUntilLoaded } from "../../utils/commonUtils";
+import { timestampFormat } from "../../utils/commonUtils";
 import './ArticlePage.scss';
 import ArticleHeader from '../ArticleHeader';
 import ThumbnailShow from '../ThumbnailShow';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {article, comment} from '../../utils/ArticleAPI';
+import UserAPI from '../../utils/UserAPI';
 
 const ArticleContainer = ({ articleData }) => {
     const {
@@ -29,7 +30,11 @@ const ArticleContainer = ({ articleData }) => {
         console.log(lock)
         if (lock) return;
         setLock(true);
-        if (bpState) await handleDislike();
+        await article.gp(id);
+        if (bpState) {
+            setBpState(false);
+            setBpCount(bpCount - 1);
+        }
         if (gpState) {
             setGpCount(gpCount - 1);
             setGpState(false);
@@ -37,7 +42,6 @@ const ArticleContainer = ({ articleData }) => {
         }
         setGpCount(gpCount + 1);
         setGpState(true);
-        await article.gp(id);
         setLock(false);
     };
 
@@ -45,7 +49,11 @@ const ArticleContainer = ({ articleData }) => {
         console.log(lock)
         if (lock) return;
         setLock(true);
-        if (gpState) await handleLike();
+        await article.bp(id);
+        if (gpState) {
+            setGpState(false);
+            setGpCount(gpCount - 1);
+        }
         if (bpState) {
             setBpCount(bpCount - 1);
             setBpState(false);
@@ -53,20 +61,21 @@ const ArticleContainer = ({ articleData }) => {
         }
         setBpCount(bpCount + 1);
         setBpState(true);
-        await article.bp(id);
         setLock(false);
     };
 
-    (async ()=>{
-        await waitUntilLoaded();
-        console.log("fetching state")
-        var state = await article.getSelfState(id)
-        if (state === 1) setGpState(true);
-        if (state === -1) setBpState(true);
-        setLock(false);
-    })()
-
-    console.log({bpCount, gpCount, bpState, gpState})
+    useEffect(()=>{
+        (async ()=>{
+            await UserAPI.waitUntilLoaded();
+            if (!UserAPI.loginStatus) return;
+            console.log("fetching state")
+            var state = await article.getSelfState(id)
+            console.log(state)
+            if (state === 1) setGpState(true);
+            if (state === -1) setBpState(true);
+            setLock(false);
+        })()
+    }, [])
 
     return (
         <>

@@ -26,8 +26,6 @@ const ReactionButtons = ({ articleInfo, handleLike, handleDislike, ratingData })
     const displayReplies = comments || replies;
     const displayDate = new Date(date).toLocaleDateString();
 
-    console.log(ratingData);
-
     return (
         <div className={className}>
             <button type="button" className="btn" onClick={handleLike}>

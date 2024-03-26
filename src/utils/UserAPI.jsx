@@ -28,12 +28,19 @@ String.prototype.passwordProcess = function (){
 
 
 class UserAPI{
-    static currentUserId = "test_user_id";
-    static currentUserName = "test_user_name";
-    static currentUserNickname = "test_user_nickname";
-    static currentUserAvatar = UserAPI.getAvatar(UserAPI.currentUserId);
+    static currentUserId;
+    static currentUserName;
+    static currentUserNickname;
+    static currentUserAvatar;
     static loginStatus = false;
+    static loginChecked = false;
 
+    static async waitUntilLoaded(){
+        while (!UserAPI.loginChecked){
+            await new Promise((resolve) => setTimeout(resolve, 100));
+        }
+    }
+        
 
     /**
      * @param {string} id
@@ -66,6 +73,7 @@ class UserAPI{
             UserAPI.currentUserNickname = response.data.nickname;
             UserAPI.currentUserAvatar = UserAPI.getAvatar(UserAPI.currentUserId);
             UserAPI.loginStatus = true;
+            UserAPI.loginChecked = true;
         }
         catch (e){
             throw new Error(e);
