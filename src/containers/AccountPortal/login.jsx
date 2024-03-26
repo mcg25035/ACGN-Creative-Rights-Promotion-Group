@@ -10,6 +10,7 @@ import './checkMarkStyke.scss';
 
 
 const Login = () => {
+    const [loaded, setLoaded] = useState(false);
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(null);
@@ -57,10 +58,17 @@ const Login = () => {
         }
     }, [loginStatus, navigate]);
 
+    useEffect(() => {
+        (async () => {
+            await UserApi.waitUntilLoaded();
+            setLoaded(true);
+        })()
+    })
+
 
     return (
         <div className="page" ref={pageRef}>
-            {!loginSuccess && <div ref={unloginElementContainer} className="unlogin">
+            {!loginSuccess && loaded && <div ref={unloginElementContainer} className="unlogin">
                 <div ref={loginSuccessOverlay} className='overlay inactive'></div>
                 <h1><b>登入</b></h1>
                 <span>
@@ -85,7 +93,7 @@ const Login = () => {
                 <button onClick={handleSubmit}>登入</button>
                 {error && <p className="error">{error}</p>}
             </div>}
-            {loginSuccess && <div className="login">
+            {loginSuccess && loaded && <div className="login">
                 <div className='ac-container'>
                     <div className="animation-component circle-loader load-complete">
                         <div className="animation-component checkmark draw" style={{ display: "block" }} />

@@ -73,10 +73,12 @@ class UserAPI{
             UserAPI.currentUserNickname = response.data.nickname;
             UserAPI.currentUserAvatar = UserAPI.getAvatar(UserAPI.currentUserId);
             UserAPI.loginStatus = true;
-            UserAPI.loginChecked = true;
         }
         catch (e){
             throw new Error(e);
+        }
+        finally{
+            UserAPI.loginChecked = true;
         }
     }
 
