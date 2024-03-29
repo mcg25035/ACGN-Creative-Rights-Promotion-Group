@@ -3,8 +3,8 @@ import { article as articleAPI } from '../utils/ArticleAPI';
 
 const initialState = [];
 
-export const fetchComments = createAsyncThunk('comments/fetchComments', async (articleid) => {
-    const response = await articleAPI.fetchComments(articleid);
+export const fetchComments = createAsyncThunk('comments/fetchComments', async (articleId) => {
+    const response = await articleAPI.fetchComments(articleId);
     return response?.data?.comments;
 });
 

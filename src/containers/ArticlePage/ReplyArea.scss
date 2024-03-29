@@ -1,0 +1,26 @@
+.reply-area {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    align-items: flex-end;
+    margin: 8rem 0;
+    width: 600rem;
+
+    textarea {
+        width: 100%;
+        height: 100rem;
+        border-radius: 4rem;
+        resize: none;
+        box-sizing: border-box;
+        border: solid #83a1c0 2px;
+        &:focus {
+            outline: none;
+        }
+    }
+}
+
+@media (orientation: portrait) {
+    .reply-area {
+        width: 90vw;
+    }
+}
