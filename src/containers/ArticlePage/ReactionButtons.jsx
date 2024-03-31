@@ -19,6 +19,8 @@ const ReactionButtons = ({ articleInfo, handleLike, handleDislike, ratingData })
         comments,
     } = articleInfo;
 
+    console.log(ratingData);
+
     const {
         gpCount,
         bpCount,

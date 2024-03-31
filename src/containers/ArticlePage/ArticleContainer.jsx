@@ -22,14 +22,18 @@ const ArticleContainer = ({ articleData }) => {
         gp
     } = articleData;
 
+    console.log(articleData)
+
     var [lock, setLock] = useState(true);
     var [bpState, setBpState] = useState(false);
     var [gpState, setGpState] = useState(false);
     var [bpCount, setBpCount] = useState(bp);
     var [gpCount, setGpCount] = useState(gp);
 
+    var ratingData = {bpCount, gpCount, bpState, gpState}
+    console.log(ratingData)
+
     const handleLike = async () => {
-        console.log(lock)
         if (lock) return toast.error('此事件交互失敗', {
             position: "bottom-right",
             autoClose: 3000,
@@ -46,7 +50,8 @@ const ArticleContainer = ({ articleData }) => {
             await article.gp(id);
         }
         catch (e) {
-            toast.error('此事件交互失敗', {
+            setLock(false);
+            return toast.error('此事件交互失敗', {
                 position: "bottom-right",
                 autoClose: 3000,
                 hideProgressBar: false,
@@ -57,8 +62,6 @@ const ArticleContainer = ({ articleData }) => {
                 theme: "dark",
                 transition: Bounce,
             });
-            setLock(false);
-            return
         }
         if (bpState) {
             setBpState(false);
@@ -75,7 +78,6 @@ const ArticleContainer = ({ articleData }) => {
     };
 
     const handleDislike = async () => {
-        console.log(lock)
         if (lock) return toast.error('此事件交互失敗', {
             position: "bottom-right",
             autoClose: 3000,
@@ -92,7 +94,8 @@ const ArticleContainer = ({ articleData }) => {
             await article.bp(id);
         }
         catch (e) {
-            toast.error('此事件交互失敗', {
+            setLock(false);
+            return toast.error('此事件交互失敗', {
                 position: "bottom-right",
                 autoClose: 3000,
                 hideProgressBar: false,
@@ -103,8 +106,6 @@ const ArticleContainer = ({ articleData }) => {
                 theme: "dark",
                 transition: Bounce,
             });
-            setLock(false);
-            return
         }
         if (gpState) {
             setGpState(false);
@@ -143,12 +144,14 @@ const ArticleContainer = ({ articleData }) => {
                     <ThumbnailShow img_src={thumbnail}/>
                     <p className="article-content">{content}</p>
                 </article>
-                <ReactionButtons
+                <div className="button-container">
+                    <ReactionButtons
                         articleInfo={articleData}
                         handleLike={handleLike}
                         handleDislike={handleDislike}
-                        ratingData={{bpCount, gpCount, bpState, gpState}}
-                />
+                        ratingData={ratingData}
+                    />
+                </div>
             </div>
         </>
     );

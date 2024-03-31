@@ -24,7 +24,7 @@ const ArticlePage = () => {
         return null;
     }
 
-    const commentList = comments.map((commentData) => <CommentContainer commentData={commentData} key={commentData.id} />);
+    const commentList = comments.map((commentData) => <CommentContainer articleId={articleId} commentData={commentData} key={commentData.id} />);
 
     return (
         <div className="article-page">

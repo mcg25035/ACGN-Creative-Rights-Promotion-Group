@@ -4,19 +4,51 @@
     flex-direction: column;
     align-items: flex-end;
     margin: 8rem 0;
-    width: 600rem;
+    width: 100%;
+    border-radius: 7rem;
+    border: solid #83a1c0 2px;
+    background-color: white;
+    --avatar-icon-width: 80rem;
+    transition: 0.3s;
 
     textarea {
-        width: 100%;
+        width: calc(100% - var(--avatar-icon-width) - 20rem);
+        background-color: transparent;
         height: 100rem;
-        border-radius: 4rem;
+        border-top-left-radius: 7rem;
+        border-top-right-radius: 7rem;
         resize: none;
         box-sizing: border-box;
-        border: solid #83a1c0 2px;
+        border-bottom: none;
+        font-size: 23rem;
+        font-family: 'Noto Sans TC';
         &:focus {
             outline: none;
         }
     }
+
+    button{
+        height: 40rem;
+        width: 120rem;
+        // border: solid #83a1c0 2px;
+        background-color: #a9c1da;
+        border-radius: 7rem;
+        font-size: 20rem;
+        font-family: 'Noto Sans TC';
+        margin-right: 10rem;
+        margin-bottom: 10rem;
+        transition: 0.3s;
+    }
+
+    button:hover {
+        transition: 0.3s;
+        background-color: #d0dfef;
+    }
+}
+
+.reply-area.focus {
+    border: solid #0761eb 2px;
+    transition: 0.3s;
 }
 
 @media (orientation: portrait) {
