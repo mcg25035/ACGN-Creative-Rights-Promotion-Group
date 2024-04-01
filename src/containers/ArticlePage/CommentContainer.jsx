@@ -1,8 +1,9 @@
 import PropTypes from 'prop-types';
 import './ArticlePage.scss';
 import { useState } from 'react';
-import {article, comment} from '../../utils/ArticleAPI';
+import { article, comment } from '../../utils/ArticleAPI';
 import ReactionButtons from './ReactionButtons';
+import ReplyArea from './ReplyArea';
 
 const CommentContainer = ({ articleId, commentData }) => {
     const {
@@ -18,8 +19,9 @@ const CommentContainer = ({ articleId, commentData }) => {
     var [gpState, setGpState] = useState(false);
     var [bpCount, setBpCount] = useState(bp);
     var [gpCount, setGpCount] = useState(gp);
+    const [replyEnabled, setReplyEnabled] = useState(false);
 
-    var ratingData = {bpCount, gpCount, bpState, gpState};
+    var ratingData = { bpCount, gpCount, bpState, gpState };
 
     const handleLike = async () => {
         if (lock) return toast.error('此事件交互失敗', {
@@ -34,7 +36,7 @@ const CommentContainer = ({ articleId, commentData }) => {
             transition: Bounce,
         });
         setLock(true);
-        try{
+        try {
             await comment.gp(articleId, gp);
         }
         catch (e) {
@@ -109,19 +111,29 @@ const CommentContainer = ({ articleId, commentData }) => {
         setLock(false);
     };
 
+    const toggleReply = () => {
+        setReplyEnabled(!replyEnabled);
+        // TODO: fetch comment replies here ?
+    };
+
+
     return (
-        <div className="comment-container">
-            <div className="comment-content">
-                <p className="author">{by}</p>
-                <p>{content}</p>
+        <>
+            <div className="comment-container">
+                <div className="comment-content">
+                    <p className="author">{by}</p>
+                    <p>{content}</p>
+                </div>
+                <ReactionButtons
+                    articleInfo={commentData}
+                    handleLike={handleLike}
+                    handleDislike={handleDislike}
+                    ratingData={ratingData}
+                    handleReply={toggleReply}
+                />
             </div>
-            <ReactionButtons
-                articleInfo={commentData}
-                handleLike={handleLike}
-                handleDislike={handleDislike}
-                ratingData={ratingData}
-            />
-        </div>
+            {replyEnabled && <ReplyArea parentId={id}/>}
+        </>
     );
 };
 

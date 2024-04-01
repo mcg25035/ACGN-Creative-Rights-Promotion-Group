@@ -1,16 +1,16 @@
 import PropTypes from 'prop-types';
+import { toast, Bounce } from 'react-toastify';
 import ReactionButtons from './ReactionButtons';
 import { timestampFormat } from "../../utils/commonUtils";
 import './ArticlePage.scss';
 import ArticleHeader from '../ArticleHeader';
 import ThumbnailShow from '../ThumbnailShow';
 import { useEffect, useState } from 'react';
-import {article, comment} from '../../utils/ArticleAPI';
+import { article, comment } from '../../utils/ArticleAPI';
 import UserAPI from '../../utils/UserAPI';
-import { toast, Bounce } from 'react-toastify';
+import ReplyArea from './ReplyArea';
 
 const ArticleContainer = ({ articleData }) => {
-
     const {
         id,
         title,
@@ -22,16 +22,17 @@ const ArticleContainer = ({ articleData }) => {
         gp
     } = articleData;
 
-    console.log(articleData)
+    console.log(articleData);
 
     var [lock, setLock] = useState(true);
     var [bpState, setBpState] = useState(false);
     var [gpState, setGpState] = useState(false);
     var [bpCount, setBpCount] = useState(bp);
     var [gpCount, setGpCount] = useState(gp);
+    const [replyEnabled, setReplyEnabled] = useState(false);
 
-    var ratingData = {bpCount, gpCount, bpState, gpState}
-    console.log(ratingData)
+    var ratingData = { bpCount, gpCount, bpState, gpState };
+    console.log(ratingData);
 
     const handleLike = async () => {
         if (lock) return toast.error('此事件交互失敗', {
@@ -46,7 +47,7 @@ const ArticleContainer = ({ articleData }) => {
             transition: Bounce,
         });
         setLock(true);
-        try{
+        try {
             await article.gp(id);
         }
         catch (e) {
@@ -121,18 +122,23 @@ const ArticleContainer = ({ articleData }) => {
         setLock(false);
     };
 
+
+    const toggleReply = () => {
+        setReplyEnabled(!replyEnabled);
+    };
+
     useEffect(()=>{
         (async ()=>{
             await UserAPI.waitUntilLoaded();
             if (!UserAPI.loginStatus) return;
-            console.log("fetching state")
-            var state = await article.getSelfState(id)
-            console.log(state)
+            console.log("fetching state");
+            var state = await article.getSelfState(id);
+            console.log(state);
             if (state === 1) setGpState(true);
             if (state === -1) setBpState(true);
             setLock(false);
-        })()
-    }, [])
+        })();
+    }, [id]);
 
     return (
         <>
@@ -150,9 +156,11 @@ const ArticleContainer = ({ articleData }) => {
                         handleLike={handleLike}
                         handleDislike={handleDislike}
                         ratingData={ratingData}
+                        handleReply={toggleReply}
                     />
                 </div>
             </div>
+            {replyEnabled && <ReplyArea parentId={id}/>}
         </>
     );
 };
