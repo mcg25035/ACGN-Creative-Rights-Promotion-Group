@@ -1,18 +1,14 @@
-import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThumbsUp, faThumbsDown, faReply } from '@fortawesome/free-solid-svg-icons';
 import { useParams } from 'react-router-dom';
 import classNames from 'classnames';
-import ReplyArea from './ReplyArea';
 
 import './ArticlePage.scss';
 
 // TODO: fetch replies
 
-const ReactionButtons = ({ articleInfo, handleLike, handleDislike, ratingData }) => {
-    const { articleId } = useParams();
-    const [replyEnabled, setReplyEnabled] = useState(false);
+const ReactionButtons = ({ articleInfo, handleLike, handleDislike, handleReply, ratingData }) => {
     const {
         state,
         replies,
@@ -31,9 +27,6 @@ const ReactionButtons = ({ articleInfo, handleLike, handleDislike, ratingData })
     const className = classNames('reaction-row', { like: state === 1, dislike: state === -1 });
     const displayReplies = comments || replies;
 
-    const showReply = () => {
-        setReplyEnabled(!replyEnabled);
-    };
 
     return (
         <>
@@ -46,14 +39,17 @@ const ReactionButtons = ({ articleInfo, handleLike, handleDislike, ratingData })
                     <FontAwesomeIcon icon={faThumbsDown} />
                     <span>{bpCount}</span>
                 </button>
-                <button type="button" className="btn" onClick={showReply}>
+                <button type="button" className="btn" onClick={handleReply}>
                     <FontAwesomeIcon icon={faReply} />
                     <span>{displayReplies}</span>
                 </button>
             </div>
-            {replyEnabled && <ReplyArea parentId={articleId}/>}
         </>
     );
+};
+
+ReactionButtons.defaultProps = {
+    handleReply: () => {},
 };
 
 ReactionButtons.propTypes = {
@@ -67,6 +63,7 @@ ReactionButtons.propTypes = {
     }).isRequired,
     handleLike: PropTypes.func.isRequired,
     handleDislike: PropTypes.func.isRequired,
+    handleReply: PropTypes.func,
 };
 
 export default ReactionButtons;
