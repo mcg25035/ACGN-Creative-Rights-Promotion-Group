@@ -3,9 +3,10 @@ import './ArticlePage.scss';
 import { useState } from 'react';
 import { article, comment } from '../../utils/ArticleAPI';
 import ReactionButtons from './ReactionButtons';
+import { toast, Bounce } from 'react-toastify';
 import ReplyArea from './ReplyArea';
 
-const CommentContainer = ({ articleId, commentData }) => {
+const CommentContainer = ({ articleId, commentData, level }) => {
     const {
         id,
         by,
@@ -116,10 +117,13 @@ const CommentContainer = ({ articleId, commentData }) => {
         // TODO: fetch comment replies here ?
     };
 
+    const style = {
+        "--level": `${level}`
+    }
 
     return (
         <>
-            <div className="comment-container">
+            <div className="comment-container" style={style}>
                 <div className="comment-content">
                     <p className="author">{by}</p>
                     <p>{content}</p>
@@ -132,12 +136,13 @@ const CommentContainer = ({ articleId, commentData }) => {
                     handleReply={toggleReply}
                 />
             </div>
-            {replyEnabled && <ReplyArea parentId={id}/>}
+            {replyEnabled && <ReplyArea parentId={id} level={level+1}/>}
         </>
     );
 };
 
 CommentContainer.propTypes = {
+    level: PropTypes.number.isRequired,
     commentData: PropTypes.object.isRequired,
     articleId: PropTypes.string.isRequired
 };

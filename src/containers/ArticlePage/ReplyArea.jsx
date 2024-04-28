@@ -3,11 +3,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchComments } from '../../slices';
+import { toast, Bounce } from 'react-toastify';
 import './ReplyArea.scss';
-import { article } from '../../utils/ArticleAPI';
+import { article, comment } from '../../utils/ArticleAPI';
 
 
-const ReplyArea = ({ parentId }) => {
+const ReplyArea = ({ level, parentId }) => {
     const { loginStatus } = useSelector((state) => state.userState);
     const [text, setText] = useState('');
     const dispatch = useDispatch();
@@ -21,9 +22,34 @@ const ReplyArea = ({ parentId }) => {
     const sendComment = async () => {
         const payload = { parentId, text };
 
-        article.postComment(payload.parentId, payload.text);
+        setText('');
+        updateText({ target: { value: '' } });
 
-        dispatch(fetchComments(parentId));
+        
+
+        try{
+            if (level == 0) {
+                await article.postComment(payload.parentId, payload.text);
+                dispatch(fetchComments(parentId));
+            }
+            else {
+                await comment.postReply(payload.parentId, payload.parentId, payload.text);
+            }
+        }
+        catch(e){
+            toast.error('此事件交互失敗', {
+                position: "bottom-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+                transition: Bounce,
+            });
+        }
+        
     };
 
     if (!loginStatus) {
@@ -38,8 +64,12 @@ const ReplyArea = ({ parentId }) => {
         replyAreaWrapper.current.classList.remove('focus');
     }
 
+    var style = {
+        "--level": level,
+    }
+
     return (
-        <div ref={replyAreaWrapper} className="reply-area">
+        <div ref={replyAreaWrapper} style={style} className="reply-area">
             <textarea
                 placeholder="新增回復..."
                 onChange={updateText}
@@ -53,6 +83,7 @@ const ReplyArea = ({ parentId }) => {
 };
 
 ReplyArea.propTypes = {
+    level: PropTypes.number.isRequired,
     parentId: PropTypes.string.isRequired,
 };
 

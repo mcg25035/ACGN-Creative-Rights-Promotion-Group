@@ -160,7 +160,7 @@ const ArticleContainer = ({ articleData }) => {
                     />
                 </div>
             </div>
-            {replyEnabled && <ReplyArea parentId={id}/>}
+            {replyEnabled && <ReplyArea parentId={id} level={0}/>}
         </>
     );
 };

@@ -4,7 +4,9 @@
     flex-direction: column;
     align-items: flex-end;
     margin: 8rem 0;
-    width: 100%;
+    --level-margin: calc(20rem * var(--level));
+    width: calc(100% - var(--level-margin));
+    margin-left: var(--level-margin);
     border-radius: 7rem;
     border: solid #83a1c0 2px;
     background-color: white;

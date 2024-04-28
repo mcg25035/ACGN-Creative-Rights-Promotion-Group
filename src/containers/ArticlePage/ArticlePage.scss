@@ -103,7 +103,11 @@
         padding: 0 0;
         border-radius: 10rem;
     }
+
     .comment-container {
+        --level-margin: calc(20rem * var(--level));
+        margin-left: var(--level-margin);
+        width: calc(100% - var(--level-margin));
         border: solid #83a1c0 2px;
         background-color: #ffffffaa;
         border-radius: 7rem;

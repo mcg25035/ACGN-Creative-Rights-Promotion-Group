@@ -12,7 +12,8 @@ export const SORT_BY = {
 
 var articleApiPath = "http://localhost:3000/api/articles";
 var commentApiPath = (id) => `${articleApiPath}/${id}/comments`;
-var replyApiPath = (articleId, commentId) => `${commentApiPath(articleId)}/${commentId}/replies`;
+var repliesApiPath = (articleId, commentId) => `${commentApiPath(articleId)}/${commentId}/replies`;
+var replyApiPath = (articleId, commentId) => `${commentApiPath(articleId)}/${commentId}/reply`;
 
 
 /**
@@ -51,7 +52,7 @@ export class comment{
      */
     static async fetchReplies(articleId, commentId, sortBy, lastId){
         var res = await axios.get(
-            `${replyApiPath(articleId, commentId)}?sortBy=${sortBy}&lastId=${lastId}`,
+            `${repliesApiPath(articleId, commentId)}?sortBy=${sortBy}&lastId=${lastId}`,
             {withCredentials: true}
         );
         res = res.data;
@@ -65,7 +66,7 @@ export class comment{
      */
     static async bp(articleId, commentId){
         await axios.put(
-            `${replyApiPath(articleId, commentId)}/${commentId}/bp?user=${UserAPI.currentUserId}`,
+            `${repliesApiPath(articleId, commentId)}/${commentId}/bp?user=${UserAPI.currentUserId}`,
             {withCredentials: true}
         );
     }
@@ -77,7 +78,7 @@ export class comment{
      */
     static async gp(articleId, commentId){
         await axios.put(
-            `${replyApiPath(articleId, commentId)}/${commentId}/gp?user=${UserAPI.currentUserId}`,
+            `${repliesApiPath(articleId, commentId)}/${commentId}/gp?user=${UserAPI.currentUserId}`,
             {withCredentials: true}
         );
     }
@@ -103,7 +104,7 @@ export class comment{
      */
     static async delete(articleId, commentId){
         await axios.delete(
-            `${replyApiPath(articleId, commentId)}/${commentId}?user=${UserAPI.currentUserId}`,
+            `${repliesApiPath(articleId, commentId)}/${commentId}?user=${UserAPI.currentUserId}`,
             {withCredentials: true}
         );
     }
