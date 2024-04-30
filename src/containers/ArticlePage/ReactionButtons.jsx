@@ -29,22 +29,20 @@ const ReactionButtons = ({ articleInfo, handleLike, handleDislike, handleReply, 
 
 
     return (
-        <>
-            <div className={className}>
-                <button type="button" className="btn" onClick={handleLike}>
-                    <FontAwesomeIcon icon={faThumbsUp} />
-                    <span>{gpCount}</span>
-                </button>
-                <button type="button" className="btn" onClick={handleDislike}>
-                    <FontAwesomeIcon icon={faThumbsDown} />
-                    <span>{bpCount}</span>
-                </button>
-                <button type="button" className="btn" onClick={handleReply}>
-                    <FontAwesomeIcon icon={faReply} />
-                    <span>{displayReplies}</span>
-                </button>
-            </div>
-        </>
+        <div className={className}>
+            <button type="button" className="btn" onClick={handleLike}>
+                <FontAwesomeIcon icon={faThumbsUp} />
+                <span>{gpCount}</span>
+            </button>
+            <button type="button" className="btn" onClick={handleDislike}>
+                <FontAwesomeIcon icon={faThumbsDown} />
+                <span>{bpCount}</span>
+            </button>
+            <button type="button" className="btn" onClick={handleReply}>
+                <FontAwesomeIcon icon={faReply} />
+                <span>{displayReplies}</span>
+            </button>
+        </div>
     );
 };
 
