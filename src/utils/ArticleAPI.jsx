@@ -50,10 +50,10 @@ export class comment{
      * @param {("date-sb"|"date-bs"|"gp"|"bp"|"replies")} sortBy
      * @returns {Array<comment>}
      */
-    static async fetchReplies(articleId, commentId, sortBy, lastId){
+    static async fetchReplies(articleId, commentId, sortBy = SORT_BY.DATE_SB, lastId = 0){
         var res = await axios.get(
             `${repliesApiPath(articleId, commentId)}?sortBy=${sortBy}&lastId=${lastId}`,
-            {withCredentials: true}
+            { withCredentials: true }
         );
         res = res.data;
         return res.replies;
@@ -67,7 +67,7 @@ export class comment{
     static async bp(articleId, commentId){
         await axios.put(
             `${repliesApiPath(articleId, commentId)}/${commentId}/bp?user=${UserAPI.currentUserId}`,
-            {withCredentials: true}
+            { withCredentials: true }
         );
     }
 
@@ -79,7 +79,7 @@ export class comment{
     static async gp(articleId, commentId){
         await axios.put(
             `${repliesApiPath(articleId, commentId)}/${commentId}/gp?user=${UserAPI.currentUserId}`,
-            {withCredentials: true}
+            { withCredentials: true }
         );
     }
 
@@ -92,8 +92,8 @@ export class comment{
     static async postReply(articleId, commentId, content){
         await axios.post(
             `${replyApiPath(articleId, commentId)}?user=${UserAPI.currentUserId}`,
-            {content: content},
-            {withCredentials: true}
+            { content: content },
+            { withCredentials: true }
         );
     }
 
@@ -105,7 +105,7 @@ export class comment{
     static async delete(articleId, commentId){
         await axios.delete(
             `${repliesApiPath(articleId, commentId)}/${commentId}?user=${UserAPI.currentUserId}`,
-            {withCredentials: true}
+            { withCredentials: true }
         );
     }
 
@@ -117,7 +117,7 @@ export class comment{
     static async getSelfState(commentId){
         var res = await axios.get(
             `${articleApiPath}/bpgp/${commentId}?user=${UserAPI.currentUserId}`,
-            {withCredentials: true}
+            { withCredentials: true }
         );
         res = res.data;
         return res.state;
@@ -163,7 +163,7 @@ export class article {
     static async getSelfState(id){
         var res = await axios.get(
             `${articleApiPath}/gpbp/${id}?user=${UserAPI.currentUserId}`,
-            {withCredentials: true}
+            { withCredentials: true }
         );
         res = res.data;
         return res.state;
@@ -179,7 +179,7 @@ export class article {
     static fetchComments(id, sortBy = SORT_BY.DATE_SB, lastCommentId = 0){
         return axios.get(
             `${commentApiPath(id)}?sortBy=${sortBy}&lastId=${lastCommentId}`,
-            {withCredentials: true}
+            { withCredentials: true }
         );
     }
 
@@ -190,7 +190,7 @@ export class article {
     static async bp(id){
         await axios.put(
             `${articleApiPath}/${id}/bp?user=${UserAPI.currentUserId}`,
-            {withCredentials: true}
+            { withCredentials: true }
         );
     }
 
@@ -201,7 +201,7 @@ export class article {
     static async gp(id){
         await axios.put(
             `${articleApiPath}/${id}/gp?user=${UserAPI.currentUserId}`,
-            {withCredentials: true}
+            { withCredentials: true }
         );
     }
 
@@ -212,9 +212,9 @@ export class article {
      */
     static async postComment(id, content){
         await axios.post(
-            `${commentApiPath(id)}?user=${UserAPI.currentUserId}`, 
-            {content: content},
-            {withCredentials: true}
+            `${commentApiPath(id)}?user=${UserAPI.currentUserId}`,
+            { content: content },
+            { withCredentials: true }
         );
     }
 
@@ -225,7 +225,7 @@ export class article {
     static async delete(id){
         await axios.delete(
             `${articleApiPath}/${id}?user=${UserAPI.currentUserId}`,
-            {withCredentials: true}
+            { withCredentials: true }
         );
     }
 }
