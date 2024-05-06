@@ -5,6 +5,8 @@ import { article, comment } from '../../utils/ArticleAPI';
 import ReactionButtons from './ReactionButtons';
 import { toast, Bounce } from 'react-toastify';
 import ReplyArea from './ReplyArea';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchReplies } from '../../slices';
 
 const CommentContainer = ({ articleId, commentData, level }) => {
     const {
@@ -20,7 +22,12 @@ const CommentContainer = ({ articleId, commentData, level }) => {
     var [gpState, setGpState] = useState(false);
     var [bpCount, setBpCount] = useState(bp);
     var [gpCount, setGpCount] = useState(gp);
+    const replies = useSelector((state) => {
+        console.log(state)
+        return state.replies
+    });
     const [replyEnabled, setReplyEnabled] = useState(false);
+    const dispatch = useDispatch();
 
     var ratingData = { bpCount, gpCount, bpState, gpState };
 
@@ -114,7 +121,9 @@ const CommentContainer = ({ articleId, commentData, level }) => {
 
     const toggleReply = () => {
         setReplyEnabled(!replyEnabled);
-        // TODO: fetch comment replies here ?
+        // TODO : fetch replies of this comment
+        // console.log(replies)
+        // dispatch(fetchReplies({ articleId, commentId: id }));
     };
 
     const style = {
