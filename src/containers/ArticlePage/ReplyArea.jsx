@@ -34,6 +34,7 @@ const ReplyArea = ({ level, parentId }) => {
             }
             else {
                 await comment.postReply(payload.parentId, payload.parentId, payload.text);
+                // TODO : update replies
             }
         }
         catch(e){
