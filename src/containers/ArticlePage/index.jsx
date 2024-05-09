@@ -19,9 +19,6 @@ const ArticlePage = () => {
         if (articleId) {
             dispatch(fetchArticle(articleId));
             dispatch(fetchComments(articleId));
-            window.setTimeout(() => {
-                dispatch(fetchReplies({ articleId, commentId: '9bbedd87-8f42-439f-93b3-2a81ad5197f4' }));
-            }, 1000);
         }
     }, [dispatch, articleId]);
 

@@ -23,9 +23,7 @@ const commentSlice = createSlice({
     initialState,
     reducers:{},
     extraReducers: (builder) => {
-        builder.addCase(fetchComments.fulfilled, (state, action) => {
-            return action.payload.map((comment) => ({ ...comment, replieList: [] }));
-        });
+        builder.addCase(fetchComments.fulfilled, (state, action) => action.payload);
         builder.addCase(fetchComments.rejected, (state, action) => {
             // TODO: handle error
             console.error(action);
