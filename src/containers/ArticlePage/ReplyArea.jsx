@@ -2,7 +2,7 @@ import { useState } from 'react';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchComments } from '../../slices';
+import { fetchComments, fetchReplies } from '../../slices';
 import { toast, Bounce } from 'react-toastify';
 import './ReplyArea.scss';
 import { article, comment } from '../../utils/ArticleAPI';
@@ -25,19 +25,19 @@ const ReplyArea = ({ level, parentId }) => {
         setText('');
         updateText({ target: { value: '' } });
 
-        
 
-        try{
+
+        try {
             if (level == 0) {
                 await article.postComment(payload.parentId, payload.text);
                 dispatch(fetchComments(parentId));
             }
             else {
                 await comment.postReply(payload.parentId, payload.parentId, payload.text);
-                // TODO : update replies
+                dispatch(fetchReplies({ articleId, commentId: id }));
             }
         }
-        catch(e){
+        catch (e){
             toast.error('此事件交互失敗', {
                 position: "bottom-right",
                 autoClose: 3000,
@@ -50,7 +50,6 @@ const ReplyArea = ({ level, parentId }) => {
                 transition: Bounce,
             });
         }
-        
     };
 
     if (!loginStatus) {
@@ -59,15 +58,15 @@ const ReplyArea = ({ level, parentId }) => {
 
     const onFocus = () => {
         replyAreaWrapper.current.classList.add('focus');
-    }
+    };
 
     const onBlur = () => {
         replyAreaWrapper.current.classList.remove('focus');
-    }
+    };
 
     var style = {
         "--level": level,
-    }
+    };
 
     return (
         <div ref={replyAreaWrapper} style={style} className="reply-area">

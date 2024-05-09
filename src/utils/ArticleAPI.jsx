@@ -56,7 +56,7 @@ export class comment{
             { withCredentials: true }
         );
         res = res.data;
-        return res.replies;
+        return res.comments;
     }
 
     /**

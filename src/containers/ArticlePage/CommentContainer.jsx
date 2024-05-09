@@ -14,7 +14,8 @@ const CommentContainer = ({ articleId, commentData, level }) => {
         by,
         content,
         bp,
-        gp
+        gp,
+        replieList,
     } = commentData;
 
     var [lock, setLock] = useState(true);
@@ -22,10 +23,6 @@ const CommentContainer = ({ articleId, commentData, level }) => {
     var [gpState, setGpState] = useState(false);
     var [bpCount, setBpCount] = useState(bp);
     var [gpCount, setGpCount] = useState(gp);
-    const replies = useSelector((state) => {
-        console.log(state)
-        return state.replies
-    });
     const [replyEnabled, setReplyEnabled] = useState(false);
     const dispatch = useDispatch();
 
@@ -121,14 +118,17 @@ const CommentContainer = ({ articleId, commentData, level }) => {
 
     const toggleReply = () => {
         setReplyEnabled(!replyEnabled);
-        // TODO : fetch replies of this comment
-        // console.log(replies)
-        // dispatch(fetchReplies({ articleId, commentId: id }));
+        if (!replieList && !replyEnabled) {
+            dispatch(fetchReplies({ articleId, commentId: id }));
+        }
     };
 
     const style = {
         "--level": `${level}`
-    }
+    };
+
+
+    const replieListEle = (replieList || []).map((commentData) => <CommentContainer level={level + 1} articleId={id} commentData={commentData} key={commentData.id} />);
 
     return (
         <>
@@ -145,7 +145,12 @@ const CommentContainer = ({ articleId, commentData, level }) => {
                     handleReply={toggleReply}
                 />
             </div>
-            {replyEnabled && <ReplyArea parentId={id} level={level+1}/>}
+            {replyEnabled && (
+                <>
+                    <ReplyArea parentId={id} level={level+1}/>
+                    {replieListEle}
+                </>
+            )}
         </>
     );
 };

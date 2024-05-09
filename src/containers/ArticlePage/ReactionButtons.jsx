@@ -15,7 +15,7 @@ const ReactionButtons = ({ articleInfo, handleLike, handleDislike, handleReply, 
         comments,
     } = articleInfo;
 
-    console.log(ratingData);
+    // console.log(ratingData);
 
     const {
         gpCount,
@@ -48,6 +48,7 @@ const ReactionButtons = ({ articleInfo, handleLike, handleDislike, handleReply, 
 
 ReactionButtons.defaultProps = {
     handleReply: () => {},
+    showReply: true,
 };
 
 ReactionButtons.propTypes = {
@@ -59,9 +60,11 @@ ReactionButtons.propTypes = {
         gp: PropTypes.number.isRequired,
         bp: PropTypes.number.isRequired,
     }).isRequired,
+    ratingData: PropTypes.object.isRequired,
     handleLike: PropTypes.func.isRequired,
     handleDislike: PropTypes.func.isRequired,
     handleReply: PropTypes.func,
+    showReply: PropTypes.bool,
 };
 
 export default ReactionButtons;
