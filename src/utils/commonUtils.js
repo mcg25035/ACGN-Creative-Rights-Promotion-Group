@@ -1,3 +1,5 @@
+import exp from "constants";
+
 export const parseCookies = () => {
     const { cookie } = document;
     return cookie.split(';').reduce((result, item) => {
@@ -17,3 +19,16 @@ export const timestampFormat = (timestamp) => {
 
     return `${year}.${month}.${day}`;
 };
+
+export const replyTagCheck = (text) => {
+    const textCheck = text.split(' ');
+    if (textCheck.length < 1) {
+        return false;
+    }
+    if (textCheck[0].length < 1) {
+        return false;
+    }
+    if (textCheck[0][0] === '@') {
+        return true;
+    }
+}

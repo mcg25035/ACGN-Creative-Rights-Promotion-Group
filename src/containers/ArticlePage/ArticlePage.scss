@@ -105,7 +105,7 @@
     }
 
     .comment-container {
-        --level-margin: calc(20rem * var(--level));
+        --level-margin: calc(40rem * var(--level));
         margin-left: var(--level-margin);
         width: calc(100% - var(--level-margin));
         border: solid #83a1c0 2px;

@@ -4,7 +4,7 @@
     flex-direction: column;
     align-items: flex-end;
     margin: 8rem 0;
-    --level-margin: calc(20rem * var(--level));
+    --level-margin: calc(40rem * var(--level));
     width: calc(100% - var(--level-margin));
     margin-left: var(--level-margin);
     border-radius: 7rem;
@@ -12,6 +12,22 @@
     background-color: white;
     --avatar-icon-width: 80rem;
     transition: 0.3s;
+
+    label {
+        width: 100%;
+        height: 100%;
+        cursor: pointer;
+
+        p {
+            font-size: 20rem;
+            font-family: 'Noto Sans TC';
+            margin-left: 10rem;
+        }
+
+        button {
+            display: none;
+        }
+    }
 
     textarea {
         width: calc(100% - var(--avatar-icon-width) - 20rem);

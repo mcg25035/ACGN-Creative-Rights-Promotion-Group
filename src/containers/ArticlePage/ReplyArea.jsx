@@ -8,11 +8,16 @@ import './ReplyArea.scss';
 import { article, comment } from '../../utils/ArticleAPI';
 
 
-const ReplyArea = ({ level, parentId }) => {
+const ReplyArea = ({ level, parentId, textState = useState('')}) => {
+    if (level > 1) {
+        level = 1;
+    }
     const { loginStatus } = useSelector((state) => state.userState);
-    const [text, setText] = useState('');
+    const [text, setText] = textState;
     const dispatch = useDispatch();
     const replyAreaWrapper = React.createRef();
+
+    // console.log(text)
 
     const updateText = (ev) => {
         const { value } = ev?.target || {};
@@ -34,10 +39,11 @@ const ReplyArea = ({ level, parentId }) => {
             }
             else {
                 await comment.postReply(payload.parentId, payload.parentId, payload.text);
-                dispatch(fetchReplies({ articleId, commentId: id }));
+                dispatch(fetchReplies({ parentId, commentId: parentId }));
             }
         }
         catch (e){
+            console.error(e);
             toast.error('此事件交互失敗', {
                 position: "bottom-right",
                 autoClose: 3000,

@@ -62,11 +62,11 @@ export class comment{
     /**
      * dislike the comment
      * @param {string} article_id
-     * @param {string} comment_id
+     * @param {string} targetId
      */
-    static async bp(articleId, commentId){
+    static async bp(articleId, targetId){
         await axios.put(
-            `${repliesApiPath(articleId, commentId)}/${commentId}/bp?user=${UserAPI.currentUserId}`,
+            `${commentApiPath(articleId, targetId)}/${targetId}/bp?user=${UserAPI.currentUserId}`,
             { withCredentials: true }
         );
     }
@@ -76,9 +76,9 @@ export class comment{
      * @param {string} article_id
      * @param {string} comment_id
      */
-    static async gp(articleId, commentId){
+    static async gp(articleId, targetId){
         await axios.put(
-            `${repliesApiPath(articleId, commentId)}/${commentId}/gp?user=${UserAPI.currentUserId}`,
+            `${commentApiPath(articleId, targetId)}/${targetId}/gp?user=${UserAPI.currentUserId}`,
             { withCredentials: true }
         );
     }
@@ -116,7 +116,7 @@ export class comment{
      */
     static async getSelfState(commentId){
         var res = await axios.get(
-            `${articleApiPath}/bpgp/${commentId}?user=${UserAPI.currentUserId}`,
+            `${articleApiPath}/gpbp/${commentId}?user=${UserAPI.currentUserId}`,
             { withCredentials: true }
         );
         res = res.data;
