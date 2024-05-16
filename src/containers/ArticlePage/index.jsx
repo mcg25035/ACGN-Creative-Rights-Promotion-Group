@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import ArticleContainer from './ArticleContainer';
 import CommentContainer from './CommentContainer';
 
-import { fetchArticle, fetchComments } from '../../slices';
+import { fetchArticle, fetchComments, clearComment } from '../../slices';
 import './ArticlePage.scss';
 
 const ArticlePage = () => {
@@ -17,6 +17,7 @@ const ArticlePage = () => {
 
     useEffect(() => {
         if (articleId) {
+            dispatch(clearComment());
             dispatch(fetchArticle(articleId));
             dispatch(fetchComments(articleId));
         }
