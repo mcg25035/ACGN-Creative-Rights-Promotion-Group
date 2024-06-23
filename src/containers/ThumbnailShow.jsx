@@ -1,15 +1,15 @@
 import "./ThumbnailShow.scss"
 import PropTypes from "prop-types";
 
-const ArticleHeader = ({img_src}) => {
+const ThumbnailShow = ({img_src}) => {
     return <div className="article-thumbnail">
         <img src={img_src}/>
     </div>
 }
 
-ArticleHeader.propTypes = {
+ThumbnailShow.propTypes = {
     img_src: PropTypes.string.isRequired
 }
 
-export default ArticleHeader;
+export default ThumbnailShow;
 

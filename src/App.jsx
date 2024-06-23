@@ -11,6 +11,7 @@ import SignUP from "./containers/AccountPortal/signup";
 import Forget from "./containers/AccountPortal/forget";
 import EmailVerifyPage from "./containers/EmailVerifyPage";
 import Loading from "./containers/Loading";
+import PostPage from "./containers/PostPage";
 import { fetchUserState } from './slices';
 import { toast, ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
@@ -38,6 +39,7 @@ function App(){
                 <Route path="/donate" element={<IndexPage />} />
                 <Route path="/working_project" element={<IndexPage />} />
                 <Route path="/join_us" element={<IndexPage />} />
+                <Route path="/post_article" element={<PostPage />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<SignUP/>}/>
                 <Route path="/forget" element={<Forget/>}/>

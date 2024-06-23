@@ -1,0 +1,177 @@
+@import url(//fonts.googleapis.com/earlyaccess/notosanstc.css);
+
+
+.post-page {
+    padding: 0 300rem;
+
+    // .button-header {
+    //   height: 30rem;
+    //   width: 100%;
+    //   background-color: black;
+    // }
+
+    .post-block-wrapper {
+        margin-top: 50rem;
+        border-radius: 8rem;
+        overflow: hidden;
+        border: solid #83a1c0 2px;
+        background-color: white;
+
+        .title-area {
+            height: 50rem;
+            // border: #202c39 1px solid;
+            outline: none;
+            background-color: #eceef1;
+            width: 100%;
+            resize: none;
+            font-family: 'Noto Sans TC';
+            font-size: 35rem;
+            overflow: hidden;            
+        }
+
+        .title-area::placeholder {
+            font-weight: 400;
+        }
+
+        .title-area:focus {
+            background-color: #fff;
+        }
+
+        hr{
+            background-color: black;
+            height: 1px; 
+            border: 0;
+            margin-top: 10rem;
+        }
+
+        .article-thumbnail{
+            margin-top: 30rem;
+            margin-bottom: 30rem;
+        }
+
+        .button-conainer {
+            padding: 60rem;
+            border-bottom-left-radius: 7rem;
+            border-bottom-right-radius: 7rem;
+            box-sizing: border-box;
+        }
+    
+        h1 {
+            font-family: 'Noto Sans TC';
+            font-weight: 500;
+            font-size: 35rem;
+            color: #202c39;
+        }
+    
+        .button-content {
+            font-size: 25rem;
+            font-family: 'Noto Sans TC';
+            font-weight: 400;
+            color: #6a7683;
+            white-space: pre-line;
+        }
+
+        .article-conainer {
+            padding: 60rem;
+            border-bottom-left-radius: 7rem;
+            border-bottom-right-radius: 7rem;
+            box-sizing: border-box;
+        }
+
+        .article-content {
+            font-size: 25rem;
+            font-family: 'Noto Sans TC';
+            font-weight: 400;
+            color: #6a7683;
+            width: 100%;
+            white-space: pre-line;
+            resize: none;
+            outline: none;
+            background-color: #eceef1;
+        }
+
+        .article-content:focus {
+            background-color: #fff;
+        }
+    
+        // .author {
+        //     font-weight: 700;
+        //     color: #0761eb;
+        // }
+    }
+
+    .reaction-row {
+        display: flex;
+        margin-top: 0;
+        align-items: center;
+        font-size: 30rem;
+        margin-left: px;
+        > button, div {
+            margin-right: 30rem;
+        }
+        button {
+            box-sizing: border-box;
+            min-width: 40rem;
+            height: 40rem;
+            border-radius: 8px;
+            // border: 3rem solid;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 4rem;
+            span{
+                margin-left: 13.5rem;
+            }
+        }
+        .btn{
+            color: #464646;
+            transition: 0.3s;
+        }
+        .btn:hover:not(.active){
+            color: #0761eb;
+            transition: 0.3s;
+        }
+        .btn.active{
+            color: #579aff;
+        }
+        .btn.active:hover{
+            color: #9cb6de;
+        }
+    }
+    .comment-list {
+        padding: 0 0;
+        border-radius: 10rem;
+    }
+
+    .comment-container {
+        --level-margin: calc(40rem * var(--level));
+        margin-left: var(--level-margin);
+        width: calc(100% - var(--level-margin));
+        border: solid #83a1c0 2px;
+        background-color: #ffffffaa;
+        border-radius: 7rem;
+        margin-top: 10rem;
+        padding: 20rem;
+    }
+
+    .comment-content {
+    //   border: solid #83a1c0 2px;
+        box-sizing: border-box;
+        display: inline-block;
+        background-color: #ffffffaa;
+        font-family: 'Noto Sans TC';
+        font-size: 24rem;
+        padding: 8rem 8rem;
+        border-radius: 10rem;
+    }
+    // .author {
+    //   font-weight: 700;
+    //   color: #0761eb;
+    // }
+}
+
+@media (orientation: portrait) {
+    .button-page {
+        padding: 0 20rem;
+    }
+}

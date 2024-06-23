@@ -9,3 +9,27 @@
         overflow: hidden;
     }
 }
+
+.preview{
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    p{
+        // cursor: pointer;
+        position: absolute;
+        width: 100%;
+        bottom: 0%;
+        transform: translateY(100%);
+        text-align: center;
+        font-size: 27rem;
+        transition: transform 0.2s;
+        background-color: rgba(255,255,255,0.6);
+    }
+    p.active{
+        transform: translateY(0);
+        transition: transform 0.2s;
+    }
+    img{
+        position: absolute;
+    }
+}
