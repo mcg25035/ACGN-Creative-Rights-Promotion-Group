@@ -11,5 +11,6 @@ ThumbnailShow.propTypes = {
     img_src: PropTypes.string.isRequired
 }
 
+
 export default ThumbnailShow;
 

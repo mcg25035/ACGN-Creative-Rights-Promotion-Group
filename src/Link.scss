@@ -1,5 +1,3 @@
-@import url(//fonts.googleapis.com/earlyaccess/notosanstc.css);
-
 div.nav-link{
     transition: all 0.3s;
     height: 100%;
@@ -15,7 +13,7 @@ div.nav-link{
         transition: all 0.3s;
         text-align: center;
         margin: 0;
-        font-family: 'Noto Sans TC';
+        font-family: 'Noto  Sans TC' 'Noto Sans';
         font-weight: 400;
         white-space: nowrap;
     }

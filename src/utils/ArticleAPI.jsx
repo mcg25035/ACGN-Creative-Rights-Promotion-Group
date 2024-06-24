@@ -228,4 +228,12 @@ export class article {
             { withCredentials: true }
         );
     }
+
+    static async postArticle(title, content, thumbnail){
+        await axios.post(
+            `${articleApiPath}?user=${UserAPI.currentUserId}`,
+            { title, content, thumbnail },
+            { withCredentials: true }
+        );
+    }
 }

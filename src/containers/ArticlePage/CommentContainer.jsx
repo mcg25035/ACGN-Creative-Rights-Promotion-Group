@@ -131,7 +131,7 @@ const CommentContainer = ({ articleId, commentData, level, parentReply = null, p
                 var msg = text.split(" ")
                 msg.shift()
                 // console.log(msg)
-                text = msg.join(" ")
+                setText(msg.join(" "))
             }
             setText(`@${by} ${text}`)
             return;

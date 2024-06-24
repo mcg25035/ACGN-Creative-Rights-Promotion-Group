@@ -6,7 +6,7 @@
   	@apply flex justify-center items-center;
   	height: 100vh;
 
-	div:not(.animation-component):not(.overlay):not(.ac-container) {
+	div.login-page {
 		background-color: #ffffff;
 		// border: #24558b 1px solid;
 		border-radius: 5px;

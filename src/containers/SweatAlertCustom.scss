@@ -1,0 +1,47 @@
+.custom-swal-popup {
+    width: 800rem;
+    height: 400rem;
+
+    .swal2-loader {
+        width: 100rem;
+        height: 100rem;
+        font-size: 30rem;
+    }
+
+    .custom-swal-actions {
+        margin-top: 0rem;
+        // font-size: 30rem;  
+    }
+
+    .custom-swal-title {
+        font-size: 40rem;  
+    }
+    
+    .custom-swal-input {
+        font-size: 30rem;  
+        height: 70rem;
+        border: rgb(169, 169, 169) 2px solid;
+    }
+
+    .custom-swal-input:focus {
+        border: #61a7f3 2px solid;
+        box-shadow: none;
+    }
+    
+    .custom-swal-content {
+        font-size: 30rem;  
+    }
+    
+    .custom-swal-confirm-button {
+        font-size: 25rem;  
+        background-color: #24558b;
+    }
+    
+    .custom-swal-cancel-button {
+        font-size: 25rem;  
+    }
+
+    .custom-swal-validation-message {
+        font-size: 20rem;  
+    }
+}

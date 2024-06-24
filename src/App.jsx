@@ -15,7 +15,10 @@ import PostPage from "./containers/PostPage";
 import { fetchUserState } from './slices';
 import { toast, ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
+import 'sweetalert2/src/sweetalert2.scss';
 import "./App.scss";
+import TestComponent from "./containers/TestComponent";
+
 
 function App(){
     var divStyle={
@@ -45,6 +48,7 @@ function App(){
                 <Route path="/forget" element={<Forget/>}/>
                 <Route path="/profile" element={<ProfilePage />} />
                 <Route path="/emailVerifyPage" element={<EmailVerifyPage />} />
+                {/* <Route path="/test" element={< TestComponent/>} /> */}
             </Routes>
         </main>
         <Footer />

@@ -1,0 +1,25 @@
+div.test-page{
+    padding: 0 300rem;
+
+    .parent{
+        position: relative;
+        margin-top: 50rem;
+        border-radius: 8rem;
+        overflow: hidden;
+        border: solid #83a1c0 2px;
+        background-color: white;
+        height: 700rem;
+        text-align: center;
+    }
+    
+    button{
+        width: 270rem;
+        height: 70rem;
+        margin-top: 30rem;
+        font-size: 25rem;
+        background-color: #24558b;
+        color: white;
+        margin-bottom: 25rem;
+        border-radius: 5px;
+    }
+}

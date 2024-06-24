@@ -20,7 +20,7 @@
 
         p {
             font-size: 20rem;
-            font-family: 'Noto Sans TC';
+            font-family: 'Noto  Sans TC' 'Noto Sans';
             margin-left: 10rem;
         }
 
@@ -39,7 +39,7 @@
         box-sizing: border-box;
         border-bottom: none;
         font-size: 23rem;
-        font-family: 'Noto Sans TC';
+        font-family: 'Noto  Sans TC' 'Noto Sans';
         &:focus {
             outline: none;
         }
@@ -52,7 +52,7 @@
         background-color: #a9c1da;
         border-radius: 7rem;
         font-size: 20rem;
-        font-family: 'Noto Sans TC';
+        font-family: 'Noto  Sans TC' 'Noto Sans';
         margin-right: 10rem;
         margin-bottom: 10rem;
         transition: 0.3s;

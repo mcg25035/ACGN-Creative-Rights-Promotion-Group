@@ -1,0 +1,51 @@
+.animation-overlay {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    opacity: 0;
+
+    &.visible {
+        pointer-events: all;
+        opacity: 1;
+    }
+
+    .overlay-text {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, 50%);
+        font-size: 50rem;
+        color: #080e14;
+        font-weight: 500;
+        transition: opacity 0.3s;
+        opacity: 0;
+    }
+
+    .overlay-triangle {
+        left: 0;
+        top: 0;
+        content: '';
+        position: absolute;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(135deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 50%, rgba(0,0,0,0) 50%, rgba(0,0,0,0) 100%);
+        transform: translate(-100%, -100%);
+        transition: transform var(--transition-time);
+    }
+}
+
+.animation-overlay.active {
+    .overlay-triangle {
+        transform: translate(0%, 0%);
+    }
+
+    .overlay-text.show {
+        opacity: 1;
+        transition: opacity 1s;
+    }
+}
