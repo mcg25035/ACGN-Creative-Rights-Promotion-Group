@@ -136,6 +136,7 @@ export class article {
      * @returns {Array<article>}
      */
     static getArticleList(sortBy = SORT_BY.DATE_SB, lastId = 0){
+        console.log(lastId)
         return axios.get(
             `${articleApiPath}`,
             { params: { sortBy, lastId } },

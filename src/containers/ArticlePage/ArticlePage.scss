@@ -64,52 +64,52 @@
         width: 100%;
         display: flex;
         justify-content: space-between; 
+    }
 
-        .reaction-row {
-            margin-left: 0;
+    .reaction-row {
+        margin-left: 0;
+    }
+
+    .admin-row {
+        margin-right: 0;
+    }
+
+    .reaction-row, .admin-row {
+        width: fit-content;
+        display: flex;
+        margin-top: 0;
+        align-items: center;
+        font-size: 30rem;
+        > button, div {
+            margin-right: 30rem;
         }
-
-        .admin-row {
-            margin-right: 0;
-        }
-
-        .reaction-row, .admin-row {
-            width: fit-content;
+        button {
+            box-sizing: border-box;
+            min-width: 40rem;
+            height: 40rem;
+            border-radius: 8px;
+            // border: 3rem solid;
             display: flex;
-            margin-top: 0;
+            justify-content: space-around;
             align-items: center;
-            font-size: 30rem;
-            > button, div {
-                margin-right: 30rem;
+            padding: 4rem;
+            span{
+                margin-left: 13.5rem;
             }
-            button {
-                box-sizing: border-box;
-                min-width: 40rem;
-                height: 40rem;
-                border-radius: 8px;
-                // border: 3rem solid;
-                display: flex;
-                justify-content: space-around;
-                align-items: center;
-                padding: 4rem;
-                span{
-                    margin-left: 13.5rem;
-                }
-            }
-            .btn{
-                color: #464646;
-                transition: 0.3s;
-            }
-            .btn:hover:not(.active){
-                color: #0761eb;
-                transition: 0.3s;
-            }
-            .btn.active{
-                color: #579aff;
-            }
-            .btn.active:hover{
-                color: #9cb6de;
-            }
+        }
+        .btn{
+            color: #464646;
+            transition: 0.3s;
+        }
+        .btn:hover:not(.active){
+            color: #0761eb;
+            transition: 0.3s;
+        }
+        .btn.active{
+            color: #579aff;
+        }
+        .btn.active:hover{
+            color: #9cb6de;
         }
     }
 
