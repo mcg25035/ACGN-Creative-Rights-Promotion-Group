@@ -45,6 +45,9 @@ function Footer(){
             <p>
                 ACGN創作權益推動小組
             </p>
+            <p>
+                version 0.1.0
+            </p>
         </footer>
     );
 }
