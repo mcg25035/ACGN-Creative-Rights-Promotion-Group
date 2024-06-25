@@ -8,6 +8,7 @@
     height: 100%;
     pointer-events: none;
     opacity: 0;
+    z-index: 256;
 
     &.visible {
         pointer-events: all;

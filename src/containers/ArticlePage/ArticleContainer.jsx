@@ -9,6 +9,8 @@ import { useEffect, useState } from 'react';
 import { article, comment } from '../../utils/ArticleAPI';
 import UserAPI from '../../utils/UserAPI';
 import ReplyArea from './ReplyArea';
+import AdminButtons from './AdminButtons';
+import TransitionTriangle from '../../transitions/TransitionTriangle';
 
 const ArticleContainer = ({ articleData }) => {
     const {
@@ -29,6 +31,8 @@ const ArticleContainer = ({ articleData }) => {
     var [gpState, setGpState] = useState(false);
     var [bpCount, setBpCount] = useState(bp);
     var [gpCount, setGpCount] = useState(gp);
+    var [articleDeleted, setArticleDeleted] = useState(false);
+    var isUserArticleOwner = UserAPI.currentUserId === postBy;
     const [replyEnabled, setReplyEnabled] = useState(false);
 
     var ratingData = { bpCount, gpCount, bpState, gpState };
@@ -143,6 +147,7 @@ const ArticleContainer = ({ articleData }) => {
     return (
         <>
             <div className="article-block-wrapper">
+                <TransitionTriangle active={articleDeleted} text='文章已刪除' redirectTo='/' />
                 <ArticleHeader date={date} postBy={postBy}/>
                 <article className="article-conainer">
                     <h1 className="article-title">{title}</h1>
@@ -158,6 +163,11 @@ const ArticleContainer = ({ articleData }) => {
                         ratingData={ratingData}
                         handleReply={toggleReply}
                     />
+                    {
+                        isUserArticleOwner && <AdminButtons articleId={id} deleteCallback={
+                            ()=>{setArticleDeleted(true)}
+                        } />
+                    }
                 </div>
             </div>
             {replyEnabled && <ReplyArea parentId={id} level={0}/>}

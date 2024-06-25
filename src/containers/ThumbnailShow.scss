@@ -3,9 +3,9 @@
 
 .article-thumbnail{
     width: 100%;
-    aspect-ratio: 16/9;
     background-color: rgb(168, 183, 192);
     img{
+        aspect-ratio: 16/9;
         width: 100%;
         height: 100%;
         object-fit: cover;
@@ -31,8 +31,5 @@
     p.active{
         transform: translateY(0);
         transition: transform 0.2s;
-    }
-    img{
-        position: absolute;
     }
 }

@@ -57,7 +57,7 @@ function Nav() {
                     {!loginStatus && <li onClick={toggleMenu}><Link to="login" name="登入" subtext="Login"/></li>}
                     {loginStatus && <li onClick={logout}><Link to="" name="登出" subtext="Logout"/></li>}
                     {loginStatus && <li onClick={toggleMenu}><Link to="profile" name="帳號" subtext="Profile"/></li>}
-                    <li onClick={toggleMenu}><Link to="post_article" name="發文" subtext="Post"/></li>
+                    {loginStatus && <li onClick={toggleMenu}><Link to="post_article" name="發文" subtext="Post"/></li>}
                     <li onClick={toggleMenu}><Link to="login" name="測試多一項" subtext="test"/></li>
                     <li onClick={toggleMenu}><Link to="login" name="測試多一項" subtext="test"/></li>
                 </ul>

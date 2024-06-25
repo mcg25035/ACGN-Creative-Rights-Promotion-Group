@@ -4,6 +4,7 @@ import ThumbnailPreview from "../ThumbnailPreview"
 import { useSelector } from "react-redux";
 import { Bounce, toast } from "react-toastify";
 import { article } from "../../utils/ArticleAPI";
+import TransitionTriangle from "../../transitions/TransitionTriangle";
 
 const PostPage = () => {
     var refArticleEdit = React.createRef();
@@ -11,6 +12,7 @@ const PostPage = () => {
     var [articleContent, setArticleContent] = React.useState("");
     var [articleTitle, setArticleTitle] = React.useState("");
     var [thumbnail, setThumbnail] = React.useState("");
+    var [postSuccess, setPostSuccess] = React.useState(false);
     const { loginStatus } = useSelector((state) => state.userState);
 
     useEffect(() => {
@@ -48,6 +50,7 @@ const PostPage = () => {
     var post = async () => {
         try{
             await article.postArticle(articleTitle, articleContent, thumbnail);
+            setPostSuccess(true);
         }
         catch(error) {
             console.error(error);
@@ -70,6 +73,7 @@ const PostPage = () => {
     return (
         <div className="post-page">
             <div className="post-block-wrapper">
+                <TransitionTriangle active={postSuccess} text="發文成功" redirectTo='/' />
                 <article className="article-conainer">
                     <h1 className="article-title">
                         <input ref={refTitleEdit} className="title-area" placeholder="編輯標題..."></input>
