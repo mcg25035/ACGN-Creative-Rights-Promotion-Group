@@ -6,7 +6,7 @@ import ReactionButtons from './ReactionButtons';
 import { toast, Bounce } from 'react-toastify';
 import ReplyArea from './ReplyArea';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchReplies } from '../../slices';
+import { fetchReplies } from '../../features/actions';
 import { replyTagCheck } from '../../utils/commonUtils';
 import UserAPI from '../../utils/UserAPI';
 import LoadMore from './LoadMore';
@@ -95,7 +95,7 @@ const CommentContainer = ({ articleId, commentData, level, parentReply = null, p
             await comment.bp(articleId, id);
         }
         catch (e) {
-            console.error(e)
+            console.error(e);
             setLock(false);
             return toast.error('此事件交互失敗', {
                 position: "bottom-right",
@@ -126,14 +126,14 @@ const CommentContainer = ({ articleId, commentData, level, parentReply = null, p
     const toggleReply = () => {
         if (level == 1) {
             // console.log(parentReply)
-            const [text, setText] = parentReply
+            const [text, setText] = parentReply;
             if (replyTagCheck(text)) {
-                var msg = text.split(" ")
-                msg.shift()
+                var msg = text.split(" ");
+                msg.shift();
                 // console.log(msg)
-                setText(msg.join(" "))
+                setText(msg.join(" "));
             }
-            setText(`@${by} ${text}`)
+            setText(`@${by} ${text}`);
             return;
         }
         setReplyEnabled(!replyEnabled);
