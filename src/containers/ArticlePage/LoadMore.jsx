@@ -1,8 +1,8 @@
 import { useDispatch } from "react-redux";
-import { fetchReplies } from "../../slices";
+import { fetchReplies } from "../../features/actions";
 
 
-const LoadMore = ({articleId = 0, level, parentId, commentList})=>{
+const LoadMore = ({ articleId = 0, level, parentId, commentList })=>{
     var dispatch = useDispatch();
 
     var style = {
@@ -10,9 +10,9 @@ const LoadMore = ({articleId = 0, level, parentId, commentList})=>{
     };
 
     var loadMoreHandler = ()=>{
-        dispatch(fetchReplies({ articleId, commentId: parentId, lastId: commentList[commentList.length - 1].id}));
-    }
-    
+        dispatch(fetchReplies({ articleId, commentId: parentId, lastId: commentList[commentList.length - 1].id }));
+    };
+
     return (
         <div style={style} className="reply-area">
             <label>
@@ -21,6 +21,6 @@ const LoadMore = ({articleId = 0, level, parentId, commentList})=>{
             </label>
         </div>
     );
-}
+};
 
 export default LoadMore;

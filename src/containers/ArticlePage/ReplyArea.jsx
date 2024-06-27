@@ -2,13 +2,13 @@ import { useState } from 'react';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchComments, fetchReplies } from '../../slices';
+import { fetchComments, fetchReplies } from '../../features/actions';
 import { toast, Bounce } from 'react-toastify';
 import './ReplyArea.scss';
 import { article, comment } from '../../utils/ArticleAPI';
 
 
-const ReplyArea = ({ level, parentId, textState = useState('')}) => {
+const ReplyArea = ({ level, parentId, textState = useState('') }) => {
     if (level > 1) {
         level = 1;
     }

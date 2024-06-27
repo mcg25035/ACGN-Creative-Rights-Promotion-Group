@@ -12,7 +12,7 @@ import Forget from "./containers/AccountPortal/forget";
 import EmailVerifyPage from "./containers/EmailVerifyPage";
 import Loading from "./containers/Loading";
 import PostPage from "./containers/PostPage";
-import { fetchUserState } from './slices';
+import { fetchUserState } from './features/actions';
 import { toast, ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import 'sweetalert2/src/sweetalert2.scss';

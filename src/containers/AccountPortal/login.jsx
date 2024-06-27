@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { setLoading } from '../../slices';
+import { setLoading } from '../../features/actions';
 import React from 'react';
 import UserApi from '../../utils/UserAPI';
 import { sleep } from '../../utils/commonUtils';
@@ -48,13 +48,13 @@ const Login = () => {
         }
     };
 
-    
+
     useEffect(() => {
         (async () => {
             await UserApi.waitUntilLoaded();
             setLoaded(true);
-        })()
-    })
+        })();
+    });
 
     useEffect(() =>{
         if (loginStatus) {
@@ -66,31 +66,31 @@ const Login = () => {
 
     return (
         <div className="page" ref={pageRef}>
-                {loaded && <div ref={unloginElementContainer} className="login-page unlogin">
+            {loaded && <div ref={unloginElementContainer} className="login-page unlogin">
                 <TransitionTriangle active={loginSuccess} text="登入成功" redirectTo='/' />
-                    <h1><b>登入</b></h1>
-                    <span>
-                        <input
-                            type="text"
-                            name="username"
-                            placeholder="使用者名稱"
-                            value={username}
-                            autoComplete='off'
-                            onChange={(e) => setUsername(e.target.value)}
-                        />
-                    </span>
-                    <span>
-                        <input
-                            type="password"
-                            name="password"
-                            placeholder="密碼"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                        />
-                    </span>
-                    <button onClick={handleSubmit}>登入</button>
-                    {error && <p className="error">{error}</p>}
-                </div>}
+                <h1><b>登入</b></h1>
+                <span>
+                    <input
+                        type="text"
+                        name="username"
+                        placeholder="使用者名稱"
+                        value={username}
+                        autoComplete='off'
+                        onChange={(e) => setUsername(e.target.value)}
+                    />
+                </span>
+                <span>
+                    <input
+                        type="password"
+                        name="password"
+                        placeholder="密碼"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+                </span>
+                <button onClick={handleSubmit}>登入</button>
+                {error && <p className="error">{error}</p>}
+            </div>}
         </div>
     );
 };

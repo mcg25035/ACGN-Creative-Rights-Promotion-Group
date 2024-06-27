@@ -3,7 +3,7 @@ import { article } from '../utils/ArticleAPI';
 
 const initialState = [];
 
-export const fetchArticleList = createAsyncThunk('articleList/fetchArticleList', async (sortBy, lastId) => {
+export const fetchArticleList = createAsyncThunk('articleList/fetchArticleList', async ({ sortBy, lastId } = {}) => {
     var lastId = 0;
     const response = await article.getArticleList(sortBy, lastId);
     return response?.data?.articles;
