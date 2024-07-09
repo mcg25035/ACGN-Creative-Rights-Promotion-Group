@@ -135,13 +135,14 @@ export class article {
      * @param {string | number} lastId
      * @returns {Array<article>}
      */
-    static getArticleList(sortBy = SORT_BY.DATE_SB, lastId = 0){
-        console.log(lastId)
-        return axios.get(
+    static async getArticleList(sortBy = SORT_BY.DATE_SB, lastId = 0){
+        var res = await axios.get(
             `${articleApiPath}`,
             { params: { sortBy, lastId } },
             { withCredentials: true }
         );
+        res = res.data;
+        return res.articles;
     }
 
     /**
@@ -177,11 +178,14 @@ export class article {
      * @param {string} lastCommentId
      * @returns {Array<comment>}
      */
-    static fetchComments(id, sortBy = SORT_BY.DATE_SB, lastCommentId = 0){
-        return axios.get(
+    static async fetchComments(id, sortBy = SORT_BY.DATE_SB, lastCommentId = 0){
+        var res = await axios.get(
             `${commentApiPath(id)}?sortBy=${sortBy}&lastId=${lastCommentId}`,
             { withCredentials: true }
         );
+        res = res.data;
+        return res.comments;
+        
     }
 
     /**

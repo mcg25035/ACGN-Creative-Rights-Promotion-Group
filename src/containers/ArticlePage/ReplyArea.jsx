@@ -35,7 +35,7 @@ const ReplyArea = ({ level, parentId, textState = useState('') }) => {
         try {
             if (level == 0) {
                 await article.postComment(payload.parentId, payload.text);
-                dispatch(fetchComments(parentId));
+                dispatch(fetchComments({ articleId: parentId }));
             }
             else {
                 await comment.postReply(payload.parentId, payload.parentId, payload.text);

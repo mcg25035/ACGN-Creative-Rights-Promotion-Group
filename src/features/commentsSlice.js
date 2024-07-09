@@ -8,12 +8,41 @@ const uniqueItemsById = (items) => Object.values(items.reduce((result, item) => 
     return result;
 }, {}));
 
+/**
+ * @typedef {Object} CommentParams
+ * @property {string} articleId
+ * @property {string} sortBy
+ * @property {string} lastId
+ */
 
-export const fetchComments = createAsyncThunk('comments/fetchComments', async (articleId) => {
-    const response = await articleAPI.fetchComments(articleId);
-    return response?.data?.comments || [];
+/**
+ * @typedef {Object} ReplyParams
+ * @property {string} articleId
+ * @property {string} commentId
+ * @property {string} sortBy
+ * @property {string} lastId
+ */
+
+/**
+ * @param {CommentParams} params
+ */
+export const fetchComments = createAsyncThunk('comments/fetchComments', async (params, thunkAPI) => {
+    const { articleId, sortBy, lastId } = params;
+    const { rejectWithValue } = thunkAPI;
+    console.log(params);
+    console.log(articleId);
+    try {
+        console.log("fetching comments");
+        return await articleAPI.fetchComments(articleId, sortBy, lastId) || [];
+    }
+    catch (e) {
+        return rejectWithValue(e);
+    }
 });
 
+/**
+ * @param {ReplyParams} params
+ */
 export const fetchReplies = createAsyncThunk('comments/fetchReplies', async (params, thunkAPI) => {
     const { articleId, commentId, sortBy, lastId } = params;
     const { rejectWithValue } = thunkAPI;
@@ -34,6 +63,7 @@ const commentSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(fetchComments.fulfilled, (state, action) => {
+            console.log(state)
             return uniqueItemsById([...state, ...action.payload]);
         });
         builder.addCase(fetchComments.rejected, (state, action) => {

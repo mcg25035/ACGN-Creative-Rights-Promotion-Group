@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { fetchReplies } from "../../features/actions";
+import { fetchComments, fetchReplies } from "../../features/actions";
 
 
 const LoadMore = ({ articleId = 0, level, parentId, commentList })=>{
@@ -10,6 +10,10 @@ const LoadMore = ({ articleId = 0, level, parentId, commentList })=>{
     };
 
     var loadMoreHandler = ()=>{
+        if (level === 0) {
+            dispatch(fetchComments({ articleId, lastId: commentList[commentList.length - 1].id }));
+            return;
+        }
         dispatch(fetchReplies({ articleId, commentId: parentId, lastId: commentList[commentList.length - 1].id }));
     };
 

@@ -1,20 +1,13 @@
-import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { fetchArticleList } from '../../features/actions';
 import IdeaShow from './IdeaShow';
-import IndexContentContainer from './IndexContentContainer';
+import IndexContentsContainer from './IndexContentsContainer';
 
 function IndexPage(){
-    const dispatch = useDispatch();
-
-    useEffect(() => {
-        dispatch(fetchArticleList());
-    }, [dispatch]);
+    
 
     return (
         <>
             <IdeaShow />
-            <IndexContentContainer />
+            <IndexContentsContainer />
         </>
     );
 }

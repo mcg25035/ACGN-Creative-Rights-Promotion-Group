@@ -6,11 +6,14 @@ import CommentContainer from './CommentContainer';
 
 import { fetchArticle, fetchComments, clearComment } from '../../features/actions';
 import './ArticlePage.scss';
+import LoadMore from './LoadMore';
 
 const ArticlePage = () => {
     const { articleId } = useParams();
     const dispatch = useDispatch();
     const articleData = useSelector((state) => state.article);
+
+    /**@type {Array} */
     const comments = useSelector((state) => state.comments);
 
     console.log(comments);
@@ -19,7 +22,7 @@ const ArticlePage = () => {
         if (articleId) {
             dispatch(clearComment());
             dispatch(fetchArticle(articleId));
-            dispatch(fetchComments(articleId));
+            dispatch(fetchComments({articleId}));
         }
     }, [dispatch, articleId]);
 
@@ -34,6 +37,7 @@ const ArticlePage = () => {
             <ArticleContainer articleData={articleData} />
             <div className="comment-list">
                 {commentList}
+                {articleData.comments - comments.length > 0 && <LoadMore articleId={articleId} level={0} parentId={articleId} commentList={comments} />}
             </div>
         </div>
 

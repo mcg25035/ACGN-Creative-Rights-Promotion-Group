@@ -5,8 +5,9 @@ import { Link } from "react-router-dom";
 import { timestampFormat } from "../../utils/commonUtils";
 import ArticleHeader from "../ArticleHeader";
 import ThumbnailShow from "../ThumbnailShow";
-function IndexContentBlock({ articleData }){
-    const { date, id, title, thumbnail, post_by: postBy } = articleData;
+
+function IndexLoadMore({ articleData }){
+    // const { date, id, title, thumbnail, post_by: postBy } = articleData;
     const refs = [new React.createRef(), new React.createRef(), new React.createRef()];
     const mouse = {
         over : () => {
@@ -25,20 +26,20 @@ function IndexContentBlock({ articleData }){
         }
     };
     return <div className="index-content-container" ref={refs[0]}>
-        <ArticleHeader date={date} postBy={postBy}/>
-        <Link to={`/article/${id}`} onMouseOver={mouse.over} onMouseOut={mouse.out}>
+        <ArticleHeader emptyHeader={true} />
+        <div onMouseOver={mouse.over} onMouseOut={mouse.out}>
             <div ref={refs[1]} className="content-wrapper">
-                <ThumbnailShow img_src={thumbnail}/>
+                <ThumbnailShow img_src="https://download.codingbear.mcloudtw.com/acgn/loadMore.png"/>
                 <p ref={refs[2]} className="title-block">
-                    {title}
+                    {"點擊載入更多"}
                 </p>
             </div>
-        </Link>
+        </div>
     </div>;
 }
 
-IndexContentBlock.propTypes = {
-    articleData: PropTypes.object.isRequired,
+IndexLoadMore.propTypes = {
+    articleData: PropTypes.object,
 };
 
-export default IndexContentBlock;
+export default IndexLoadMore;
