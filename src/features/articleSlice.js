@@ -4,8 +4,7 @@ import { article as articleAPI } from '../utils/ArticleAPI';
 const initialState = {};
 
 export const fetchArticle = createAsyncThunk('article/fetchArticle', async (articleId) => {
-    const response = await articleAPI.getArticleById(articleId);
-    return response?.data;
+    return await articleAPI.getArticleById(articleId);
 });
 
 

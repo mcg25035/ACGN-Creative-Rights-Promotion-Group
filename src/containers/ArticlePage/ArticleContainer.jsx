@@ -24,8 +24,6 @@ const ArticleContainer = ({ articleData }) => {
         gp
     } = articleData;
 
-    console.log(articleData);
-
     var [lock, setLock] = useState(true);
     var [bpState, setBpState] = useState(false);
     var [gpState, setGpState] = useState(false);
@@ -36,7 +34,7 @@ const ArticleContainer = ({ articleData }) => {
     const [replyEnabled, setReplyEnabled] = useState(false);
 
     var ratingData = { bpCount, gpCount, bpState, gpState };
-    console.log(ratingData);
+    // console.log(ratingData);
 
     const handleLike = async () => {
         if (lock) return toast.error('此事件交互失敗', {
@@ -135,9 +133,7 @@ const ArticleContainer = ({ articleData }) => {
         (async ()=>{
             await UserAPI.waitUntilLoaded();
             if (!UserAPI.loginStatus) return;
-            console.log("fetching state");
             var state = await article.getSelfState(id);
-            console.log(state);
             if (state === 1) setGpState(true);
             if (state === -1) setBpState(true);
             setLock(false);

@@ -63,7 +63,6 @@ const commentSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(fetchComments.fulfilled, (state, action) => {
-            console.log(state)
             return uniqueItemsById([...state, ...action.payload]);
         });
         builder.addCase(fetchComments.rejected, (state, action) => {

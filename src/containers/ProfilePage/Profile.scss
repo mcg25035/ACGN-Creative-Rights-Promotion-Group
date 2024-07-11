@@ -1,43 +1,102 @@
 .profile-page {
+    padding: 0 300rem;
     margin: auto;
-    width: 90vw;
-    max-width: 800rem;
+    width: 100%;
     font-size: 28rem;
 
-    label {
-        width: 100%;
-        margin: 20rem auto;
+    .profile-block-wrapper {
+        margin-top: 50rem;
+        border-radius: 8rem;
+        position: relative;
+        border: solid #83a1c0 2px;
+        background-color: white;
+        overflow: hidden;
         display: flex;
+        flex-direction: column;
         align-items: center;
-        span {
-            width: 300rem;
+
+        .option-wrapper {
+            width: 100%;
+            display: grid;
+            grid-template-columns: max-content auto;
+            gap: 17rem;
+            padding: 17rem;
+            padding-left: 200rem;
+            padding-right: 200rem;
+
+            label {
+                display: contents; 
+
+                p.hint {
+                    width: 100%;
+                    text-align: right;
+                    color: #e87e37;
+                    font-family: 'Noto Sans TC';
+                    font-size: 20rem;
+                }
+
+                span {
+                    grid-column: 1; 
+                    text-align: right;
+                    align-self: center;
+                }
+
+                input {
+                    grid-column: 2; 
+                    height: 70rem;
+                    padding: 9rem;
+                    outline: none;
+                    transition: 0.3s;
+                    border-radius: 5px;
+                    font-size: 15px;
+                    background-color: #ffffff;
+                    border: rgb(169, 169, 169) 2px solid;
+                    box-sizing: border-box;
+                    width: 100%;
+                    align-self: center;
+                }
+
+                input:read-only:focus {
+                    border: #e87e37 2px solid;
+                }
+
+                input:not(:read-only):focus {
+                    border: #61a7f3 2px solid;
+                }
+            }
         }
 
-        input {
-            flex: 1;
-            padding: 0 8rem;
-            box-sizing: border-box;
-            border-radius: 8rem;
-            background-color: transparent;
-            border: 1px solid transparent;
-
-            &:focus {
-                outline-width: 0;
-            }
-
-            &:not(:read-only) {
-                border-color: #052745;
-            }
+        button {
+            font-size: 15px;
+            border-radius:5px;
+            background: #24558b;
+            color: #fff;
+            cursor: pointer;
+            padding: 5px 10px;
+            height: 70rem;
+            width: 150rem;
+            margin-bottom: 30rem;
         }
     }
 }
 
 @media (orientation: portrait) {
     .profile-page {
-        label {
-            flex-wrap: wrap;
-            span {
-                basis-width: 100%;
+        .profile-block-wrapper {
+            grid-template-columns: 1fr; 
+            label {
+                display: flex;
+                flex-direction: column;
+                align-items: stretch;
+
+                span, input {
+                    width: 100%;
+                }
+
+                span {
+                    margin-bottom: 10rem;
+                    text-align: left;
+                }
             }
         }
     }

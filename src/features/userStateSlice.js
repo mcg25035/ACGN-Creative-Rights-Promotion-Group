@@ -2,17 +2,17 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import userAPI from '../utils/UserAPI';
 
 const initialState = {
-    currentUserId: null,
-    currentUserName: null,
-    currentUserNickname: null,
-    currentUserAvatar: null,
+    currentUserId: "",
+    currentUserName: "",
+    currentUserNickname: "",
+    currentUserAvatar: "",
     loginStatus: false,
 };
 
 
 export const fetchUserState = createAsyncThunk('userState/fetchUserState', async () => {
-    const response = await userAPI.refreshLoad();
-    return response?.data;
+    const res = await userAPI.refreshLoad();
+    return res;
 });
 
 
@@ -21,7 +21,9 @@ const userStateSlice = createSlice({
     initialState,
     reducers:{},
     extraReducers: (builder) => {
-        builder.addCase(fetchUserState.fulfilled, (state, action) => ({ ...action.payload,  loginStatus: true }));
+        builder.addCase(fetchUserState.fulfilled, (state, action) => {
+            return ({ ...action.payload,  loginStatus: true });
+        });
         builder.addCase(fetchUserState.rejected, () => ({ loginStatus: false }));
     }
 });

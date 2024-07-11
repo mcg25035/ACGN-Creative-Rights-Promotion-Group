@@ -6,7 +6,6 @@ import React from 'react';
 import UserApi from '../../utils/UserAPI';
 import { sleep } from '../../utils/commonUtils';
 import './style.scss';
-import './checkMarkStyle.scss';
 import TransitionTriangle from '../../transitions/TransitionTriangle';
 
 

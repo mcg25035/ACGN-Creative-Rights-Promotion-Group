@@ -146,15 +146,27 @@ export class article {
     }
 
     /**
+     * @returns {Number}
+     */
+    static async getArticleCount(){
+        var res = await axios.get(
+            `${articleApiPath}/count`,
+            { withCredentials: true }
+        );
+        return res.data.count
+    }
+
+    /**
      * get article by id
      * @param {string} id
      * @returns {article}
      */
-    static getArticleById(id){
-        return axios.get(
+    static async getArticleById(id){
+        var res = await axios.get(
             `${articleApiPath}/${id}`,
             { withCredentials: true }
         );
+        return res.data;
     }
 
     /**

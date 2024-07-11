@@ -71,8 +71,15 @@ class UserAPI{
             UserAPI.currentUserId = response.data.user_id;
             UserAPI.currentUserName = response.data.realname;
             UserAPI.currentUserNickname = response.data.nickname;
-            UserAPI.currentUserAvatar = UserAPI.getAvatar(UserAPI.currentUserId);
+            UserAPI.currentUserAvatar = await UserAPI.getAvatar(UserAPI.currentUserId);
             UserAPI.loginStatus = true;
+            return {
+                currentUserId: UserAPI.currentUserId,
+                currentUserName: UserAPI.currentUserName,
+                currentUserNickname: UserAPI.currentUserNickname,
+                currentUserAvatar: UserAPI.currentUserAvatar,
+                loginStatus: UserAPI.loginStatus
+            };
         }
         catch (e){
             throw new Error(e);
@@ -243,11 +250,12 @@ class UserAPI{
      * @param {UserConfig} config
      */
     static async updateUserInfo(userId, config) {
-        await axios.put(
+        var res = await axios.put(
             `${userApiPath}/${userId}`,
             config,
             {withCredentials: true}
         );
+        return res.data;
     }
 
 

@@ -3,6 +3,11 @@ import { article } from '../utils/ArticleAPI';
 
 const initialState = [];
 
+const uniqueItemsById = (items) => Object.values(items.reduce((result, item) => {
+    result[item?.id] = item;
+    return result;
+}, {}));
+
 export const fetchArticleList = createAsyncThunk('articleList/fetchArticleList', async (params = {}, thunkAPI) => {
     var { sortBy, lastId } = params;
     const response = await article.getArticleList(sortBy, lastId);
@@ -15,7 +20,9 @@ const articleListSlice = createSlice({
     initialState,
     reducers:{},
     extraReducers: (builder) => {
-        builder.addCase(fetchArticleList.fulfilled, (state, action) => action.payload);
+        builder.addCase(fetchArticleList.fulfilled, (state, action) => {
+            return uniqueItemsById([...state, ...action.payload]);
+        });
         builder.addCase(fetchArticleList.rejected, (state, action) => {
             // TODO: handle error
             console.error(action);
