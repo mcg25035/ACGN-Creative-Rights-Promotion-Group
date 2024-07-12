@@ -4,16 +4,16 @@ $breakpoint-lg: 992px;
 
 .line {
     display: block;
-    width: 25px;
-    height: 3px;
-    margin: 5px 0;
+    width: 37.9398941022rem;
+    height: 4.55278729226rem;
+    margin:  7.58797882043rem;
     background-color: #333;
     transition: transform 0.2s, opacity 0.2s;
 }
 
 .menu{
     top: 0;
-    width: 15vw;
+    width: 285.51894946rem;
     height: 100vh;
     position: fixed;
     right: 0vw;
@@ -63,11 +63,11 @@ div.menu-overlay.menu-hidden{
 }
 
 .menu-hidden{
-    right: -15vw;
+    right: -285.51894946rem;
 }
 
 .open .line:nth-child(1) {
-    transform: translateY(8px) rotate(45deg);
+    transform: translateY(12.1407661127rem) rotate(45deg);
 }
 
 .open .line:nth-child(2) {
@@ -75,7 +75,7 @@ div.menu-overlay.menu-hidden{
 }
 
 .open .line:nth-child(3) {
-    transform: translateY(-8px) rotate(-45deg);
+    transform: translateY(-12.1407661127rem) rotate(-45deg);
 }
 
 .nav-link{

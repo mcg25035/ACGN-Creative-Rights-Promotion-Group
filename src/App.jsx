@@ -18,6 +18,7 @@ import "react-toastify/dist/ReactToastify.css";
 import 'sweetalert2/src/sweetalert2.scss';
 import "./App.scss";
 import TestComponent from "./containers/TestComponent";
+import Logout from "./containers/Logout";
 
 
 function App(){
@@ -44,6 +45,7 @@ function App(){
                 <Route path="/join_us" element={<IndexPage />} />
                 <Route path="/post_article" element={<PostPage />} />
                 <Route path="/login" element={<Login />} />
+                <Route path="/logout" element={<Logout />} />
                 <Route path="/signup" element={<SignUP/>}/>
                 <Route path="/forget" element={<Forget/>}/>
                 <Route path="/profile" element={<ProfilePage />} />

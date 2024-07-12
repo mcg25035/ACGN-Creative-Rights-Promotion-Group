@@ -2,6 +2,7 @@ import axios from 'axios';
 import sha256 from 'crypto-js/sha256';
 
 var userApiPath = "http://localhost:3000/api/users";
+axios.defaults.withCredentials = true;
 
 String.prototype.reverse = function (){
     return this.split("").reverse().join("");
@@ -65,8 +66,7 @@ class UserAPI{
     static async refreshLoad(){
         try {
             var response = await axios.get(
-                `${userApiPath}/get_login_state`,
-                {withCredentials: true}
+                `${userApiPath}/get_login_state`
             );
             UserAPI.currentUserId = response.data.user_id;
             UserAPI.currentUserName = response.data.realname;
@@ -102,10 +102,15 @@ class UserAPI{
             {
                 user_id: userId,
                 password: password
-            },
-            {withCredentials: true}
+            }
         );
 
+    }
+
+    static async logout(){
+        await axios.put(
+            `${userApiPath}/${UserAPI.currentUserId}/logout`
+        );
     }
 
     /**
@@ -116,8 +121,7 @@ class UserAPI{
     static async register(userId, password){
         var password = password.passwordProcess();
         var response = await axios.post(`${userApiPath}/${userId}/normal`,
-            {password: password},
-            {withCredentials: true}
+            {password: password}
         );
         return response.data.user_id;
     }
@@ -131,8 +135,7 @@ class UserAPI{
             {
                 verificationCode: verificationCode,
                 email: email
-            },
-            {withCredentials: true}
+            }
         );
     }
 
@@ -160,8 +163,7 @@ class UserAPI{
      */
     static async getUserInfo(userId){
         var response = await axios.get(
-            `${userApiPath}/${userId}`,
-            {withCredentials: true}
+            `${userApiPath}/${userId}`
         );
         /**
          * @type {{[key: string]: ValueInfo}}
@@ -252,8 +254,7 @@ class UserAPI{
     static async updateUserInfo(userId, config) {
         var res = await axios.put(
             `${userApiPath}/${userId}`,
-            config,
-            {withCredentials: true}
+            config
         );
         return res.data;
     }

@@ -39,7 +39,7 @@ function Nav() {
         <div>
             <div className={`bg-white z-[5] top-0 fixed w-full px-16 items-center h-[100rem] transform ${ isOpen ? '' : (visible ? '' : 'translate-y-[-100%]') } transition-all duration-150 ease-out`}/>
             <div className={` bg-transparent z-[7] top-0 fixed w-full px-16 items-center h-[100rem] transform ${ isOpen ? '' : (visible ? '' : 'translate-y-[-100%]') } transition-all duration-150 ease-out`}>
-                <div className="menu-transparent mr-[20px] flex justify-between items-center">
+                <div className="menu-transparent mr-[30.3519152817rem] flex justify-between items-center">
                     <span className="h-[100rem]"><Icon/></span>
                     <div className={` cursor-pointer ${isOpen ? 'open' : ''}`} onClick={toggleMenu}>
                         <span className="line l1"></span>
@@ -55,7 +55,7 @@ function Nav() {
                     <li onClick={toggleMenu}><Link to="working_project" name="企劃進度" subtext="Project Progress" /></li>
                     <li onClick={toggleMenu}><Link to="join_us" name="加入我們" subtext="Join Us" /></li>
                     {!loginStatus && <li onClick={toggleMenu}><Link to="login" name="登入" subtext="Login"/></li>}
-                    {loginStatus && <li onClick={logout}><Link to="" name="登出" subtext="Logout"/></li>}
+                    {loginStatus && <li onClick={logout}><Link to="logout" name="登出" subtext="Logout"/></li>}
                     {loginStatus && <li onClick={toggleMenu}><Link to="profile" name="帳號" subtext="Profile"/></li>}
                     {loginStatus && <li onClick={toggleMenu}><Link to="post_article" name="發文" subtext="Post"/></li>}
                 </ul>

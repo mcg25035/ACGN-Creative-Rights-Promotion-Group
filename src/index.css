@@ -5,7 +5,11 @@
 html{
     width: 100%;
     height: 100%;
-    font-size: calc(100vw / 1920); /* 1px = 1rem in 1920px wide */
+    /* font-size: calc( calc(100vw + 100vh) / calc(1920 + 1080) ); */
+    font-size: calc(100vw / 1920);
+    --is-protrait: 0;
+    /* font-size: calc(100vw / 1920); */
+    /*  */
 }
 
 body{
@@ -17,6 +21,7 @@ body{
 
 @media (orientation: portrait) {
     html {
-        font-size: calc(100vw / 375); /* 1px = 1rem in 375px wide */
+        font-size: calc(100vw / 800); /* 1px = 1rem in 375px wide */
+        --is-protrait: 1;
     }
 }
