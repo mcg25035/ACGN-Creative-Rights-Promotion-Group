@@ -94,14 +94,14 @@ class UserAPI{
      * @param {string} password
      */
     static async login(userId, password){
-        var password = password.passwordProcess();
+        var _password = password.passwordProcess();
 
 
         await axios.put(
             `${userApiPath}/${userId}/login`,
             {
                 user_id: userId,
-                password: password
+                password: _password
             }
         );
 
