@@ -1,7 +1,7 @@
 import axios from 'axios';
 import sha256 from 'crypto-js/sha256';
 
-var userApiPath = "http://localhost:3000/api/users";
+var userApiPath = "http://localhost/api/users";
 axios.defaults.withCredentials = true;
 
 String.prototype.reverse = function (){
