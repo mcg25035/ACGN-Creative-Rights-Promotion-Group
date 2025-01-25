@@ -10,7 +10,7 @@ export const SORT_BY = {
     REPLIES: "replies"
 };
 
-var articleApiPath = "http://localhost/api/articles";
+var articleApiPath = `${import.meta.env.VITE_API_URL}/api/articles`;
 var commentApiPath = (id) => `${articleApiPath}/${id}/comments`;
 var repliesApiPath = (articleId, commentId) => `${commentApiPath(articleId)}/${commentId}/replies`;
 var replyApiPath = (articleId, commentId) => `${commentApiPath(articleId)}/${commentId}/reply`;
